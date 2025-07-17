@@ -27,10 +27,6 @@ const FundingComparisonTable: React.FC<FundingComparisonTableProps> = ({ recomme
 
   return (
     <div className="mb-8">
-      <div className="flex items-center mb-4">
-        <svg className="h-6 w-6 text-green-500 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2l4-4m5 2a9 9 0 11-18 0a9 9 0 0118 0z" /></svg>
-        <h2 className="text-xl font-semibold">Compare Funding Options</h2>
-      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {displayRecommendations.map((rec) => (
           <Card key={rec.id} className="p-6 flex flex-col h-full border-2 border-blue-100 hover:border-blue-400 transition">
