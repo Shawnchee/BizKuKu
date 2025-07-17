@@ -74,12 +74,26 @@ export default function DashboardPage() {
                 Get detailed insights into your business financial health and performance
               </p>
             </div>
-            <a
-              href="/dashboard/financial"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
-            >
-              View Financial Analytics
-            </a>
+            <div className="flex items-center gap-3">
+              <a
+                href="/dashboard/financial"
+                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
+              >
+                View Financial Analytics
+              </a>
+              <a
+                href="/dashboard/open-finance"
+                className="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition-colors"
+              >
+                Open Finance
+              </a>
+              <a
+                href="/dashboard/compliance"
+                className="inline-flex items-center px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-md hover:bg-orange-700 transition-colors"
+              >
+                Compliance
+              </a>
+            </div>
           </div>
         </div>
 
