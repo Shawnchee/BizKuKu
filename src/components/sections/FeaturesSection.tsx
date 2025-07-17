@@ -94,7 +94,7 @@ export default function FeaturesSection() {
         {/* Bottom CTA */}
         <div className="text-center mt-12">
           <p className="text-gray-600 mb-4">
-            Ready to transform your business?
+            Ready to transform your business? 
             <span className="font-medium text-gray-800"> Start your journey today!</span>
           </p>
           <div className="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors cursor-pointer">

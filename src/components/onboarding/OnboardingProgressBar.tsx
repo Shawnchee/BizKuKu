@@ -1,15 +1,58 @@
 'use client'
 
-import { CheckCircle, Sparkles } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { CheckCircle, Sparkles, Play } from 'lucide-react'
+import { OnboardingStorage } from '@/lib/onboarding-storage'
 
 interface OnboardingProgressBarProps {
   className?: string
 }
 
 export default function OnboardingProgressBar({ className = '' }: OnboardingProgressBarProps) {
-  // Simple progress simulation - 3 out of 4 steps completed
-  const completedSteps = 3
+  const [completedSteps, setCompletedSteps] = useState(0)
+  const [currentStep, setCurrentStep] = useState(1)
+  const [hasProgress, setHasProgress] = useState(false)
+
   const totalSteps = 4
+
+  const loadProgress = () => {
+    const savedProgress = OnboardingStorage.load()
+    if (savedProgress) {
+      setCompletedSteps(savedProgress.completedSteps.length)
+      setCurrentStep(savedProgress.currentStep)
+      setHasProgress(true)
+    } else {
+      setCompletedSteps(0)
+      setCurrentStep(1)
+      setHasProgress(false)
+    }
+  }
+
+  useEffect(() => {
+    loadProgress()
+
+    // Listen for storage changes (when user completes steps in another tab)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'bizzku_onboarding_progress') {
+        loadProgress()
+      }
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+
+    // Also refresh when window gains focus (user returns from onboarding)
+    const handleFocus = () => {
+      loadProgress()
+    }
+
+    window.addEventListener('focus', handleFocus)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('focus', handleFocus)
+    }
+  }, [])
+
   const progressPercentage = Math.round((completedSteps / totalSteps) * 100)
 
   return (
@@ -27,12 +70,30 @@ export default function OnboardingProgressBar({ className = '' }: OnboardingProg
           <div>
             <h3 className="text-lg font-semibold text-gray-900 flex items-center">
               Setup Progress
-              <span className="ml-2 text-sm bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
-                Almost Done!
+              <span className={`ml-2 text-sm px-2 py-1 rounded-full font-medium ${
+                !hasProgress
+                  ? 'bg-blue-100 text-blue-700'
+                  : completedSteps === totalSteps
+                  ? 'bg-green-100 text-green-700'
+                  : completedSteps >= 2
+                  ? 'bg-yellow-100 text-yellow-700'
+                  : 'bg-blue-100 text-blue-700'
+              }`}>
+                {!hasProgress
+                  ? 'Get Started!'
+                  : completedSteps === totalSteps
+                  ? 'Completed!'
+                  : completedSteps >= 2
+                  ? 'Almost Done!'
+                  : 'In Progress'
+                }
               </span>
             </h3>
             <p className="text-sm text-gray-600">
-              {completedSteps} of {totalSteps} steps completed • Kemajuan setup
+              {hasProgress
+                ? `${completedSteps} of ${totalSteps} steps completed • Kemajuan setup`
+                : 'Start your business setup journey • Mulakan perjalanan setup perniagaan'
+              }
             </p>
           </div>
         </div>
@@ -41,9 +102,21 @@ export default function OnboardingProgressBar({ className = '' }: OnboardingProg
           <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             {progressPercentage}%
           </div>
-          <button className="mt-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium">
-            Continue Setup →
-          </button>
+          <a
+            href={completedSteps === totalSteps ? "/dashboard" : "/onboarding"}
+            className="mt-2 inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
+          >
+            {!hasProgress ? (
+              <>
+                <Play className="w-4 h-4 inline mr-1" />
+                Start Setup →
+              </>
+            ) : completedSteps === totalSteps ? (
+              'View Dashboard →'
+            ) : (
+              'Continue Setup →'
+            )}
+          </a>
         </div>
       </div>
 
@@ -79,7 +152,23 @@ export default function OnboardingProgressBar({ className = '' }: OnboardingProg
       {/* Motivational message */}
       <div className="mt-4 text-center">
         <p className="text-sm text-gray-700">
-          <span className="font-medium text-blue-600">One more step</span> to unlock your business dashboard! 🚀
+          {!hasProgress ? (
+            <>
+              <span className="font-medium text-blue-600">Ready to start?</span> Set up your business in just 4 simple steps! 🚀
+            </>
+          ) : completedSteps === totalSteps ? (
+            <>
+              <span className="font-medium text-green-600">Congratulations!</span> Your business setup is complete! 🎉
+            </>
+          ) : completedSteps >= 2 ? (
+            <>
+              <span className="font-medium text-blue-600">Almost there!</span> Just {totalSteps - completedSteps} more step{totalSteps - completedSteps > 1 ? 's' : ''} to go! 🚀
+            </>
+          ) : (
+            <>
+              <span className="font-medium text-blue-600">Great start!</span> Continue your setup journey! 💪
+            </>
+          )}
         </p>
       </div>
     </div>

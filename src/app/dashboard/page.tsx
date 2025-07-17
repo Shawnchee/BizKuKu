@@ -153,7 +153,7 @@ export default function DashboardPage() {
           <Card className="p-6 text-center">
             <div className="text-3xl font-bold text-gray-900 mb-2">3.24%</div>
             <div className="text-sm text-gray-600">Conversion Rate</div>
-            <div className="text-xs text-red-600 mt-1">-2.1% from last month</div>
+            <div className="text-xs text-red-600 mt-1">-3.1% from last month</div>
           </Card>
         </div>
       </div>

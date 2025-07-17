@@ -62,7 +62,7 @@ export default function CTASection() {
 
           {/* Enhanced CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <Link href="/dashboard">
+            <Link href="/onboarding">
               <Button
                 size="lg"
                 className="bg-white text-blue-600 hover:bg-gray-50 text-lg px-10 py-4 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 font-bold"

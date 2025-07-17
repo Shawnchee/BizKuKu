@@ -1,4 +1,4 @@
-import { HeroSection, FeaturesSection } from '@/components/sections'
+import { HeroSection, FeaturesSection, RecommendedSection } from '@/components/sections'
 import { OnboardingProgressBar } from '@/components/onboarding'
 
 export default function Home() {
@@ -12,6 +12,9 @@ export default function Home() {
           <OnboardingProgressBar />
         </div>
       </section>
+
+      {/* Recommended Section */}
+      <RecommendedSection />
 
       <FeaturesSection />
     </div>

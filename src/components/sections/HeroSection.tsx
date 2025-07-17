@@ -53,19 +53,19 @@ export default function HeroSection() {
 
             {/* Enhanced Button with stats */}
             <div className="mb-8 lg:mb-0">
-              <Link href="/dashboard">
+              <Link href="/onboarding">
                 <Button size="lg" className="text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                  Register Now - It's Free →
+                  Register Now !
                 </Button>
               </Link>
               <div className="mt-4 flex items-center justify-center lg:justify-start space-x-6 text-sm text-white/80">
                 <div className="flex items-center">
                   <span className="text-green-400 mr-1">✓</span>
-                  No credit card required
+                  No credit card needed
                 </div>
                 <div className="flex items-center">
                   <span className="text-green-400 mr-1">✓</span>
-                  Setup in 5 minutes
+                  5 minutes setup
                 </div>
               </div>
             </div>
