@@ -10,6 +10,7 @@ import { NavItem } from '@/lib/types'
 const navigation: NavItem[] = [
   { name: 'Home', href: '/' },
   { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Recommendation', href: '/recommendation' },
 ]
 
 export default function Header() {
