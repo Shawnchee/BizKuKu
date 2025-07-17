@@ -56,6 +56,67 @@ export interface ChartData {
   category?: string;
 }
 
+// Financial Analytics Types
+export interface FinancialKPI extends KPICard {
+  target?: number;
+  period: 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly';
+  currency?: string;
+  trend?: 'up' | 'down' | 'stable';
+}
+
+export interface CashFlowData {
+  name: string;
+  date: string;
+  income: number;
+  expenses: number;
+  netCashFlow: number;
+  cumulativeCashFlow: number;
+}
+
+export interface BusinessMetrics {
+  id: string;
+  name: string;
+  completionRate: number;
+  averageTime: number;
+  dropOffRate: number;
+  satisfactionScore: number;
+  date: string;
+}
+
+export interface FinancialHealthIndicator {
+  id: string;
+  name: string;
+  value: number;
+  status: 'healthy' | 'warning' | 'critical';
+  recommendation: string;
+  trend: 'improving' | 'stable' | 'declining';
+}
+
+export interface RevenueBreakdown {
+  name: string;
+  amount: number;
+  percentage: number;
+  change: number;
+  color: string;
+}
+
+export interface ExpenseCategory {
+  name: string;
+  amount: number;
+  percentage: number;
+  budget: number;
+  color: string;
+}
+
+export interface ProfitMarginData {
+  name: string;
+  revenue: number;
+  costs: number;
+  grossProfit: number;
+  margin: number;
+  date: string;
+}
+
 export interface TableData {
   id: string;
   [key: string]: string | number | boolean;

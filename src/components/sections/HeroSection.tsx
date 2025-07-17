@@ -23,7 +23,7 @@ export default function HeroSection() {
             <div className="mb-8 lg:mb-0">
               <Link href="/dashboard">
                 <Button size="lg" className="text-lg px-8 py-4">
-                  Register Now - It's Free
+                  Register Now - It&apos;s Free
                 </Button>
               </Link>
             </div>

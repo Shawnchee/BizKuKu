@@ -34,7 +34,7 @@ const tableColumns = [
 ]
 
 export default function DashboardPage() {
-  const [dateRange, setDateRange] = useState('Last 30 days')
+  const [dateRange] = useState('Last 30 days')
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -62,6 +62,24 @@ export default function DashboardPage() {
                 <span>Export</span>
               </Button>
             </div>
+          </div>
+        </div>
+
+        {/* Quick Access to Financial Analytics */}
+        <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-blue-900">Financial Analytics</h3>
+              <p className="text-sm text-blue-700">
+                Get detailed insights into your business financial health and performance
+              </p>
+            </div>
+            <a
+              href="/dashboard/financial"
+              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
+            >
+              View Financial Analytics
+            </a>
           </div>
         </div>
 
