@@ -29,7 +29,7 @@ export function generateId(): string {
 }
 
 // Debounce function
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -41,7 +41,7 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 // Throttle function
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
@@ -56,12 +56,43 @@ export function throttle<T extends (...args: any[]) => any>(
 }
 
 // Check if value is empty
-export function isEmpty(value: any): boolean {
+export function isEmpty(value: unknown): boolean {
   if (value == null) return true
   if (typeof value === 'string') return value.trim().length === 0
   if (Array.isArray(value)) return value.length === 0
   if (typeof value === 'object') return Object.keys(value).length === 0
   return false
+}
+
+// Format date for display
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString)
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(date)
+}
+
+// Format date for relative time
+export function formatRelativeDate(dateString: string): string {
+  const date = new Date(dateString)
+  const now = new Date()
+  const diffInMs = now.getTime() - date.getTime()
+  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60))
+  const diffInDays = Math.floor(diffInHours / 24)
+  
+  if (diffInHours < 1) {
+    return 'Just now'
+  } else if (diffInHours < 24) {
+    return `${diffInHours} hours ago`
+  } else if (diffInDays < 7) {
+    return `${diffInDays} days ago`
+  } else {
+    return formatDate(dateString)
+  }
 }
 
 // Capitalize first letter
