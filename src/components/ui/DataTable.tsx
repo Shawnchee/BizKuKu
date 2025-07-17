@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { ChevronUp, ChevronDown } from 'lucide-react'
 import { Card } from './Card'
-import { Button } from './Button'
 import { cn } from '@/lib/utils'
 
 interface Column {
@@ -13,7 +12,7 @@ interface Column {
 }
 
 interface DataTableProps {
-  data: Record<string, any>[]
+  data: Array<Record<string, string | number | boolean>>
   columns: Column[]
   title?: string
 }

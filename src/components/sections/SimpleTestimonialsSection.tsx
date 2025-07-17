@@ -44,7 +44,7 @@ export default function SimpleTestimonialsSection() {
                   ⭐⭐⭐⭐⭐
                 </div>
                 <p className="text-gray-700 italic mb-4">
-                  "{testimonial.quote}"
+                  &quot;{testimonial.quote}&quot;
                 </p>
               </div>
               <div>
