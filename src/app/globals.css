@@ -272,3 +272,10 @@
     }
   }
 }
+
+body.chatbot-expanded {
+  @media (min-width: 640px) {
+    margin-right: 368px;
+    transition: margin-right 0.3s;
+  }
+}
