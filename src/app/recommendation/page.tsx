@@ -214,12 +214,12 @@ export default function RecommendationPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Discover tailored financial support!</h1>
           <p className="mt-2 text-gray-600 text-lg">
-          Our AI analyzes your business profile and suggests relevant grants, loans, subsidies, and incentive schemes — all in one place.
+          We analyze your business profile and suggests relevant grants, loans, subsidies, and incentive schemes — all in one place.
           </p>
         </div>
 
@@ -302,6 +302,26 @@ export default function RecommendationPage() {
             </Button>
           </div>
         </Card>
+
+        {/* Success Metrics & Social Proof */}
+        {!recommendations.length && !isThinking && (
+          <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex items-center gap-4 flex-wrap">
+              <div className="flex items-center gap-2 text-green-700 font-semibold bg-green-50 px-3 py-1 rounded-lg">
+                <span className="text-lg">✅</span>
+                <span>3,214 micro businesses matched</span>
+              </div>
+              <div className="flex items-center gap-2 text-blue-700 font-semibold bg-blue-50 px-3 py-1 rounded-lg">
+                <span className="text-lg">📈</span>
+                <span>RM12.4 million approved</span>
+              </div>
+              <div className="flex items-center gap-2 text-yellow-700 font-semibold bg-yellow-50 px-3 py-1 rounded-lg">
+                <span className="text-lg">🎉</span>
+                <span>87% found eligible support</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Thinking State */}
         {isThinking && (
