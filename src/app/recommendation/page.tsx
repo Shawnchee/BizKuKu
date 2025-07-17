@@ -66,7 +66,7 @@ export default function RecommendationPage() {
 
   // Remove profile status check useEffect
 
-  // Hardcoded recommendations for each tab
+  // Recommendations for each tab
   const grantsAndLoans = [
     {
       id: 10001,
@@ -94,15 +94,51 @@ export default function RecommendationPage() {
     },
     {
       id: 10003,
-      name: 'DanaNITA (Women Entrepreneur Fund)',
-      description: 'Special fund for women entrepreneurs, up to RM20,000 for business expansion.',
+      name: 'SME Digitalisation Matching Grant',
+      description: '50% matching grant for digital solutions (e-commerce, POS, payroll, etc.), up to RM5,000.',
+      type: 'Grant',
+      max_amount: 5000,
+      provider: 'BSN',
+      eligibility: 'Malaysian SME, in operation >1 year, annual sales <RM50m.',
+      apply_url: 'https://www.bsn.com.my/',
+      for_whom: 'SMEs looking to digitalize',
+      highlight: 'Cut your digital costs in half!'
+    },
+    {
+      id: 10004,
+      name: 'SME Bank Micro Enterprise Loan',
+      description: 'Flexible micro loans up to RM50,000 for business growth and working capital.',
+      type: 'Loan',
+      max_amount: 50000,
+      provider: 'SME Bank',
+      eligibility: 'Malaysian micro enterprise, registered with SSM, in operation >1 year.',
+      apply_url: 'https://www.smebank.com.my/',
+      for_whom: 'Micro businesses, food stalls, service providers',
+      highlight: 'Flexible repayment, business-friendly terms'
+    },
+    {
+      id: 10005,
+      name: 'Tabung Usahawan Siswazah (TUS)',
+      description: 'Loan scheme for graduates to start or expand businesses, up to RM50,000.',
+      type: 'Loan',
+      max_amount: 50000,
+      provider: 'MARA',
+      eligibility: 'Malaysian graduates, aged 18-40, business registered with SSM.',
+      apply_url: 'https://www.mara.gov.my/bantuan-perniagaan/tus/',
+      for_whom: 'Young entrepreneurs, new graduates',
+      highlight: 'Special for university/college graduates'
+    },
+    {
+      id: 10006,
+      name: 'Bumiputera Enterprise Enhancement Program (BEEP)',
+      description: 'Grant for Bumiputera SMEs to upgrade equipment, branding, and digitalization.',
       type: 'Grant',
       max_amount: 20000,
-      provider: 'MARA',
-      eligibility: 'Malaysian women, registered business, at least 6 months operation.',
-      apply_url: 'https://www.mara.gov.my/bantuan-perniagaan/dananita/',
-      for_whom: 'Women-owned micro and small businesses',
-      highlight: 'Empowering women in business'
+      provider: 'SME Corp',
+      eligibility: 'Bumiputera-owned SME, registered with SSM, in operation >1 year.',
+      apply_url: 'https://www.smecorp.gov.my/',
+      for_whom: 'Bumiputera micro and small businesses',
+      highlight: 'Upgrade your business assets!'
     }
   ]
 
@@ -142,6 +178,30 @@ export default function RecommendationPage() {
       apply_url: 'https://www.hasil.gov.my/',
       for_whom: 'Retailers, F&B, service providers',
       highlight: 'Boost your profit margins!'
+    },
+    {
+      id: 20005,
+      name: 'PERKESO Wage Subsidy',
+      description: 'Wage subsidy for employers to retain local workers during tough times.',
+      type: 'Subsidy',
+      max_amount: 0,
+      provider: 'PERKESO',
+      eligibility: 'Registered employer, local employees, subject to PERKESO terms.',
+      apply_url: 'https://www.perkeso.gov.my/',
+      for_whom: 'Employers with local staff',
+      highlight: 'Support for keeping your team!'
+    },
+    {
+      id: 20006,
+      name: 'Micro Enterprise Tax Incentive',
+      description: 'Reduced tax rate for micro enterprises on the first RM600,000 chargeable income.',
+      type: 'Tax Relief',
+      max_amount: 0,
+      provider: 'LHDN',
+      eligibility: 'Micro enterprise, annual sales <RM300,000, <5 employees.',
+      apply_url: 'https://www.hasil.gov.my/',
+      for_whom: 'Micro businesses',
+      highlight: 'Pay less tax, grow more!'
     }
   ]
 
