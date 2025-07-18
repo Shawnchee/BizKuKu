@@ -177,7 +177,7 @@ export default function MSMEDashboardPage() {
           <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-blue-700">Monthly Revenue</p>
+                <p className="text-sm font-medium text-blue-700">Monthly Cash Inflow</p>
                 <p className="text-2xl font-bold text-blue-900">
                   {showBalance ? formatCurrency(msmeConsolidatedFinancialData.totalIncome) : 'RM ••••••'}
                 </p>
@@ -208,8 +208,8 @@ export default function MSMEDashboardPage() {
           <Card className="p-6 bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-orange-700">Daily Customers</p>
-                <p className="text-2xl font-bold text-orange-900">125</p>
+                <p className="text-sm font-medium text-orange-700">Daily Transactions</p>
+                <p className="text-2xl font-bold text-orange-900">47</p>
                 <p className="text-xs text-orange-600 mt-1">Average per day</p>
               </div>
               <div className="p-3 bg-orange-200 rounded-full">
@@ -291,10 +291,10 @@ export default function MSMEDashboardPage() {
         <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Card className="p-6 hover:shadow-lg transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Daily Sales Pattern</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Daily Cash Flow Pattern</h3>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">Revenue (RM)</span>
+                <span className="text-sm text-gray-600">Cash Flow (RM)</span>
               </div>
             </div>
             <BarChart 
@@ -306,16 +306,16 @@ export default function MSMEDashboardPage() {
             />
             <div className="mt-4 p-3 bg-blue-50 rounded-lg">
               <p className="text-sm text-blue-700">
-                <strong>Peak Hours:</strong> Lunch time (12-1 PM) shows highest sales. 
-                Consider promoting breakfast items to boost morning sales.
+                <strong>Peak Activity:</strong> Lunch time (12-1 PM) shows highest cash inflow. 
+                Consider promoting digital payments to reduce cash handling.
               </p>
             </div>
           </Card>
 
           <Card className="p-6 hover:shadow-lg transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Revenue Breakdown</h3>
-              <span className="text-sm text-gray-600">By Menu Items</span>
+              <h3 className="text-lg font-semibold text-gray-900">Payment Method Distribution</h3>
+              <span className="text-sm text-gray-600">By Payment Type</span>
             </div>
             <PieChart 
               data={msmeRevenueBreakdown} 
@@ -324,8 +324,8 @@ export default function MSMEDashboardPage() {
             />
             <div className="mt-4 p-3 bg-green-50 rounded-lg">
               <p className="text-sm text-green-700">
-                <strong>Best Seller:</strong> Nasi Lemak Classic accounts for 60% of revenue. 
-                Consider introducing seasonal variations.
+                <strong>Most Popular:</strong> DuitNow QR accounts for 45% of transactions. 
+                Digital adoption is growing steadily.
               </p>
             </div>
           </Card>
@@ -334,7 +334,7 @@ export default function MSMEDashboardPage() {
         {/* Additional Charts */}
         <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
           <Card className="p-6 hover:shadow-lg transition-all duration-300">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Growth</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Cash Flow Growth</h3>
             <LineChart 
               data={msmeMonthlyRevenueGrowth} 
               dataKey="value" 
@@ -344,12 +344,12 @@ export default function MSMEDashboardPage() {
             />
             <div className="mt-3 text-center">
               <div className="text-2xl font-bold text-green-600">+15.2%</div>
-              <div className="text-sm text-gray-600">Growth this month</div>
+              <div className="text-sm text-gray-600">Net cash flow growth</div>
             </div>
           </Card>
 
           <Card className="p-6 hover:shadow-lg transition-all duration-300">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Customer Demographics</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Transaction Time Patterns</h3>
             <div className="space-y-3">
               {msmeCustomerDemographics.slice(0, 4).map((demo, index) => (
                 <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
@@ -486,7 +486,7 @@ export default function MSMEDashboardPage() {
                   <TrendingUp className="h-4 w-4 text-green-700" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-green-900">Strong morning sales</p>
+                  <p className="text-sm font-medium text-green-900">Strong morning cash inflow</p>
                   <p className="text-xs text-green-700">15% higher than yesterday</p>
                 </div>
               </div>
@@ -504,8 +504,8 @@ export default function MSMEDashboardPage() {
                   <Award className="h-4 w-4 text-purple-700" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-purple-900">Customer satisfaction</p>
-                  <p className="text-xs text-purple-700">New 5-star review received</p>
+                  <p className="text-sm font-medium text-purple-900">Payment efficiency</p>
+                  <p className="text-xs text-purple-700">Zero failed transactions today</p>
                 </div>
               </div>
             </div>

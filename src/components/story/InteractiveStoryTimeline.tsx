@@ -39,79 +39,79 @@ export default function InteractiveStoryTimeline({
   const [playbackSpeed, setPlaybackSpeed] = useState(1)
   const [hoveredEvent, setHoveredEvent] = useState<string | null>(null)
 
-  // Timeline events for a typical warung day
+  // Timeline events for a typical payment day - PAYMENT-CENTRIC VERSION
   const timelineEvents: TimelineEvent[] = [
     {
       id: 'morning-prep',
       time: '7:00 AM',
       icon: Sun,
       title: language === 'ms' ? 'Pagi Bermula' : 'Morning Starts',
-      description: language === 'ms' ? 'Kak Siti sampai warung, masak nasi lemak' : 'Kak Siti arrives, cooks nasi lemak',
+      description: language === 'ms' ? 'Kak Siti sampai warung, buka sistem pembayaran' : 'Kak Siti arrives, opens payment systems',
       visual: '🌅',
       color: 'from-orange-400 to-yellow-500',
       emotion: 'happy',
-      audioText: language === 'ms' ? 'Pagi bermula! Kak Siti sampai warung dan mula masak nasi lemak' : 'Morning starts! Kak Siti arrives and starts cooking nasi lemak',
+      audioText: language === 'ms' ? 'Pagi bermula! Kak Siti sampai warung dan buka sistem pembayaran' : 'Morning starts! Kak Siti arrives and opens payment systems',
       data: { preparation: true }
     },
     {
-      id: 'first-customers',
+      id: 'first-payments',
       time: '8:00 AM',
       icon: Users,
-      title: language === 'ms' ? 'Pelanggan Pertama' : 'First Customers',
-      description: language === 'ms' ? 'Pekerja ofis datang sarapan' : 'Office workers come for breakfast',
-      visual: '👥',
+      title: language === 'ms' ? 'Bayaran Pertama' : 'First Payments',
+      description: language === 'ms' ? 'Bayaran QR pertama diterima' : 'First QR payments received',
+      visual: '💳',
       color: 'from-blue-400 to-purple-500',
       emotion: 'excited',
-      audioText: language === 'ms' ? 'Pelanggan pertama datang! Pekerja ofis nak sarapan' : 'First customers arrive! Office workers want breakfast',
-             data: { customers: Math.floor((businessData.totalCustomers || 0) * 0.3) }
+      audioText: language === 'ms' ? 'Bayaran pertama diterima! Pelanggan guna QR code' : 'First payments received! Customers use QR code',
+      data: { customers: Math.floor((businessData.totalCustomers || 0) * 0.3) }
     },
     {
       id: 'peak-hours',
       time: '12:00 PM',
       icon: TrendingUp,
       title: language === 'ms' ? 'Waktu Puncak' : 'Peak Hours',
-      description: language === 'ms' ? 'Ramai pelanggan, nasi lemak laris' : 'Many customers, nasi lemak selling well',
+      description: language === 'ms' ? 'Banyak transaksi, wang masuk banyak' : 'Many transactions, lots of money coming in',
       visual: '📈',
       color: 'from-green-400 to-teal-500',
       emotion: 'excited',
-      audioText: language === 'ms' ? 'Waktu puncak! Ramai pelanggan dan nasi lemak sangat laris' : 'Peak hours! Many customers and nasi lemak selling very well',
-             data: { sales: (businessData.todaysSales || 0) * 0.6 }
+      audioText: language === 'ms' ? 'Waktu puncak! Banyak transaksi dan wang masuk banyak' : 'Peak hours! Many transactions and lots of money coming in',
+      data: { sales: (businessData.todaysSales || 0) * 0.6 }
     },
     {
-      id: 'popular-item',
+      id: 'popular-method',
       time: '1:00 PM',
       icon: Star,
-      title: language === 'ms' ? 'Makanan Popular' : 'Popular Food',
-      description: language === 'ms' ? 'Nasi lemak ayam paling laris' : 'Nasi lemak with chicken most popular',
-      visual: '🍗',
+      title: language === 'ms' ? 'Cara Bayar Popular' : 'Popular Payment Method',
+      description: language === 'ms' ? 'DuitNow QR paling kerap digunakan' : 'DuitNow QR most frequently used',
+      visual: '📱',
       color: 'from-yellow-400 to-orange-500',
       emotion: 'happy',
-      audioText: language === 'ms' ? 'Nasi lemak ayam paling laris! Pelanggan suka sangat' : 'Nasi lemak with chicken most popular! Customers love it',
-             data: { topItem: businessData.popularItems?.[0] }
+      audioText: language === 'ms' ? 'DuitNow QR paling popular! Pelanggan suka guna' : 'DuitNow QR most popular! Customers love using it',
+      data: { topItem: businessData.popularItems?.[0] }
     },
     {
       id: 'afternoon-slow',
       time: '3:00 PM',
       icon: Coffee,
       title: language === 'ms' ? 'Petang Tenang' : 'Quiet Afternoon',
-      description: language === 'ms' ? 'Pelanggan kurang, masa rehat' : 'Fewer customers, rest time',
+      description: language === 'ms' ? 'Transaksi kurang, masa rehat' : 'Fewer transactions, rest time',
       visual: '☕',
       color: 'from-purple-400 to-pink-500',
       emotion: 'neutral',
-      audioText: language === 'ms' ? 'Petang tenang, pelanggan kurang. Masa untuk rehat' : 'Quiet afternoon, fewer customers. Time to rest',
+      audioText: language === 'ms' ? 'Petang tenang, transaksi kurang. Masa untuk rehat' : 'Quiet afternoon, fewer transactions. Time to rest',
       data: { restTime: true }
     },
     {
       id: 'evening-summary',
       time: '6:00 PM',
       icon: DollarSign,
-      title: language === 'ms' ? 'Kira Untung' : 'Count Profits',
-      description: language === 'ms' ? 'Kira duit hari ini' : 'Count today\'s earnings',
+      title: language === 'ms' ? 'Kira Wang Masuk' : 'Count Cash Inflow',
+      description: language === 'ms' ? 'Kira jumlah wang masuk hari ini' : 'Count today\'s total cash inflow',
       visual: '💰',
       color: 'from-green-400 to-emerald-500',
       emotion: 'happy',
-             audioText: language === 'ms' ? 'Kira untung hari ini! Jumlah: RM' + (businessData.todaysSales || 0) : 'Count today\'s profits! Total: RM' + (businessData.todaysSales || 0),
-             data: { totalSales: businessData.todaysSales || 0 }
+      audioText: language === 'ms' ? 'Kira wang masuk hari ini! Jumlah: RM' + (businessData.todaysSales || 0) : 'Count today\'s cash inflow! Total: RM' + (businessData.todaysSales || 0),
+      data: { totalSales: businessData.todaysSales || 0 }
     }
   ]
 
@@ -247,27 +247,27 @@ export default function InteractiveStoryTimeline({
               {currentEvent.data.customers && (
                 <div className="flex items-center gap-2 mb-2">
                   <Users className="h-4 w-4" />
-                  <span>{language === 'ms' ? 'Pelanggan' : 'Customers'}: {currentEvent.data.customers}</span>
+                  <span>{language === 'ms' ? 'Transaksi' : 'Transactions'}: {currentEvent.data.customers}</span>
                 </div>
               )}
-                             {currentEvent.data.sales && (
-                 <div className="flex items-center gap-2 mb-2">
-                   <DollarSign className="h-4 w-4" />
-                   <span>{language === 'ms' ? 'Jualan' : 'Sales'}: RM {(currentEvent.data.sales || 0).toFixed(2)}</span>
-                 </div>
-               )}
-                             {currentEvent.data.topItem && (
-                 <div className="flex items-center gap-2 mb-2">
-                   <Star className="h-4 w-4" />
-                   <span>{currentEvent.data.topItem.visual} {currentEvent.data.topItem.name}: {currentEvent.data.topItem.sold || 0} {language === 'ms' ? 'dijual' : 'sold'}</span>
-                 </div>
-               )}
-                             {currentEvent.data.totalSales && (
-                 <div className="flex items-center gap-2 text-xl font-bold">
-                   <DollarSign className="h-5 w-5" />
-                   <span>{language === 'ms' ? 'Jumlah Hari Ini' : 'Total Today'}: RM {(currentEvent.data.totalSales || 0).toFixed(2)}</span>
-                 </div>
-               )}
+              {currentEvent.data.sales && (
+                <div className="flex items-center gap-2 mb-2">
+                  <DollarSign className="h-4 w-4" />
+                  <span>{language === 'ms' ? 'Wang Masuk' : 'Cash Inflow'}: RM {(currentEvent.data.sales || 0).toFixed(2)}</span>
+                </div>
+              )}
+              {currentEvent.data.topItem && (
+                <div className="flex items-center gap-2 mb-2">
+                  <Star className="h-4 w-4" />
+                  <span>{currentEvent.data.topItem.visual} {currentEvent.data.topItem.name}: {currentEvent.data.topItem.sold || 0} {language === 'ms' ? 'transaksi' : 'transactions'}</span>
+                </div>
+              )}
+              {currentEvent.data.totalSales && (
+                <div className="flex items-center gap-2 text-xl font-bold">
+                  <DollarSign className="h-5 w-5" />
+                  <span>{language === 'ms' ? 'Jumlah Wang Masuk' : 'Total Cash Inflow'}: RM {(currentEvent.data.totalSales || 0).toFixed(2)}</span>
+                </div>
+              )}
             </div>
           )}
 

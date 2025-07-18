@@ -1,14 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Volume2, VolumeX, Play, Pause, ArrowUp, ArrowDown, TrendingUp, TrendingDown, Clock, Calendar, MapPin, Star, Coffee, Users, ShoppingCart, Utensils, DollarSign, PieChart, Eye, EyeOff, RefreshCw, ChevronRight, ChevronLeft, BookOpen, Heart, Smile, Frown, Meh, Sun, Moon, Zap, Award, Target, Gift, Sparkles, Coins, Wallet, PiggyBank, Building2, Home, Store, Truck, Phone, MessageCircle, Share2, Camera, Music, Headphones, Mic } from 'lucide-react'
+import { Volume2, VolumeX, Play, Pause, ArrowUp, ArrowDown, TrendingUp, TrendingDown, Clock, Calendar, MapPin, Star, Coffee, Users, ShoppingCart, Utensils, DollarSign, PieChart, Eye, EyeOff, RefreshCw, ChevronRight, ChevronLeft, BookOpen, Heart, Smile, Frown, Meh, Sun, Moon, Zap, Award, Target, Gift, Sparkles, Coins, Wallet, PiggyBank, Building2, Home, Store, Truck, Phone, MessageCircle, Share2, Camera, Music, Headphones, Mic, CreditCard, QrCode } from 'lucide-react'
 import MoneyJarAnimation from '@/components/story/MoneyJarAnimation'
 import FoodStoryCard from '@/components/story/FoodStoryCard'
 import InteractiveStoryTimeline from '@/components/story/InteractiveStoryTimeline'
 import { Card } from '@/components/ui'
 import { Button } from '@/components/ui'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { msmeBusinessProfile, msmeKPIData, msmeFinancialKPIs, msmeBankAccounts, msmeTransactions, msmeDailySalesPattern, msmeRevenueBreakdown, msmeMenuPerformance, msmeCustomerDemographics } from '@/lib/msme-data'
+import { msmeBusinessProfile, msmeKPIData, msmeFinancialKPIs, msmeBankAccounts, msmeTransactions, msmeDailySalesPattern, msmeRevenueBreakdown, msmeMenuPerformance, msmeCustomerDemographics, msmePaymentMethodPerformance } from '@/lib/msme-data'
 import { formatCurrency, formatNumber } from '@/lib/utils'
 
 export default function StoryPage() {
@@ -54,56 +54,57 @@ export default function StoryPage() {
   const [currentTimeframe, setCurrentTimeframe] = useState<'today' | 'week' | 'month'>('today')
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
 
-  // Story data based on real business metrics
-  const todaysSalesKPI = msmeFinancialKPIs.find(kpi => kpi.id === 'daily_sales')
-  const monthlyProfitKPI = msmeFinancialKPIs.find(kpi => kpi.id === 'monthly_profit')
+  // Story data based on payment metrics
+  const todayInflowKPI = msmeFinancialKPIs.find(kpi => kpi.id === 'daily_inflow')
+  const monthlyOutflowKPI = msmeFinancialKPIs.find(kpi => kpi.id === 'monthly_outflow')
+  const netCashFlowKPI = msmeFinancialKPIs.find(kpi => kpi.id === 'net_cash_flow')
   
   // Extract numeric values from formatted strings
-  const todaysSales = todaysSalesKPI ? parseFloat(todaysSalesKPI.value.replace(/[^\d.]/g, '')) : 1125
-  const monthlyRevenue = monthlyProfitKPI ? parseFloat(monthlyProfitKPI.value.replace(/[^\d.]/g, '')) : 12750
+  const todayInflow = todayInflowKPI ? parseFloat(todayInflowKPI.value.replace(/[^\d.]/g, '')) : 1125
+  const monthlyOutflow = monthlyOutflowKPI ? parseFloat(monthlyOutflowKPI.value.replace(/[^\d.]/g, '')) : 10000
+  const netCashFlow = netCashFlowKPI ? parseFloat(netCashFlowKPI.value.replace(/[^\d.]/g, '')) : 8750
   const totalBalance = msmeBankAccounts && msmeBankAccounts.length > 0 
     ? msmeBankAccounts.reduce((sum, account) => sum + (account.balance || 0), 0)
-    : 15420 // Fallback value
-  const todayProfit = todaysSales * 0.3 // 30% profit margin
-  const weeklyProfit = todayProfit * 7
-  const monthlyProfit = monthlyRevenue * 0.3
+    : 56751 // Fallback value
+  const todayOutflow = monthlyOutflow / 30 // Daily outflow estimate
+  const todayNetFlow = todayInflow - todayOutflow
 
 
 
-  // Visual metaphors for money (jars)
+  // Visual metaphors for money (jars) - PAYMENT-CENTRIC VERSION
   const moneyJars = [
     {
-      id: 'daily',
-      label: language === 'ms' ? 'Duit Hari Ini' : 'Today\'s Money',
-      amount: todaysSales,
+      id: 'inflow',
+      label: language === 'ms' ? 'Wang Masuk Hari Ini' : 'Today\'s Cash Inflow',
+      amount: todayInflow,
       color: 'from-green-400 to-green-600',
       icon: Coins,
-      emotion: todaysSales > 800 ? 'happy' : todaysSales > 500 ? 'neutral' : 'sad'
+      emotion: todayInflow > 800 ? 'happy' : todayInflow > 500 ? 'neutral' : 'sad'
     },
     {
-      id: 'savings',
-      label: language === 'ms' ? 'Simpanan' : 'Savings',
+      id: 'balance',
+      label: language === 'ms' ? 'Jumlah Dalam Bank' : 'Total Bank Balance',
       amount: totalBalance,
       color: 'from-blue-400 to-blue-600',
       icon: PiggyBank,
-      emotion: totalBalance > 10000 ? 'happy' : totalBalance > 5000 ? 'neutral' : 'sad'
+      emotion: totalBalance > 50000 ? 'happy' : totalBalance > 20000 ? 'neutral' : 'sad'
     },
     {
-      id: 'profit',
-      label: language === 'ms' ? 'Untung' : 'Profit',
-      amount: todayProfit,
+      id: 'netflow',
+      label: language === 'ms' ? 'Wang Bersih Hari Ini' : 'Today\'s Net Cash Flow',
+      amount: todayNetFlow,
       color: 'from-yellow-400 to-yellow-600',
       icon: Award,
-      emotion: todayProfit > 200 ? 'happy' : todayProfit > 100 ? 'neutral' : 'sad'
+      emotion: todayNetFlow > 200 ? 'happy' : todayNetFlow > 100 ? 'neutral' : 'sad'
     }
   ]
 
-  // Story sections
+  // Story sections - PAYMENT-CENTRIC VERSION
   const storySection = [
     {
       id: 'greeting',
       title: language === 'ms' ? 'Selamat Pagi, Kak Siti!' : 'Good Morning, Kak Siti!',
-      content: language === 'ms' ? 'Mari kita tengok cerita warung hari ini' : 'Let\'s see today\'s warung story',
+      content: language === 'ms' ? 'Mari kita tengok cerita kewangan hari ini' : 'Let\'s see today\'s financial story',
       icon: Sun,
       color: 'from-orange-400 to-pink-500'
     },
@@ -115,44 +116,23 @@ export default function StoryPage() {
       color: 'from-green-400 to-teal-500'
     },
     {
-      id: 'customers',
-      title: language === 'ms' ? 'Pelanggan Hari Ini' : 'Today\'s Customers',
-      content: language === 'ms' ? 'Berapa orang datang makan?' : 'How many people came to eat?',
-      icon: Users,
+      id: 'payments',
+      title: language === 'ms' ? 'Bayaran Hari Ini' : 'Today\'s Payments',
+      content: language === 'ms' ? 'Berapa banyak bayaran yang diterima?' : 'How many payments were received?',
+      icon: CreditCard,
       color: 'from-blue-400 to-purple-500'
     },
     {
-      id: 'food',
-      title: language === 'ms' ? 'Makanan Popular' : 'Popular Food',
-      content: language === 'ms' ? 'Nasi lemak mana yang paling laris?' : 'Which nasi lemak sells the most?',
-      icon: Utensils,
+      id: 'methods',
+      title: language === 'ms' ? 'Cara Bayar Popular' : 'Popular Payment Methods',
+      content: language === 'ms' ? 'Cara bayar mana yang paling kerap digunakan?' : 'Which payment method is used most?',
+      icon: QrCode,
       color: 'from-red-400 to-pink-500'
     }
   ]
 
-  const menuItems = msmeMenuPerformance && msmeMenuPerformance.length > 0 
-    ? msmeMenuPerformance.map(item => ({
-        ...item,
-        // Convert monthly values to daily values (divide by 30)
-        soldToday: Math.floor((item.value || 0) / 30),
-        price: item.name?.includes('Teh') || item.name?.includes('Kopi') ? 2.5 : 
-               item.name?.includes('Extra') ? 1.0 : 6.5, // Default prices
-        visual: item.name?.includes('Classic') ? '🍽️' : 
-               item.name?.includes('Ayam') ? '🍗' : 
-               item.name?.includes('Rendang') ? '🍛' : 
-               item.name?.includes('Sambal') ? '🌶️' : 
-               item.name?.includes('Teh') ? '🍵' : 
-               item.name?.includes('Kopi') ? '☕' : '🥤'
-      }))
-    : [
-        // Fallback menu items
-        { name: 'Nasi Lemak Classic', soldToday: 15, price: 6.5, visual: '🍽️', value: 450 },
-        { name: 'Nasi Lemak Ayam', soldToday: 6, price: 6.5, visual: '🍗', value: 195 },
-        { name: 'Teh Tarik', soldToday: 6, price: 2.5, visual: '🍵', value: 180 },
-        { name: 'Kopi O', soldToday: 4, price: 2.5, visual: '☕', value: 120 },
-        { name: 'Extra Egg', soldToday: 3, price: 1.0, visual: '🥚', value: 85 },
-        { name: 'Nasi Lemak Sotong', soldToday: 2, price: 6.5, visual: '🦑', value: 60 }
-      ]
+  // Payment method data based on transaction frequencies
+  const paymentMethods = msmePaymentMethodPerformance || []
 
   // Audio synthesis for text-to-speech
   const speakText = (text: string) => {
@@ -335,11 +315,11 @@ export default function StoryPage() {
             
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="text-2xl">🍽️</div>
+                <div className="text-2xl">💳</div>
                 <p className="text-gray-700">
                   {language === 'ms' ? 
-                    `Kak Siti jual nasi lemak dan dapat ${formatCurrency(todaysSales)} hari ini.` :
-                    `Kak Siti sold nasi lemak and earned ${formatCurrency(todaysSales)} today.`
+                    `Kak Siti terima bayaran sejumlah ${formatCurrency(todayInflow)} hari ini.` :
+                    `Kak Siti received payments totaling ${formatCurrency(todayInflow)} today.`
                   }
                 </p>
               </div>
@@ -348,18 +328,18 @@ export default function StoryPage() {
                 <div className="text-2xl">💰</div>
                 <p className="text-gray-700">
                   {language === 'ms' ? 
-                    `Untung hari ini ${formatCurrency(todayProfit)}.` :
-                    `Today's profit is ${formatCurrency(todayProfit)}.`
+                    `Wang bersih hari ini ${formatCurrency(todayNetFlow)}.` :
+                    `Today's net cash flow is ${formatCurrency(todayNetFlow)}.`
                   }
                 </p>
               </div>
               
               <div className="flex items-center gap-3">
-                <div className="text-2xl">👥</div>
+                <div className="text-2xl">📱</div>
                 <p className="text-gray-700">
                   {language === 'ms' ? 
-                    `Ramai pelanggan datang, terutama pekerja ofis dan penduduk kawasan.` :
-                    `Many customers came, especially office workers and local residents.`
+                    `Kebanyakan pelanggan guna QR code untuk bayar - sangat mudah!` :
+                    `Most customers use QR code to pay - so convenient!`
                   }
                 </p>
               </div>
@@ -367,30 +347,44 @@ export default function StoryPage() {
           </div>
         </Card>
 
-        {/* Popular Food Section */}
+        {/* Popular Payment Methods Section */}
         <div className="space-y-6">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              {language === 'ms' ? '🍽️ Makanan Popular' : '🍽️ Popular Food'}
+              {language === 'ms' ? '💳 Cara Bayar Popular' : '💳 Popular Payment Methods'}
             </h2>
             <p className="text-gray-600 text-lg">
-              {language === 'ms' ? 'Nasi lemak mana yang paling laris?' : 'Which nasi lemak sells the most?'}
+              {language === 'ms' ? 'Cara bayar mana yang paling kerap digunakan?' : 'Which payment method is used most?'}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {menuItems.slice(0, 6).map((item, index) => (
-              <FoodStoryCard
-                key={item.name}
-                name={item.name}
-                visual={item.visual}
-                soldToday={item.soldToday}
-                price={item.price}
-                isPopular={index === 0} // First item is most popular
-                customerFeedback={index === 0 ? 'excellent' : index < 3 ? 'good' : 'average'}
-                language={language}
-                onAudioPlay={speakText}
-              />
+            {msmePaymentMethodPerformance.slice(0, 6).map((method, index) => (
+              <Card key={method.name} className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <div className="text-center">
+                  <div className="text-6xl mb-4">
+                    {method.name === 'DuitNow QR' ? '📱' : 
+                     method.name === 'Touch n Go' ? '💳' : 
+                     method.name === 'GrabPay' ? '🟢' : 
+                     method.name === 'Cash' ? '💵' : 
+                     method.name === 'Bank Transfer' ? '🏦' : '💳'}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{method.name}</h3>
+                  <div className="text-3xl font-bold text-blue-600 mb-2">
+                    {method.value}
+                  </div>
+                  <p className="text-gray-600 text-sm mb-4">
+                    {language === 'ms' ? 'transaksi bulan ini' : 'transactions this month'}
+                  </p>
+                  <div className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${
+                    index === 0 ? 'bg-green-100 text-green-800' : 
+                    index < 3 ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
+                  }`}>
+                    {index === 0 ? '⭐ Most Popular' : 
+                     index < 3 ? '✅ Frequently Used' : '📊 Available'}
+                  </div>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
@@ -421,7 +415,7 @@ export default function StoryPage() {
                   {language === 'ms' ? 'Minggu Ini' : 'This Week'}
                 </div>
                 <div className="text-3xl font-bold text-gray-900">
-                  {formatCurrency(todaysSales * 7)}
+                  {formatCurrency(todayInflow * 7)}
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-2">
                   <ArrowUp className="h-5 w-5 text-green-500" />
@@ -437,7 +431,7 @@ export default function StoryPage() {
                   {language === 'ms' ? 'Minggu Lepas' : 'Last Week'}
                 </div>
                 <div className="text-3xl font-bold text-gray-600">
-                  {formatCurrency(todaysSales * 7 * 0.85)}
+                  {formatCurrency(todayInflow * 7 * 0.85)}
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-2">
                   <span className="text-gray-500">
@@ -464,17 +458,29 @@ export default function StoryPage() {
             language={language}
             onAudioPlay={speakText}
             businessData={{
-              todaysSales: todaysSales,
-              totalCustomers: 156, // Estimated based on business data
-              popularItems: menuItems.slice(0, 3).map(item => ({
-                name: item.name || 'Unknown Item',
-                visual: item.visual || '🍽️',
-                sold: item.soldToday || 0
-              })),
+              todaysSales: todayInflow,
+              totalCustomers: 47, // Total transactions instead of customers
+              popularItems: [
+                {
+                  name: 'DuitNow QR',
+                  visual: '📱',
+                  sold: 21 // transactions
+                },
+                {
+                  name: 'Touch n Go',
+                  visual: '💳',
+                  sold: 15 // transactions
+                },
+                {
+                  name: 'Cash',
+                  visual: '💵',
+                  sold: 11 // transactions
+                }
+              ],
               peakHours: [
-                { hour: 8, sales: todaysSales * 0.15 },
-                { hour: 12, sales: todaysSales * 0.4 },
-                { hour: 18, sales: todaysSales * 0.25 }
+                { hour: 8, sales: todayInflow * 0.15 },
+                { hour: 12, sales: todayInflow * 0.4 },
+                { hour: 18, sales: todayInflow * 0.25 }
               ]
             }}
           />

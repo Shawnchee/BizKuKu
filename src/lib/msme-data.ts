@@ -124,34 +124,34 @@ export const msmeBusinessProfile = {
   paymentMethods: ["Cash", "DuitNow QR", "Touch 'n Go eWallet", "GrabPay", "Maybank QRPay"]
 }
 
-// Malaysian MSME KPI Data
+// Malaysian MSME KPI Data - PAYMENT-CENTRIC VERSION
 export const msmeKPIData: KPICard[] = [
   {
     id: '1',
-    title: 'Monthly Revenue',
+    title: 'Monthly Cash Inflow',
     value: 'RM 18,750',
     change: 15.2,
     changeType: 'increase',
     icon: DollarSign,
-    description: 'Total sales from nasi lemak and sides',
+    description: 'Total money received from all payment methods',
   },
   {
     id: '2',
-    title: 'Daily Customers',
-    value: '125',
+    title: 'Daily Transactions',
+    value: '47',
     change: 8.7,
     changeType: 'increase',
-    icon: Users,
-    description: 'Average customers per day',
+    icon: ArrowUpDown,
+    description: 'Average number of transactions per day',
   },
   {
     id: '3',
-    title: 'Profit Margin',
-    value: '68%',
+    title: 'Cash Flow Health',
+    value: '87%',
     change: 2.3,
     changeType: 'increase',
     icon: TrendingUp,
-    description: 'Gross profit margin',
+    description: 'Positive cash flow ratio',
   },
   {
     id: '4',
@@ -164,59 +164,58 @@ export const msmeKPIData: KPICard[] = [
   },
 ]
 
-// Malaysian Banking Data
+// Malaysian Banking Data - PAYMENT-CENTRIC VERSION
 export const msmeFinancialKPIs: FinancialKPI[] = [
   {
-    id: 'daily_sales',
-    title: 'Daily Sales',
+    id: 'daily_inflow',
+    title: 'Daily Cash Inflow',
     value: 'RM 1,125',
     change: 18.5,
     changeType: 'increase',
     icon: DollarSign,
-    description: 'Average daily sales revenue',
+    description: 'Average daily money received',
     period: 'daily',
     currency: 'MYR',
     trend: 'up',
     target: 1200,
   },
   {
-    id: 'monthly_profit',
-    title: 'Monthly Profit',
-    value: 'RM 12,750',
-    change: 22.3,
-    changeType: 'increase',
-    icon: TrendingUp,
-    description: 'Net profit after expenses',
-    period: 'monthly',
-    currency: 'MYR',
-    trend: 'up',
-    target: 15000,
-  },
-  {
-    id: 'cash_flow',
-    title: 'Cash Flow',
-    value: 'RM 8,420',
-    change: 12.8,
-    changeType: 'increase',
-    icon: BarChart3,
-    description: 'Monthly net cash flow',
-    period: 'monthly',
-    currency: 'MYR',
-    trend: 'up',
-    target: 10000,
-  },
-  {
-    id: 'ingredient_cost',
-    title: 'Ingredient Cost',
-    value: 'RM 6,000',
+    id: 'monthly_outflow',
+    title: 'Monthly Cash Outflow',
+    value: 'RM 10,000',
     change: -5.2,
     changeType: 'decrease',
-    icon: ShoppingCart,
-    description: 'Monthly ingredient expenses',
+    icon: TrendingDown,
+    description: 'Total monthly expenses paid',
     period: 'monthly',
     currency: 'MYR',
     trend: 'down',
-    target: 5500,
+    target: 9500,
+  },
+  {
+    id: 'net_cash_flow',
+    title: 'Net Cash Flow',
+    value: 'RM 8,750',
+    change: 22.3,
+    changeType: 'increase',
+    icon: BarChart3,
+    description: 'Monthly net cash flow (inflow - outflow)',
+    period: 'monthly',
+    currency: 'MYR',
+    trend: 'up',
+    target: 9000,
+  },
+  {
+    id: 'payment_frequency',
+    title: 'Transaction Frequency',
+    value: '47/day',
+    change: 12.8,
+    changeType: 'increase',
+    icon: Clock,
+    description: 'Average transactions per day',
+    period: 'daily',
+    trend: 'up',
+    target: 50,
   },
   {
     id: 'digital_payments',
@@ -231,16 +230,16 @@ export const msmeFinancialKPIs: FinancialKPI[] = [
     target: 80,
   },
   {
-    id: 'customer_satisfaction',
-    title: 'Customer Rating',
-    value: '4.8/5',
+    id: 'cash_utilization',
+    title: 'Cash Utilization',
+    value: '68%',
     change: 2.1,
     changeType: 'increase',
-    icon: Award,
-    description: 'Average customer rating',
+    icon: PieChart,
+    description: 'Percentage of available cash being used',
     period: 'monthly',
     trend: 'up',
-    target: 4.9,
+    target: 70,
   },
 ]
 
@@ -491,49 +490,44 @@ export const msmeCashFlowData: CashFlowData[] = [
   },
 ]
 
-// Revenue Breakdown by Menu Items
-export const msmeRevenueBreakdown: RevenueBreakdown[] = [
+// Payment Method Breakdown - PAYMENT-CENTRIC VERSION
+export const msmePaymentMethodBreakdown: RevenueBreakdown[] = [
   {
-    name: 'Nasi Lemak Classic',
-    amount: 11250.00,
-    percentage: 60.0,
-    change: 8.5,
+    name: 'DuitNow QR',
+    amount: 8475.00,
+    percentage: 45.2,
+    change: 31.2,
     color: '#22c55e',
-    description: 'Traditional nasi lemak with egg and anchovies',
+    description: 'DuitNow QR code payments',
   },
   {
-    name: 'Nasi Lemak Ayam',
-    amount: 4875.00,
-    percentage: 26.0,
-    change: 12.3,
+    name: 'Touch \'n Go eWallet',
+    amount: 5231.25,
+    percentage: 27.9,
+    change: 18.5,
     color: '#3b82f6',
-    description: 'Nasi lemak with rendang chicken',
+    description: 'Touch \'n Go digital wallet payments',
   },
   {
-    name: 'Nasi Lemak Sambal Sotong',
-    amount: 1500.00,
-    percentage: 8.0,
-    change: -2.1,
+    name: 'GrabPay',
+    amount: 3243.75,
+    percentage: 17.3,
+    change: 25.8,
     color: '#f59e0b',
-    description: 'Nasi lemak with spicy squid',
+    description: 'GrabPay digital payments',
   },
   {
-    name: 'Beverages',
-    amount: 750.00,
-    percentage: 4.0,
-    change: 15.7,
+    name: 'Cash Payments',
+    amount: 1856.25,
+    percentage: 9.9,
+    change: -12.3,
     color: '#ef4444',
-    description: 'Teh tarik, kopi, and fresh juices',
-  },
-  {
-    name: 'Add-ons',
-    amount: 375.00,
-    percentage: 2.0,
-    change: 6.2,
-    color: '#8b5cf6',
-    description: 'Extra egg, chicken, vegetables',
+    description: 'Traditional cash payments',
   },
 ]
+
+// Keep the same variable name for backward compatibility
+export const msmeRevenueBreakdown = msmePaymentMethodBreakdown
 
 // Expense Categories for Malaysian MSME
 export const msmeExpenseCategories: ExpenseCategory[] = [
@@ -588,26 +582,29 @@ export const msmeExpenseCategories: ExpenseCategory[] = [
   },
 ]
 
-// Monthly Revenue Growth
+// Monthly Cash Flow Growth - PAYMENT-CENTRIC VERSION
 export const msmeMonthlyRevenueGrowth: ChartData[] = [
-  { name: 'Jul', value: 14200.00 },
-  { name: 'Aug', value: 15800.00 },
-  { name: 'Sep', value: 16500.00 },
-  { name: 'Oct', value: 17200.00 },
-  { name: 'Nov', value: 17800.00 },
-  { name: 'Dec', value: 18750.00 },
+  { name: 'Jul', value: 7200.00 },
+  { name: 'Aug', value: 7800.00 },
+  { name: 'Sep', value: 8100.00 },
+  { name: 'Oct', value: 8400.00 },
+  { name: 'Nov', value: 8600.00 },
+  { name: 'Dec', value: 8750.00 },
 ]
 
-// Daily Sales Pattern
-export const msmeDailySalesPattern: ChartData[] = [
-  { name: 'Mon', value: 780.00 },
-  { name: 'Tue', value: 850.00 },
-  { name: 'Wed', value: 920.00 },
-  { name: 'Thu', value: 1050.00 },
-  { name: 'Fri', value: 1180.00 },
-  { name: 'Sat', value: 1420.00 },
-  { name: 'Sun', value: 1300.00 },
+// Daily Cash Flow Pattern - PAYMENT-CENTRIC VERSION
+export const msmeDailyCashFlowPattern: ChartData[] = [
+  { name: 'Mon', value: 680.00 },
+  { name: 'Tue', value: 750.00 },
+  { name: 'Wed', value: 820.00 },
+  { name: 'Thu', value: 950.00 },
+  { name: 'Fri', value: 1080.00 },
+  { name: 'Sat', value: 1320.00 },
+  { name: 'Sun', value: 1200.00 },
 ]
+
+// Keep the same variable name for backward compatibility
+export const msmeDailySalesPattern = msmeDailyCashFlowPattern
 
 // QR Payment Methods
 export const msmeQRPayments: QRPayment[] = [
@@ -722,14 +719,14 @@ export const msmeConsolidatedFinancialData: ConsolidatedFinancialData = {
   },
 }
 
-// Transaction Categories
+// Transaction Categories - PAYMENT-CENTRIC VERSION
 export const msmeTransactionCategories: TransactionCategory[] = [
   {
-    id: 'cat_sales',
-    name: 'Food Sales',
+    id: 'cat_inflow',
+    name: 'Payment Inflow',
     type: 'income',
     color: '#22c55e',
-    icon: 'Utensils',
+    icon: 'ArrowUpRight',
     totalAmount: 16500.00,
     transactionCount: 98,
     percentage: 88.0,
@@ -738,11 +735,11 @@ export const msmeTransactionCategories: TransactionCategory[] = [
     trendPercentage: 15.2,
   },
   {
-    id: 'cat_catering',
-    name: 'Catering Services',
+    id: 'cat_bulk_payments',
+    name: 'Large Payments',
     type: 'income',
     color: '#3b82f6',
-    icon: 'Users',
+    icon: 'DollarSign',
     totalAmount: 2250.00,
     transactionCount: 8,
     percentage: 12.0,
@@ -901,118 +898,133 @@ export const msmeBusinessGrowthMetrics: BusinessMetrics[] = [
   },
 ]
 
-// Popular Menu Items Performance
-export const msmeMenuPerformance: ChartData[] = [
-  { name: 'Nasi Lemak Classic', value: 450 },
-  { name: 'Nasi Lemak Ayam', value: 195 },
-  { name: 'Nasi Lemak Sotong', value: 60 },
-  { name: 'Teh Tarik', value: 180 },
-  { name: 'Kopi O', value: 120 },
-  { name: 'Extra Egg', value: 85 },
+// Payment Method Performance - PAYMENT-CENTRIC VERSION
+export const msmePaymentMethodPerformance: ChartData[] = [
+  { name: 'DuitNow QR', value: 847 },
+  { name: 'Touch n Go', value: 523 },
+  { name: 'GrabPay', value: 324 },
+  { name: 'Cash', value: 186 },
+  { name: 'Bank Transfer', value: 92 },
+  { name: 'Credit Card', value: 45 },
 ]
 
-// Peak Hours Analysis
-export const msmePeakHours: ChartData[] = [
-  { name: '7:00-8:00', value: 45 },
-  { name: '8:00-9:00', value: 85 },
-  { name: '9:00-10:00', value: 65 },
-  { name: '10:00-11:00', value: 35 },
-  { name: '11:00-12:00', value: 95 },
-  { name: '12:00-13:00', value: 125 },
-  { name: '13:00-14:00', value: 85 },
+// Keep the same variable name for backward compatibility
+export const msmeMenuPerformance = msmePaymentMethodPerformance
+
+// Peak Payment Hours - PAYMENT-CENTRIC VERSION
+export const msmePaymentPeakHours: ChartData[] = [
+  { name: '7:00-8:00', value: 12 },
+  { name: '8:00-9:00', value: 23 },
+  { name: '9:00-10:00', value: 18 },
+  { name: '10:00-11:00', value: 8 },
+  { name: '11:00-12:00', value: 28 },
+  { name: '12:00-13:00', value: 47 },
+  { name: '13:00-14:00', value: 25 },
 ]
 
-// Weekly Sales Trends
-export const msmeWeeklySalesTrends: ChartData[] = [
-  { name: 'Week 1', value: 5950 },
-  { name: 'Week 2', value: 6280 },
-  { name: 'Week 3', value: 7120 },
-  { name: 'Week 4', value: 6850 },
+// Keep the same variable name for backward compatibility
+export const msmePeakHours = msmePaymentPeakHours
+
+// Weekly Cash Flow Trends - PAYMENT-CENTRIC VERSION
+export const msmeWeeklyCashFlowTrends: ChartData[] = [
+  { name: 'Week 1', value: 2150 },
+  { name: 'Week 2', value: 2080 },
+  { name: 'Week 3', value: 2320 },
+  { name: 'Week 4', value: 2200 },
 ]
 
-// Monthly comparison
+// Keep the same variable name for backward compatibility
+export const msmeWeeklySalesTrends = msmeWeeklyCashFlowTrends
+
+// Monthly Cash Flow Comparison - PAYMENT-CENTRIC VERSION
 export const msmeMonthlyComparison: ChartData[] = [
-  { name: 'Nov 2023', value: 16800 },
-  { name: 'Dec 2023', value: 17200 },
-  { name: 'Jan 2024', value: 18750 },
+  { name: 'Nov 2023', value: 7800 },
+  { name: 'Dec 2023', value: 8200 },
+  { name: 'Jan 2024', value: 8750 },
 ]
 
-// Profit Margin Data
-export const msmeProfitMarginData: ProfitMarginData[] = [
+// Cash Flow Analysis - PAYMENT-CENTRIC VERSION
+export const msmeCashFlowAnalysis: ProfitMarginData[] = [
   {
     name: 'Week 1',
     revenue: 5950.00,
-    costs: 1890.00,
-    grossProfit: 4060.00,
-    margin: 68.2,
+    costs: 2400.00,
+    grossProfit: 3550.00,
+    margin: 59.7,
     date: '2024-01-07',
   },
   {
     name: 'Week 2',
     revenue: 6280.00,
-    costs: 1960.00,
-    grossProfit: 4320.00,
-    margin: 68.8,
+    costs: 2500.00,
+    grossProfit: 3780.00,
+    margin: 60.2,
     date: '2024-01-14',
   },
   {
     name: 'Week 3',
     revenue: 7120.00,
-    costs: 2150.00,
-    grossProfit: 4970.00,
-    margin: 69.8,
+    costs: 2750.00,
+    grossProfit: 4370.00,
+    margin: 61.4,
     date: '2024-01-21',
   },
   {
     name: 'Week 4',
     revenue: 6850.00,
-    costs: 2100.00,
-    grossProfit: 4750.00,
-    margin: 69.3,
+    costs: 2650.00,
+    grossProfit: 4200.00,
+    margin: 61.3,
     date: '2024-01-28',
   },
 ]
 
-// Customer Demographics
-export const msmeCustomerDemographics: RevenueBreakdown[] = [
+// Keep the same variable name for backward compatibility
+export const msmeProfitMarginData = msmeCashFlowAnalysis
+
+// Transaction Time Patterns - PAYMENT-CENTRIC VERSION
+export const msmeTransactionTimePatterns: RevenueBreakdown[] = [
   {
-    name: 'Office Workers',
+    name: 'Morning Rush (7-10 AM)',
     amount: 8250.00,
     percentage: 44.0,
     change: 12.3,
     color: '#3b82f6',
-    description: 'Nearby office employees',
+    description: 'Early morning payment activity',
   },
   {
-    name: 'Residents',
+    name: 'Lunch Peak (11 AM-2 PM)',
     amount: 5625.00,
     percentage: 30.0,
     change: 5.7,
     color: '#22c55e',
-    description: 'Local neighborhood residents',
+    description: 'Peak lunch time transactions',
   },
   {
-    name: 'Students',
+    name: 'Afternoon Moderate (2-5 PM)',
     amount: 2812.50,
     percentage: 15.0,
     change: -8.2,
     color: '#f59e0b',
-    description: 'University and college students',
+    description: 'Moderate afternoon activity',
   },
   {
-    name: 'Tourists',
+    name: 'Evening Wind-down (5-8 PM)',
     amount: 1312.50,
     percentage: 7.0,
     change: 18.5,
     color: '#ef4444',
-    description: 'Food tourists and visitors',
+    description: 'Evening transaction activity',
   },
   {
-    name: 'Food Delivery',
+    name: 'Off-Peak Hours',
     amount: 750.00,
     percentage: 4.0,
     change: 25.8,
     color: '#8b5cf6',
-    description: 'GrabFood and Foodpanda orders',
+    description: 'Outside normal business hours',
   },
-] 
+]
+
+// Keep the same variable name for backward compatibility
+export const msmeCustomerDemographics = msmeTransactionTimePatterns 
