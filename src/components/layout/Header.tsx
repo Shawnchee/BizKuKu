@@ -35,9 +35,9 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <img
-                src="/bizkuku logo.png"
+                src="/logo.png"
                 alt="BizzKu Logo"
-                className="h-20 w-auto"
+                className="h-10 w-auto"
                 style={{ display: 'block' }}
               />
             </Link>
