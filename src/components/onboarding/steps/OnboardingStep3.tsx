@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Clock, CheckCircle, AlertCircle, ArrowLeft, RefreshCw, FileText, Building, Phone } from 'lucide-react'
 import { Button } from '@/components/ui'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface Step3Data {
   applicationStatus: 'pending' | 'approved' | 'rejected'
@@ -25,6 +26,7 @@ interface OnboardingStep3Props {
 }
 
 export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: OnboardingStep3Props) {
+  const { t } = useLanguage()
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [lastChecked, setLastChecked] = useState<Date>(new Date())
 
@@ -39,7 +41,7 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
       businessName: 'Warung Mak Siti', // This should come from Step 1 data
       registrationDate: currentDate.toLocaleDateString('ms-MY'),
       expiryDate: expiryDate.toLocaleDateString('ms-MY'),
-      businessType: 'Perniagaan Kecil • Small Business',
+      businessType: 'Small Business',
       address: 'No. 123, Jalan Utama, Taman Bahagia, 12345 Kuala Lumpur' // This should come from Step 1 data
     }
   }
@@ -77,21 +79,21 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
     switch (status) {
       case 'pending':
         return [
-          'Tunggu kelulusan dari SSM (2-3 hari bekerja) • Wait for SSM approval (2-3 working days)',
-          'Kami akan hantar notifikasi bila siap • We will send notification when ready',
-          'Boleh hubungi support jika ada soalan • Contact support if you have questions'
+          t('onboarding.step3.pending_step1'),
+          t('onboarding.step3.pending_step2'),
+          t('onboarding.step3.pending_step3')
         ]
       case 'approved':
         return [
-          'Tahniah! Permohonan anda diluluskan • Congratulations! Your application is approved',
-          'Seterusnya: Setup akaun bank • Next: Set up bank account',
-          'Dokumen rasmi akan dihantar dalam 1-2 hari • Official documents will be sent in 1-2 days'
+          t('onboarding.step3.approved_step1'),
+          t('onboarding.step3.approved_step2'),
+          t('onboarding.step3.approved_step3')
         ]
       case 'rejected':
         return [
-          'Permohonan perlu semakan semula • Application needs review',
-          'Sila semak dokumen yang dihantar • Please check submitted documents',
-          'Hubungi support untuk bantuan • Contact support for assistance'
+          t('onboarding.step3.rejected_step1'),
+          t('onboarding.step3.rejected_step2'),
+          t('onboarding.step3.rejected_step3')
         ]
       default:
         return []
@@ -126,8 +128,8 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
           borderColor: 'border-yellow-200',
           textColor: 'text-yellow-800',
           iconColor: 'text-yellow-600',
-          title: 'Dalam Proses • In Progress',
-          description: 'Permohonan anda sedang diproses • Your application is being processed'
+          title: t('onboarding.step3.status.pending'),
+          description: t('onboarding.step3.status.pending_desc')
         }
       case 'approved':
         return {
@@ -137,8 +139,8 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
           borderColor: 'border-green-200',
           textColor: 'text-green-800',
           iconColor: 'text-green-600',
-          title: 'Diluluskan • Approved',
-          description: 'Permohonan anda telah diluluskan • Your application has been approved'
+          title: t('onboarding.step3.status.approved'),
+          description: t('onboarding.step3.status.approved_desc')
         }
       case 'rejected':
         return {
@@ -148,8 +150,8 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
           borderColor: 'border-red-200',
           textColor: 'text-red-800',
           iconColor: 'text-red-600',
-          title: 'Perlu Semakan • Needs Review',
-          description: 'Permohonan perlu maklumat tambahan • Application needs additional information'
+          title: t('onboarding.step3.status.rejected'),
+          description: t('onboarding.step3.status.rejected_desc')
         }
     }
   }
@@ -164,10 +166,10 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
       {/* Header */}
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900">
-          Semak Status Permohonan
+          {t('onboarding.step3.header.title')}
         </h2>
         <p className="text-gray-600 mt-2">
-          Check Application Status • Lihat kemajuan permohonan anda
+          {t('onboarding.step3.header.subtitle')}
         </p>
       </div>
 
@@ -196,17 +198,17 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
             className="flex items-center space-x-2"
           >
             <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-            <span>{isRefreshing ? 'Menyemak...' : 'Semak Semula'}</span>
+            <span>{isRefreshing ? t('onboarding.step3.checking') : t('onboarding.step3.refresh_status')}</span>
           </Button>
         </div>
 
         <div className="text-xs text-gray-500 mb-4">
-          Terakhir disemak • Last checked: {lastChecked.toLocaleString('ms-MY')}
+          {t('onboarding.step3.last_checked')} {lastChecked.toLocaleString('en-US')}
         </div>
 
         {/* Progress Timeline */}
         <div className="space-y-4">
-          <h4 className="font-medium text-gray-900">Kemajuan • Progress:</h4>
+          <h4 className="font-medium text-gray-900">Progress:</h4>
           
           <div className="space-y-3">
             {/* Step 1: Document Submission */}
@@ -216,10 +218,10 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
               </div>
               <div className="flex-1">
                 <div className="text-sm font-medium text-gray-900">
-                  Dokumen Dihantar • Documents Submitted
+                  {t('onboarding.step3.documents_submitted')}
                 </div>
                 <div className="text-xs text-gray-500">
-                  Semua dokumen telah diterima • All documents received
+                  {t('onboarding.step3.documents_submitted_desc')}
                 </div>
               </div>
             </div>
@@ -237,12 +239,12 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
               </div>
               <div className="flex-1">
                 <div className="text-sm font-medium text-gray-900">
-                  Semakan Dokumen • Document Review
+                  {t('onboarding.step3.document_review')}
                 </div>
                 <div className="text-xs text-gray-500">
-                  {data.applicationStatus === 'pending' 
-                    ? 'Sedang disemak • Under review'
-                    : 'Semakan selesai • Review completed'
+                  {data.applicationStatus === 'pending'
+                    ? t('onboarding.step3.status.pending_desc')
+                    : t('onboarding.step3.document_review_desc')
                   }
                 </div>
               </div>
@@ -267,14 +269,14 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
               </div>
               <div className="flex-1">
                 <div className="text-sm font-medium text-gray-900">
-                  Keputusan • Decision
+                  {t('onboarding.step3.decision')}
                 </div>
                 <div className="text-xs text-gray-500">
-                  {data.applicationStatus === 'approved' 
-                    ? 'Diluluskan • Approved'
+                  {data.applicationStatus === 'approved'
+                    ? t('onboarding.step3.decision_desc')
                     : data.applicationStatus === 'rejected'
-                    ? 'Perlu semakan • Needs review'
-                    : 'Menunggu keputusan • Awaiting decision'
+                    ? t('onboarding.step3.status.rejected_desc')
+                    : t('onboarding.step3.status.pending_desc')
                   }
                 </div>
               </div>
@@ -292,42 +294,42 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
             </div>
             <div>
               <h3 className="text-xl font-semibold text-green-900">
-                Maklumat SSM • SSM Details
+                {t('onboarding.step3.ssm_details')}
               </h3>
               <p className="text-sm text-green-700">
-                Perniagaan anda telah berjaya didaftarkan • Your business has been successfully registered
+                Your business has been successfully registered
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white rounded-lg p-4 border border-green-100">
-              <div className="text-sm text-gray-600 mb-1">Nombor Pendaftaran • Registration Number</div>
+              <div className="text-sm text-gray-600 mb-1">{t('onboarding.step3.registration_number')}</div>
               <div className="font-semibold text-gray-900 text-lg">{data.ssmDetails.registrationNumber}</div>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-green-100">
-              <div className="text-sm text-gray-600 mb-1">Nama Perniagaan • Business Name</div>
+              <div className="text-sm text-gray-600 mb-1">{t('onboarding.step3.business_name')}</div>
               <div className="font-semibold text-gray-900">{data.ssmDetails.businessName}</div>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-green-100">
-              <div className="text-sm text-gray-600 mb-1">Tarikh Pendaftaran • Registration Date</div>
+              <div className="text-sm text-gray-600 mb-1">{t('onboarding.step3.registration_date')}</div>
               <div className="font-semibold text-gray-900">{data.ssmDetails.registrationDate}</div>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-green-100">
-              <div className="text-sm text-gray-600 mb-1">Tarikh Tamat • Expiry Date</div>
+              <div className="text-sm text-gray-600 mb-1">{t('onboarding.step3.expiry_date')}</div>
               <div className="font-semibold text-gray-900">{data.ssmDetails.expiryDate}</div>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-green-100 md:col-span-2">
-              <div className="text-sm text-gray-600 mb-1">Jenis Perniagaan • Business Type</div>
+              <div className="text-sm text-gray-600 mb-1">{t('onboarding.step3.business_type')}</div>
               <div className="font-semibold text-gray-900">{data.ssmDetails.businessType}</div>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-green-100 md:col-span-2">
-              <div className="text-sm text-gray-600 mb-1">Alamat Perniagaan • Business Address</div>
+              <div className="text-sm text-gray-600 mb-1">{t('onboarding.step3.address')}</div>
               <div className="font-semibold text-gray-900">{data.ssmDetails.address}</div>
             </div>
           </div>
@@ -337,13 +339,10 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
               <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-green-900 mb-1">
-                  Dokumen Rasmi • Official Documents
+                  {t('onboarding.step3.official_documents')}
                 </p>
                 <p className="text-sm text-green-800">
-                  Sijil SSM rasmi akan dihantar ke alamat anda dalam 1-2 hari bekerja
-                </p>
-                <p className="text-sm text-green-700">
-                  Official SSM certificate will be sent to your address within 1-2 working days
+                  {t('onboarding.step3.official_documents_desc')}
                 </p>
               </div>
             </div>
@@ -355,7 +354,7 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
       <div className="bg-white rounded-lg shadow-sm border p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
           <FileText className="w-5 h-5 mr-2 text-blue-600" />
-          Langkah Seterusnya • Next Steps
+          {t('onboarding.step3.next_steps')}
         </h3>
         
         <div className="space-y-3">
@@ -376,18 +375,15 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
           <Phone className="w-5 h-5 text-blue-600 mt-0.5" />
           <div>
             <h4 className="font-medium text-blue-900 mb-1">
-              Perlukan Bantuan? • Need Help?
+              {t('onboarding.step3.need_help')}
             </h4>
             <p className="text-sm text-blue-800 mb-2">
-              Hubungi pasukan sokongan kami jika ada sebarang soalan
-            </p>
-            <p className="text-sm text-blue-800">
-              Contact our support team if you have any questions
+              {t('onboarding.step3.contact_support')}
             </p>
             <div className="mt-2 space-y-1 text-sm text-blue-700">
-              <p>📞 WhatsApp: +60 12-345-6789</p>
-              <p>📧 Email: support@bizzku.com</p>
-              <p>🕒 Waktu: 9 Pagi - 6 Petang (Isnin - Jumaat)</p>
+              <p>📞 {t('onboarding.step3.whatsapp')}</p>
+              <p>📧 {t('onboarding.step3.email')}</p>
+              <p>🕒 {t('onboarding.step3.operating_hours')}</p>
             </div>
           </div>
         </div>
@@ -402,20 +398,20 @@ export function OnboardingStep3({ data, onUpdate, onPrevious, onNext }: Onboardi
           className="flex items-center"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Kembali • Back
+          {t('onboarding.back')}
         </Button>
-        
+
         <Button
           onClick={onNext}
           disabled={!canProceed}
           size="lg"
           className={`${
-            canProceed 
+            canProceed
               ? 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700'
               : 'bg-gray-300 cursor-not-allowed'
           }`}
         >
-          {canProceed ? 'Setup Bank →' : 'Tunggu Kelulusan • Wait for Approval'}
+          {canProceed ? t('onboarding.next') : 'Wait for Approval'}
         </Button>
       </div>
     </div>

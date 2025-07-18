@@ -3,6 +3,7 @@
 import React from 'react'
 import { Check, ArrowLeft, Info } from 'lucide-react'
 import { Button } from '@/components/ui'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface Step2Data {
   ssmApplication: boolean
@@ -18,6 +19,8 @@ interface OnboardingStep2Props {
 
 
 export function OnboardingStep2({ data, onUpdate, onPrevious, onNext }: OnboardingStep2Props) {
+  const { t } = useLanguage()
+
   const handleSSMToggle = () => {
     onUpdate({
       ssmApplication: !data.ssmApplication
@@ -33,13 +36,10 @@ export function OnboardingStep2({ data, onUpdate, onPrevious, onNext }: Onboardi
       {/* Header */}
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900">
-          Permohonan SSM • SSM Application
+          {t('onboarding.step2.header.title')}
         </h2>
         <p className="text-gray-600 mt-2">
-          Daftar perniagaan anda secara rasmi dengan Suruhanjaya Syarikat Malaysia
-        </p>
-        <p className="text-sm text-gray-500">
-          Register your business officially with Companies Commission of Malaysia
+          {t('onboarding.step2.header.subtitle')}
         </p>
       </div>
 
@@ -52,13 +52,13 @@ export function OnboardingStep2({ data, onUpdate, onPrevious, onNext }: Onboardi
                 <Info className="w-6 h-6 text-blue-600 mt-1" />
                 <div>
                   <h4 className="font-medium text-blue-900 mb-2">
-                    Mengapa perlu SSM? • Why do you need SSM?
+                    {t('onboarding.step2.why_ssm')}
                   </h4>
                   <ul className="text-sm text-blue-800 space-y-1">
-                    <li>• Perniagaan yang sah di mata undang-undang • Legal business recognition</li>
-                    <li>• Boleh buka akaun bank perniagaan • Can open business bank account</li>
-                    <li>• Mudah dapat pinjaman • Easier to get loans</li>
-                    <li>• Nampak lebih profesional • Looks more professional</li>
+                    <li>{t('onboarding.step2.benefit1')}</li>
+                    <li>{t('onboarding.step2.benefit2')}</li>
+                    <li>{t('onboarding.step2.benefit3')}</li>
+                    <li>{t('onboarding.step2.benefit4')}</li>
                   </ul>
                 </div>
               </div>
@@ -84,11 +84,11 @@ export function OnboardingStep2({ data, onUpdate, onPrevious, onNext }: Onboardi
                 <span className="text-lg font-medium text-gray-900">
                   {data.ssmApplication ? (
                     <span className="text-blue-600">
-                      ✓ Ya, saya mahu mohon SSM • Yes, I want to apply for SSM
+                      {t('onboarding.step2.yes_apply')}
                     </span>
                   ) : (
                     <span className="text-gray-600">
-                      Tidak sekarang • Not now
+                      {t('onboarding.step2.not_now')}
                     </span>
                   )}
                 </span>
@@ -100,7 +100,7 @@ export function OnboardingStep2({ data, onUpdate, onPrevious, onNext }: Onboardi
                 <div className="flex items-center">
                   <Check className="w-5 h-5 text-green-600 mr-2" />
                   <span className="text-green-800 font-medium">
-                    Bagus! Kami akan bantu anda mohon SSM • Great! We'll help you apply for SSM
+                    {t('onboarding.step2.great_help')}
                   </span>
                 </div>
               </div>
@@ -117,16 +117,16 @@ export function OnboardingStep2({ data, onUpdate, onPrevious, onNext }: Onboardi
           className="flex items-center"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Kembali • Back
+          {t('onboarding.back')}
         </Button>
-        
+
         <Button
           onClick={onNext}
           disabled={!isFormValid()}
           size="lg"
           className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
         >
-          Seterusnya • Next →
+          {t('onboarding.next')}
         </Button>
       </div>
     </div>

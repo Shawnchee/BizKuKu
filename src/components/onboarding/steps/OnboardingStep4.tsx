@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Building, CheckCircle, Shield, Clock, FileCheck, QrCode, AlertCircle, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface Step4Data {
   selectedBank: string
@@ -21,52 +22,56 @@ interface OnboardingStep4Props {
   onComplete: () => void
 }
 
-const banks = [
-  {
-    id: 'maybank',
-    name: 'Maybank',
-    logo: '🏦',
-    description: 'Malaysia\'s largest bank',
-    processingDays: '3-5 hari bekerja • 3-5 working days'
-  },
-  {
-    id: 'cimb',
-    name: 'CIMB Bank',
-    logo: '🏦',
-    description: 'Leading ASEAN universal bank',
-    processingDays: '2-4 hari bekerja • 2-4 working days'
-  },
-  {
-    id: 'public-bank',
-    name: 'Public Bank',
-    logo: '🏦',
-    description: 'Trusted by millions',
-    processingDays: '3-5 hari bekerja • 3-5 working days'
-  },
-  {
-    id: 'rhb',
-    name: 'RHB Bank',
-    logo: '🏦',
-    description: 'Your partner in progress',
-    processingDays: '2-3 hari bekerja • 2-3 working days'
-  },
-  {
-    id: 'hong-leong',
-    name: 'Hong Leong Bank',
-    logo: '🏦',
-    description: 'The Caring Bank',
-    processingDays: '3-4 hari bekerja • 3-4 working days'
-  },
-  {
-    id: 'ambank',
-    name: 'AmBank',
-    logo: '🏦',
-    description: 'Helping you prosper',
-    processingDays: '4-6 hari bekerja • 4-6 working days'
-  }
-]
+
 
 export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: OnboardingStep4Props) {
+  const { t } = useLanguage()
+
+  const banksWithTranslations = [
+    {
+      id: 'maybank',
+      name: t('onboarding.step4.bank.maybank.name'),
+      logo: '🏦',
+      description: t('onboarding.step4.bank.maybank.desc'),
+      processingDays: t('onboarding.step4.bank.maybank.processing')
+    },
+    {
+      id: 'cimb',
+      name: t('onboarding.step4.bank.cimb.name'),
+      logo: '🏦',
+      description: t('onboarding.step4.bank.cimb.desc'),
+      processingDays: t('onboarding.step4.bank.cimb.processing')
+    },
+    {
+      id: 'public-bank',
+      name: t('onboarding.step4.bank.public.name'),
+      logo: '🏦',
+      description: t('onboarding.step4.bank.public.desc'),
+      processingDays: t('onboarding.step4.bank.public.processing')
+    },
+    {
+      id: 'rhb',
+      name: t('onboarding.step4.bank.rhb.name'),
+      logo: '🏦',
+      description: t('onboarding.step4.bank.rhb.desc'),
+      processingDays: t('onboarding.step4.bank.rhb.processing')
+    },
+    {
+      id: 'hong-leong',
+      name: t('onboarding.step4.bank.hongleong.name'),
+      logo: '🏦',
+      description: t('onboarding.step4.bank.hongleong.desc'),
+      processingDays: t('onboarding.step4.bank.hongleong.processing')
+    },
+    {
+      id: 'ambank',
+      name: t('onboarding.step4.bank.ambank.name'),
+      logo: '🏦',
+      description: t('onboarding.step4.bank.ambank.desc'),
+      processingDays: t('onboarding.step4.bank.ambank.processing')
+    }
+  ]
+
   // Determine initial section based on current data state
   const getInitialSection = () => {
     if (data.qrRequestSubmitted) return 'status'
@@ -117,7 +122,7 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
   }
 
   const getSelectedBank = () => {
-    return banks.find(bank => bank.id === data.selectedBank)
+    return banksWithTranslations.find(bank => bank.id === data.selectedBank)
   }
 
   const formatDate = (dateString?: string) => {
@@ -135,10 +140,10 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
       {/* Header */}
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900">
-          QR Merchant
+          {t('onboarding.step4.header.title')}
         </h2>
         <p className="text-gray-600 mt-2">
-          Merchant QR Setup • Dapatkan QR untuk terima bayaran dari pelanggan
+          {t('onboarding.step4.header.subtitle')}
         </p>
       </div>
 
@@ -149,7 +154,7 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
         }`}>
           <Building className={`w-4 h-4 ${data.selectedBank ? 'text-green-600' : 'text-blue-600'}`} />
           <span className={`text-xs font-medium ${data.selectedBank ? 'text-green-600' : 'text-blue-600'}`}>
-            1. Pilih Bank
+            1. Choose Bank
           </span>
           {data.selectedBank && <CheckCircle className="w-4 h-4 text-green-600" />}
         </div>
@@ -186,18 +191,15 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
             <div className="text-center">
               <Building className="w-16 h-16 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-900">
-                Pilih Bank Utama • Choose Primary Bank
+                {t('onboarding.step4.select_bank')}
               </h3>
               <p className="text-gray-600 mt-2">
-                Bank ini akan digunakan untuk terima bayaran dari pelanggan
-              </p>
-              <p className="text-sm text-gray-500">
-                This bank will be used to receive payments from customers
+                {t('onboarding.step4.select_bank_desc')}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {banks.map((bank) => {
+              {banksWithTranslations.map((bank) => {
                 const isSelected = data.selectedBank === bank.id
                 
                 return (
@@ -218,7 +220,7 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
                     </div>
                     <h4 className="font-semibold text-gray-900 mb-1">{bank.name}</h4>
                     <p className="text-sm text-gray-600 mb-2">{bank.description}</p>
-                    <p className="text-xs text-gray-500">Masa pemprosesan: {bank.processingDays}</p>
+                    <p className="text-xs text-gray-500">{t('onboarding.step4.processing_time')} {bank.processingDays}</p>
                   </button>
                 )
               })}
@@ -229,11 +231,11 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
                   <span className="text-green-800 font-medium">
-                    Bank dipilih: {getSelectedBank()?.name}
+                    Bank selected: {getSelectedBank()?.name}
                   </span>
                 </div>
                 <p className="text-sm text-green-700 mt-1">
-                  Seterusnya, berikan kebenaran untuk berkongsi ID SSM • Next, give consent to share SSM ID
+                  Next, give consent to share SSM ID
                 </p>
               </div>
             )}
@@ -245,13 +247,10 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
             <div className="text-center">
               <FileCheck className="w-16 h-16 text-purple-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-900">
-                Kebenaran Berkongsi ID SSM • SSM ID Sharing Consent
+                {t('onboarding.step4.consent_title')}
               </h3>
               <p className="text-gray-600 mt-2">
-                Berikan kebenaran untuk berkongsi ID SSM dengan bank untuk mendapatkan QR merchant
-              </p>
-              <p className="text-sm text-gray-500">
-                Give consent to share SSM ID with bank to get merchant QR
+                {t('onboarding.step4.consent_desc')}
               </p>
             </div>
 
@@ -261,12 +260,12 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
                   <div className="flex items-start space-x-3">
                     <Shield className="w-5 h-5 text-blue-600 mt-0.5" />
                     <div className="text-sm text-blue-800">
-                      <p className="font-medium mb-2">Maklumat yang akan dikongsi • Information to be shared:</p>
+                      <p className="font-medium mb-2">{t('onboarding.step4.consent_what_shared')}</p>
                       <ul className="space-y-1 list-disc list-inside">
-                        <li>Nombor pendaftaran SSM • SSM registration number</li>
-                        <li>Nama perniagaan • Business name</li>
-                        <li>Alamat perniagaan • Business address</li>
-                        <li>Jenis perniagaan • Business type</li>
+                        <li>{t('onboarding.step4.consent_item1')}</li>
+                        <li>{t('onboarding.step4.consent_item2')}</li>
+                        <li>{t('onboarding.step4.consent_item3')}</li>
+                        <li>{t('onboarding.step4.consent_item4')}</li>
                       </ul>
                     </div>
                   </div>
@@ -276,9 +275,8 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
                   <div className="flex items-start space-x-3">
                     <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5" />
                     <div className="text-sm text-yellow-800">
-                      <p className="font-medium mb-1">Penting • Important:</p>
-                      <p>Bank akan menggunakan maklumat ini untuk memproses permohonan QR merchant anda. Maklumat ini akan digunakan secara selamat dan mengikut dasar privasi bank.</p>
-                      <p className="text-xs mt-1">Bank will use this information to process your merchant QR application. This information will be used securely according to the bank's privacy policy.</p>
+                      <p className="font-medium mb-1">{t('onboarding.step4.important_notice')}</p>
+                      <p>{t('onboarding.step4.privacy_notice')}</p>
                     </div>
                   </div>
                 </div>
@@ -295,9 +293,7 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
                     }}
                   />
                   <label htmlFor="ssmConsent" className="text-sm text-gray-700 cursor-pointer">
-                    <span className="font-medium">Saya bersetuju untuk berkongsi maklumat SSM saya dengan {getSelectedBank()?.name} untuk tujuan mendapatkan QR merchant.</span>
-                    <br />
-                    <span className="text-xs text-gray-500">I agree to share my SSM information with {getSelectedBank()?.name} for the purpose of obtaining merchant QR.</span>
+                    <span className="font-medium">{t('onboarding.step4.consent_checkbox')}</span>
                   </label>
                 </div>
               </div>
@@ -308,12 +304,9 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold text-green-800 mb-2">
-                    Kebenaran Diberikan! • Consent Given!
+                    Consent Given!
                   </h4>
                   <p className="text-green-700">
-                    Permohonan QR merchant anda sedang diproses
-                  </p>
-                  <p className="text-sm text-green-600">
                     Your merchant QR application is being processed
                   </p>
                 </div>
@@ -327,13 +320,10 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
             <div className="text-center">
               <QrCode className="w-16 h-16 text-orange-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-900">
-                Status QR Merchant • Merchant QR Status
+                {t('onboarding.step4.status_title')}
               </h3>
               <p className="text-gray-600 mt-2">
-                Semak status permohonan QR merchant anda
-              </p>
-              <p className="text-sm text-gray-500">
-                Check your merchant QR application status
+                {t('onboarding.step4.header.subtitle')}
               </p>
             </div>
 
@@ -345,13 +335,10 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
                   </div>
                   <div className="text-center">
                     <h4 className="text-lg font-semibold text-blue-800 mb-2">
-                      Sedang Diproses • Processing
+                      {t('onboarding.step4.status.processing')}
                     </h4>
                     <p className="text-blue-700 mb-2">
-                      Permohonan QR merchant anda sedang diproses oleh {getSelectedBank()?.name}
-                    </p>
-                    <p className="text-sm text-blue-600">
-                      Your merchant QR application is being processed by {getSelectedBank()?.name}
+                      {t('onboarding.step4.status.processing_desc')}
                     </p>
                   </div>
                 </div>
@@ -360,19 +347,19 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-700">Tarikh Permohonan • Application Date</p>
+                    <p className="text-sm font-medium text-gray-700">{t('onboarding.step4.request_date')}</p>
                     <p className="text-gray-900">{formatDate(data.qrRequestDate)}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-700">Anggaran Siap • Estimated Ready</p>
+                    <p className="text-sm font-medium text-gray-700">{t('onboarding.step4.estimated_ready')}</p>
                     <p className="text-gray-900">{formatDate(data.estimatedReadyDate)}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-700">Bank</p>
+                    <p className="text-sm font-medium text-gray-700">{t('onboarding.step4.selected_bank')}</p>
                     <p className="text-gray-900">{getSelectedBank()?.name}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-700">Masa Pemprosesan • Processing Time</p>
+                    <p className="text-sm font-medium text-gray-700">{t('onboarding.step4.processing_time')}</p>
                     <p className="text-gray-900">{getSelectedBank()?.processingDays}</p>
                   </div>
                 </div>
@@ -382,11 +369,11 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
                 <div className="flex items-start space-x-3">
                   <Clock className="w-5 h-5 text-yellow-600 mt-0.5" />
                   <div className="text-sm text-yellow-800">
-                    <p className="font-medium mb-1">Langkah Seterusnya • Next Steps:</p>
+                    <p className="font-medium mb-1">{t('onboarding.step4.next_steps_title')}</p>
                     <ul className="space-y-1 list-disc list-inside">
-                      <li>Tunggu email pengesahan dari bank • Wait for confirmation email from bank</li>
-                      <li>QR merchant akan dihantar dalam {getSelectedBank()?.processingDays}</li>
-                      <li>Anda boleh mula terima bayaran setelah QR siap • You can start accepting payments once QR is ready</li>
+                      <li>{t('onboarding.step4.next_step1')}</li>
+                      <li>{t('onboarding.step4.next_step2')}</li>
+                      <li>{t('onboarding.step4.next_step3')}</li>
                     </ul>
                   </div>
                 </div>
@@ -405,16 +392,16 @@ export function OnboardingStep4({ data, onUpdate, onPrevious, onComplete }: Onbo
           className="flex items-center"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Kembali • Back
+          {t('onboarding.back')}
         </Button>
-        
+
         <Button
           onClick={onComplete}
           disabled={!isFormValid()}
           size="lg"
           className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
         >
-          Selesai • Complete Setup 🎉
+          {t('onboarding.step4.complete_setup')} 🎉
         </Button>
       </div>
     </div>

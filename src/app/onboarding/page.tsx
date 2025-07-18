@@ -6,6 +6,7 @@ import { ArrowLeft, X, CheckCircle, Clock, FileText, CreditCard, Building, Setti
 import { Button } from '@/components/ui'
 import { OnboardingStep1, OnboardingStep2, OnboardingStep3, OnboardingStep4 } from '@/components/onboarding'
 import { OnboardingStorage, OnboardingProgress } from '@/lib/onboarding-storage'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export interface OnboardingData {
   step1: {
@@ -60,46 +61,50 @@ export interface OnboardingData {
 
 
 
-const steps = [
-  {
-    id: 1,
-    title: 'Maklumat Diperlukan',
-    subtitle: 'Required Information',
-    description: 'Isi maklumat peribadi dan perniagaan • Fill personal and business info',
-    icon: FileText,
-    color: 'blue'
-  },
-  {
-    id: 2,
-    title: 'SSM Application',
-    subtitle: 'Permohonan SSM',
-    description: 'Daftar perniagaan dengan SSM • Register business with SSM',
-    icon: CreditCard,
-    color: 'green'
-  },
-  {
-    id: 3,
-    title: 'Semak Status',
-    subtitle: 'Check Status',
-    description: 'Lihat kemajuan permohonan anda • Check your application progress',
-    icon: Clock,
-    color: 'yellow'
-  },
-  {
-    id: 4,
-    title: 'QR Merchant',
-    subtitle: 'Merchant QR',
-    description: 'Dapatkan QR untuk terima bayaran • Get QR to accept payments',
-    icon: Building,
-    color: 'purple'
-  }
-]
+// Steps will be defined inside the component to access translation function
 
 export default function OnboardingPage() {
   const router = useRouter()
+  const { t } = useLanguage()
   const [currentStep, setCurrentStep] = useState(1)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
   const [isDataLoaded, setIsDataLoaded] = useState(false)
+
+  const steps = [
+    {
+      id: 1,
+      title: t('onboarding.step1.title'),
+      subtitle: t('onboarding.step1.subtitle'),
+      description: t('onboarding.step1.description'),
+      icon: FileText,
+      color: 'blue'
+    },
+    {
+      id: 2,
+      title: t('onboarding.step2.title'),
+      subtitle: t('onboarding.step2.subtitle'),
+      description: t('onboarding.step2.description'),
+      icon: CreditCard,
+      color: 'green'
+    },
+    {
+      id: 3,
+      title: t('onboarding.step3.title'),
+      subtitle: t('onboarding.step3.subtitle'),
+      description: t('onboarding.step3.description'),
+      icon: Clock,
+      color: 'yellow'
+    },
+    {
+      id: 4,
+      title: t('onboarding.step4.title'),
+      subtitle: t('onboarding.step4.subtitle'),
+      description: t('onboarding.step4.description'),
+      icon: Building,
+      color: 'purple'
+    }
+  ]
+
   const [onboardingData, setOnboardingData] = useState<OnboardingData>({
     step1: {
       ekyc: { fullName: '', icNumber: '', phoneNumber: '', email: '' },
@@ -249,7 +254,7 @@ export default function OnboardingPage() {
         }
       })
       console.log('Progress reset successfully')
-      alert('Progress reset successfully! • Kemajuan telah direset!')
+      alert('Progress reset successfully!')
     }
   }
 
@@ -282,10 +287,10 @@ export default function OnboardingPage() {
               setOnboardingData(savedProgress.data)
               setCurrentStep(savedProgress.currentStep)
               setCompletedSteps(savedProgress.completedSteps)
-              alert('Kemajuan berjaya diimport • Progress imported successfully')
+              alert('Progress imported successfully')
             }
           } else {
-            alert('Fail tidak sah • Invalid file')
+            alert('Invalid file')
           }
         }
         reader.readAsText(file)
@@ -388,10 +393,10 @@ export default function OnboardingPage() {
               </button>
               <div>
                 <h1 className="text-xl font-semibold text-gray-900">
-                  Setup Perniagaan • Business Setup
+                  {t('onboarding.business_setup')}
                 </h1>
                 <p className="text-sm text-gray-600">
-                  Langkah {currentStep} daripada 4 • Step {currentStep} of 4
+                  {t('onboarding.step_of').replace('{current}', currentStep.toString()).replace('{total}', '4')}
                 </p>
               </div>
             </div>
@@ -401,14 +406,14 @@ export default function OnboardingPage() {
                 className="px-3 py-1 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded"
                 title="Reset All Progress"
               >
-                Reset
+                {t('onboarding.reset')}
               </button>
               <button
                 onClick={saveProgressManually}
                 className="px-3 py-1 text-xs bg-green-100 hover:bg-green-200 text-green-700 rounded"
                 title="Manual Save"
               >
-                Save
+                {t('onboarding.save')}
               </button>
               <button
                 onClick={() => {
@@ -419,19 +424,19 @@ export default function OnboardingPage() {
                 className="px-3 py-1 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded"
                 title="Check Saved Data"
               >
-                Check
+                {t('onboarding.check')}
               </button>
               <button
                 onClick={handleExportProgress}
                 className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700"
-                title="Export Progress • Eksport Kemajuan"
+                title="Export Progress"
               >
                 <Download className="w-4 h-4" />
               </button>
               <button
                 onClick={handleImportProgress}
                 className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700"
-                title="Import Progress • Import Kemajuan"
+                title="Import Progress"
               >
                 <Upload className="w-4 h-4" />
               </button>
@@ -451,7 +456,7 @@ export default function OnboardingPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="mb-2 text-center">
             <p className="text-xs text-gray-500">
-              💡 Click on any step to jump directly • Klik mana-mana langkah untuk lompat terus
+              💡 {t('onboarding.click_any_step')}
             </p>
           </div>
           <div className="flex items-center justify-between">
@@ -474,7 +479,7 @@ export default function OnboardingPage() {
                           ? `bg-${step.color}-500 border-${step.color}-500 text-white hover:bg-${step.color}-600`
                           : 'bg-gray-100 border-gray-300 text-gray-400 hover:bg-gray-200 hover:border-gray-400'
                       } ${canNavigate ? 'cursor-pointer' : 'cursor-not-allowed'} disabled:opacity-50`}
-                      title={`Jump to ${step.title} • Lompat ke ${step.title}`}
+                      title={`Jump to ${step.title}`}
                     >
                       {isCompleted ? (
                         <CheckCircle className="w-6 h-6" />
@@ -485,7 +490,7 @@ export default function OnboardingPage() {
                     <button
                       onClick={() => jumpToStep(step.id)}
                       className="mt-2 text-center hover:bg-gray-50 rounded px-2 py-1 transition-colors"
-                      title={`Jump to ${step.title} • Lompat ke ${step.title}`}
+                      title={`Jump to ${step.title}`}
                     >
                       <div className={`text-sm font-medium ${isCurrent ? 'text-blue-600' : 'text-gray-600'} hover:text-blue-600`}>
                         {step.title}

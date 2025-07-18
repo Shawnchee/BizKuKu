@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Upload, Camera, FileText, User, Building, DollarSign, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface Step1Data {
   ekyc: {
@@ -37,6 +38,7 @@ interface OnboardingStep1Props {
 
 export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props) {
   const [activeSection, setActiveSection] = useState<'documents' | 'ekyc' | 'business' | 'financial'>('documents')
+  const { t } = useLanguage()
 
 
 
@@ -74,29 +76,29 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
   const sections = [
     {
       id: 'documents' as const,
-      title: 'Muat Naik Dokumen',
-      subtitle: 'Upload Documents',
+      title: t('onboarding.step1.documents.title'),
+      subtitle: t('onboarding.step1.documents.subtitle'),
       icon: FileText,
       color: 'purple'
     },
     {
       id: 'ekyc' as const,
-      title: 'E-KYC (Pengenalan Diri)',
-      subtitle: 'Personal Identification',
+      title: t('onboarding.step1.ekyc.title'),
+      subtitle: t('onboarding.step1.ekyc.subtitle'),
       icon: User,
       color: 'blue'
     },
     {
       id: 'business' as const,
-      title: 'Maklumat Perniagaan',
-      subtitle: 'Business Information',
+      title: t('onboarding.step1.business.title'),
+      subtitle: t('onboarding.step1.business.subtitle'),
       icon: Building,
       color: 'green'
     },
     {
       id: 'financial' as const,
-      title: 'Maklumat Kewangan',
-      subtitle: 'Financial Information',
+      title: t('onboarding.step1.financial.title'),
+      subtitle: t('onboarding.step1.financial.subtitle'),
       icon: DollarSign,
       color: 'yellow'
     }
@@ -128,7 +130,7 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
             />
             <Button variant="outline" className="mt-3">
               <Camera className="w-4 h-4 mr-2" />
-              Pilih Fail • Choose File
+              {t('onboarding.step1.documents.choose_file')}
             </Button>
           </label>
         </div>
@@ -146,10 +148,10 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
       {/* Header */}
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900">
-          Isi Maklumat Diperlukan
+          {t('onboarding.step1.header.title')}
         </h2>
         <p className="text-gray-600 mt-2">
-          Fill in Required Information • Sila isi semua maklumat dengan betul
+          {t('onboarding.step1.header.subtitle')}
         </p>
       </div>
 
@@ -185,18 +187,18 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
           <div className="space-y-6">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center">
               <FileText className="w-5 h-5 mr-2 text-purple-600" />
-              Muat Naik Dokumen • Upload Documents
+              {t('onboarding.step1.documents.header')}
             </h3>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="flex items-start">
                 <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 mr-2" />
                 <div className="text-sm text-blue-800">
-                  <p className="font-medium">Petua • Tips:</p>
+                  <p className="font-medium">{t('onboarding.step1.documents.tips')}</p>
                   <ul className="mt-1 list-disc list-inside space-y-1">
-                    <li>Pastikan gambar jelas dan tidak kabur • Ensure images are clear and not blurry</li>
-                    <li>Format yang diterima: JPG, PNG, PDF • Accepted formats: JPG, PNG, PDF</li>
-                    <li>Saiz maksimum: 5MB setiap fail • Maximum size: 5MB per file</li>
+                    <li>{t('onboarding.step1.documents.tip1')}</li>
+                    <li>{t('onboarding.step1.documents.tip2')}</li>
+                    <li>{t('onboarding.step1.documents.tip3')}</li>
                   </ul>
                 </div>
               </div>
@@ -204,22 +206,22 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FileUploadComponent
-                label="Kad Pengenalan (Depan) • IC Front"
+                label={t('onboarding.step1.documents.ic_front')}
                 field="icFront"
-                description="Muka depan kad pengenalan • Front side of IC"
+                description={t('onboarding.step1.documents.ic_front_desc')}
               />
 
               <FileUploadComponent
-                label="Kad Pengenalan (Belakang) • IC Back"
+                label={t('onboarding.step1.documents.ic_back')}
                 field="icBack"
-                description="Muka belakang kad pengenalan • Back side of IC"
+                description={t('onboarding.step1.documents.ic_back_desc')}
               />
 
               <div className="md:col-span-2">
                 <FileUploadComponent
-                  label="Lesen Perniagaan (Pilihan) • Business License (Optional)"
+                  label={t('onboarding.step1.documents.business_license')}
                   field="businessLicense"
-                  description="Sijil pendaftaran perniagaan jika ada • Business registration certificate if available"
+                  description={t('onboarding.step1.documents.business_license_desc')}
                 />
               </div>
             </div>
@@ -230,59 +232,59 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center">
               <User className="w-5 h-5 mr-2 text-blue-600" />
-              E-KYC (Pengenalan Diri) • Personal Identification
+              {t('onboarding.step1.ekyc.header')}
             </h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nama Penuh • Full Name *
+                  {t('onboarding.step1.ekyc.full_name')}
                 </label>
                 <input
                   type="text"
                   value={data.ekyc.fullName}
                   onChange={(e) => handleInputChange('ekyc', 'fullName', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Contoh: Ahmad bin Ali"
+                  placeholder={t('onboarding.step1.ekyc.full_name_placeholder')}
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  No. Kad Pengenalan • IC Number *
+                  {t('onboarding.step1.ekyc.ic_number')}
                 </label>
                 <input
                   type="text"
                   value={data.ekyc.icNumber}
                   onChange={(e) => handleInputChange('ekyc', 'icNumber', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Contoh: 901234-56-7890"
+                  placeholder={t('onboarding.step1.ekyc.ic_number_placeholder')}
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  No. Telefon • Phone Number *
+                  {t('onboarding.step1.ekyc.phone_number')}
                 </label>
                 <input
                   type="tel"
                   value={data.ekyc.phoneNumber}
                   onChange={(e) => handleInputChange('ekyc', 'phoneNumber', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Contoh: 012-345-6789"
+                  placeholder={t('onboarding.step1.ekyc.phone_number_placeholder')}
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Emel • Email *
+                  {t('onboarding.step1.ekyc.email')}
                 </label>
                 <input
                   type="email"
                   value={data.ekyc.email}
                   onChange={(e) => handleInputChange('ekyc', 'email', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Contoh: ahmad@email.com"
+                  placeholder={t('onboarding.step1.ekyc.email_placeholder')}
                 />
               </div>
             </div>
@@ -293,64 +295,64 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center">
               <Building className="w-5 h-5 mr-2 text-green-600" />
-              Maklumat Perniagaan • Business Information
+              {t('onboarding.step1.business.header')}
             </h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nama Perniagaan • Business Name *
+                  {t('onboarding.step1.business.name')}
                 </label>
                 <input
                   type="text"
                   value={data.businessInfo.businessName}
                   onChange={(e) => handleInputChange('businessInfo', 'businessName', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Contoh: Warung Mak Kiah"
+                  placeholder={t('onboarding.step1.business.name_placeholder')}
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Jenis Perniagaan • Business Type *
+                  {t('onboarding.step1.business.type')}
                 </label>
                 <select
                   value={data.businessInfo.businessType}
                   onChange={(e) => handleInputChange('businessInfo', 'businessType', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="">Pilih jenis • Choose type</option>
-                  <option value="warung">Warung</option>
-                  <option value="kedai">Kedai</option>
-                  <option value="restoran">Restoran</option>
-                  <option value="online">Jualan Online</option>
-                  <option value="lain">Lain-lain</option>
+                  <option value="">{t('onboarding.step1.business.type_choose')}</option>
+                  <option value="warung">{t('onboarding.step1.business.type_warung')}</option>
+                  <option value="kedai">{t('onboarding.step1.business.type_kedai')}</option>
+                  <option value="restoran">{t('onboarding.step1.business.type_restoran')}</option>
+                  <option value="online">{t('onboarding.step1.business.type_online')}</option>
+                  <option value="lain">{t('onboarding.step1.business.type_others')}</option>
                 </select>
               </div>
-              
+
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Alamat Perniagaan • Business Address *
+                  {t('onboarding.step1.business.address')}
                 </label>
                 <textarea
                   value={data.businessInfo.address}
                   onChange={(e) => handleInputChange('businessInfo', 'address', e.target.value)}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Contoh: No. 123, Jalan Utama, Taman Bahagia, 12345 Kuala Lumpur"
+                  placeholder={t('onboarding.step1.business.address_placeholder')}
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  No. Pendaftaran (jika ada) • Registration Number (if any)
+                  {t('onboarding.step1.business.registration_number')}
                 </label>
                 <input
                   type="text"
                   value={data.businessInfo.registrationNumber}
                   onChange={(e) => handleInputChange('businessInfo', 'registrationNumber', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Contoh: SSM123456789"
+                  placeholder={t('onboarding.step1.business.registration_number_placeholder')}
                 />
               </div>
             </div>
@@ -361,37 +363,37 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center">
               <DollarSign className="w-5 h-5 mr-2 text-yellow-600" />
-              Maklumat Kewangan • Financial Information
+              {t('onboarding.step1.financial.header')}
             </h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Pendapatan Bulanan • Monthly Revenue *
+                  {t('onboarding.step1.financial.monthly_revenue')}
                 </label>
                 <select
                   value={data.financialInfo.monthlyRevenue}
                   onChange={(e) => handleInputChange('financialInfo', 'monthlyRevenue', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="">Pilih julat • Choose range</option>
-                  <option value="below-1000">Bawah RM1,000 • Below RM1,000</option>
-                  <option value="1000-5000">RM1,000 - RM5,000</option>
-                  <option value="5000-10000">RM5,000 - RM10,000</option>
-                  <option value="above-10000">Atas RM10,000 • Above RM10,000</option>
+                  <option value="">{t('onboarding.step1.financial.revenue_choose')}</option>
+                  <option value="below-1000">{t('onboarding.step1.financial.revenue_below_1000')}</option>
+                  <option value="1000-5000">{t('onboarding.step1.financial.revenue_1000_5000')}</option>
+                  <option value="5000-10000">{t('onboarding.step1.financial.revenue_5000_10000')}</option>
+                  <option value="above-10000">{t('onboarding.step1.financial.revenue_above_10000')}</option>
                 </select>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nama Bank • Bank Name *
+                  {t('onboarding.step1.financial.bank_name')}
                 </label>
                 <select
                   value={data.financialInfo.bankName}
                   onChange={(e) => handleInputChange('financialInfo', 'bankName', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="">Pilih bank • Choose bank</option>
+                  <option value="">{t('onboarding.step1.financial.bank_choose')}</option>
                   <option value="maybank">Maybank</option>
                   <option value="cimb">CIMB Bank</option>
                   <option value="public-bank">Public Bank</option>
@@ -401,17 +403,17 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
                   <option value="bsn">Bank Simpanan Nasional</option>
                 </select>
               </div>
-              
+
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  No. Akaun Bank • Bank Account Number *
+                  {t('onboarding.step1.financial.bank_account')}
                 </label>
                 <input
                   type="text"
                   value={data.financialInfo.bankAccount}
                   onChange={(e) => handleInputChange('financialInfo', 'bankAccount', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Contoh: 1234567890123"
+                  placeholder={t('onboarding.step1.financial.bank_account_placeholder')}
                 />
               </div>
             </div>
@@ -424,16 +426,16 @@ export function OnboardingStep1({ data, onUpdate, onNext }: OnboardingStep1Props
       {/* Navigation */}
       <div className="flex justify-between items-center pt-6">
         <div className="text-sm text-gray-500">
-          Kemajuan akan disimpan secara automatik • Progress is saved automatically
+          {t('onboarding.progress_saved')}
         </div>
-        
+
         <Button
           onClick={onNext}
           disabled={!isFormValid()}
           size="lg"
           className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
         >
-          Seterusnya • Next →
+          {t('onboarding.next')}
         </Button>
       </div>
     </div>
