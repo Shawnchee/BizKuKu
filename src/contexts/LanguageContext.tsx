@@ -23,6 +23,10 @@ const translations = {
     ms: 'Analysis',
     en: 'Dashboard'
   },
+  'nav.story': {
+    ms: 'Cerita',
+    en: 'Story'
+  },
   'nav.recommendation': {
     ms: 'Cadangan',
     en: 'Recommendation'
@@ -64,7 +68,7 @@ const translations = {
   
   // Dashboard Preview
   'dashboard.title': {
-    ms: 'Papan Perusahaam Anda',
+    ms: 'Papan Bisnes Anda',
     en: 'Your Business Dashboard'
   },
   'dashboard.today': {
@@ -1136,6 +1140,725 @@ const translations = {
   'onboarding.step4.next_step3': {
     ms: 'Anda boleh mula terima pembayaran sebaik sahaja QR siap',
     en: 'You can start accepting payments once QR is ready'
+  },
+
+  // Chatbot
+  'chatbot.greeting': {
+    ms: 'Hai! 👋 Macam mana saya boleh bantu dengan sokongan perniagaan anda hari ini?',
+    en: 'Hi! 👋 How can I help you with your business support today?'
+  },
+  'chatbot.placeholder': {
+    ms: 'Taip mesej anda...',
+    en: 'Type your message...'
+  },
+  'chatbot.error': {
+    ms: 'Maaf, ada masalah. Sila cuba lagi.',
+    en: 'Sorry, there was an error. Please try again.'
+  },
+
+  // Recommendation Page
+  'recommendation.title': {
+    ms: 'Cari bantuan kewangan yang sesuai!',
+    en: 'Discover tailored financial support!'
+  },
+  'recommendation.subtitle': {
+    ms: 'Kami analisis profil perniagaan anda dan cadangkan geran, pinjaman, subsidi, dan skim insentif yang berkaitan — semua dalam satu tempat.',
+    en: 'We analyze your business profile and suggests relevant grants, loans, subsidies, and incentive schemes — all in one place.'
+  },
+  'recommendation.form.purpose.label': {
+    ms: 'Tujuan Pembiayaan',
+    en: 'Funding Purpose'
+  },
+  'recommendation.form.purpose.placeholder': {
+    ms: 'Contoh: Beli peralatan, tambah stok, bayar gaji...',
+    en: 'e.g., Buy equipment, add inventory, pay salaries...'
+  },
+  'recommendation.form.amount.label': {
+    ms: 'Jumlah Diperlukan',
+    en: 'Amount Needed'
+  },
+  'recommendation.form.amount.placeholder': {
+    ms: 'Contoh: RM10,000',
+    en: 'e.g., RM10,000'
+  },
+  'recommendation.form.additional.label': {
+    ms: 'Keperluan Tambahan',
+    en: 'Additional Requirements'
+  },
+  'recommendation.form.additional.placeholder': {
+    ms: 'Terangkan keperluan khas, contoh: sijil halal, wanita sahaja, dll.',
+    en: 'Describe any special needs, e.g. halal certification, women-only, etc.'
+  },
+  'recommendation.form.button.generate': {
+    ms: 'Jana Cadangan',
+    en: 'Generate Recommendations'
+  },
+  'recommendation.form.button.generating': {
+    ms: 'Menjana...',
+    en: 'Generating...'
+  },
+  'recommendation.history.button': {
+    ms: 'Sejarah',
+    en: 'History'
+  },
+  'recommendation.profile.button': {
+    ms: 'Profil Syarikat',
+    en: 'Company Profile'
+  },
+
+  'recommendation.top_picks.title': {
+    ms: 'Pilihan Terbaik untuk Perniagaan Anda',
+    en: 'Top 3 Picks for Your Business'
+  },
+  'recommendation.other_funding.title': {
+    ms: 'Pembiayaan & Sokongan Lain yang Layak',
+    en: 'Other Eligible Funding & Support'
+  },
+  'recommendation.tabs.grants_loans': {
+    ms: 'Geran & Pinjaman',
+    en: 'Grants & Loans'
+  },
+  'recommendation.tabs.subsidies_schemes': {
+    ms: 'Subsidi & Skim',
+    en: 'Subsidies & Schemes'
+  },
+  'recommendation.card.max_amount': {
+    ms: 'Jumlah Maksimum:',
+    en: 'Max Amount:'
+  },
+  'recommendation.card.for': {
+    ms: 'Untuk:',
+    en: 'For:'
+  },
+  'recommendation.card.eligibility': {
+    ms: 'Kelayakan:',
+    en: 'Eligibility:'
+  },
+  'recommendation.card.apply_now': {
+    ms: 'Mohon Sekarang',
+    en: 'Apply Now'
+  },
+  'recommendation.loading': {
+    ms: 'Memuatkan...',
+    en: 'Loading...'
+  },
+
+  // Funding Purpose Options
+  'recommendation.purpose.equipment': {
+    ms: 'Peralatan',
+    en: 'Equipment'
+  },
+  'recommendation.purpose.digitalization': {
+    ms: 'Digitalisasi',
+    en: 'Digitalization'
+  },
+  'recommendation.purpose.working_capital': {
+    ms: 'Modal Kerja',
+    en: 'Working Capital'
+  },
+  'recommendation.purpose.expansion': {
+    ms: 'Pengembangan Perniagaan',
+    en: 'Business Expansion'
+  },
+  'recommendation.purpose.inventory': {
+    ms: 'Inventori',
+    en: 'Inventory'
+  },
+
+  // Preference Options
+  'recommendation.preference.grant': {
+    ms: 'Geran sahaja',
+    en: 'Grant only'
+  },
+  'recommendation.preference.loan': {
+    ms: 'Pinjaman sahaja',
+    en: 'Loan only'
+  },
+  'recommendation.preference.low_interest': {
+    ms: 'Faedah rendah',
+    en: 'Low-interest'
+  },
+  'recommendation.preference.fast_approval': {
+    ms: 'Kelulusan pantas',
+    en: 'Fast approval'
+  },
+  'recommendation.preferences.label': {
+    ms: 'Keutamaan',
+    en: 'Preferences'
+  },
+
+  // Thinking Process
+  'recommendation.thinking.title': {
+    ms: 'AI Agen sedang berfikir...',
+    en: 'AI Agent is Thinking...'
+  },
+  'recommendation.thinking.subtitle': {
+    ms: 'Beri kami sedikit masa sementara AI kami menganalisis keperluan anda dan menjana cadangan pembiayaan yang diperibadikan.',
+    en: 'Give us a moment while our AI analyzes your requirements and generates personalized funding recommendations.'
+  },
+  'recommendation.thinking.stage1': {
+    ms: 'Menganalisis profil syarikat dan data kewangan',
+    en: 'Analyzing company profile and financial data'
+  },
+  'recommendation.thinking.stage2': {
+    ms: 'Mendapatkan maklumat pembiayaan yang berkaitan',
+    en: 'Retrieving relevant funding information'
+  },
+  'recommendation.thinking.stage3': {
+    ms: 'Merumuskan cadangan yang diperibadikan',
+    en: 'Formulating personalized recommendations'
+  },
+  'recommendation.thinking.stage4': {
+    ms: 'Menyediakan pilihan pembiayaan anda',
+    en: 'Preparing your funding options'
+  },
+  'recommendation.thinking.completed': {
+    ms: 'Selesai',
+    en: 'Completed'
+  },
+  'recommendation.thinking.in_progress': {
+    ms: 'Sedang Diproses',
+    en: 'In Progress'
+  },
+
+  // Thinking Process Details
+  'recommendation.thinking.detail1_1': {
+    ms: 'Memproses penyata kewangan',
+    en: 'Processing financial statements'
+  },
+  'recommendation.thinking.detail1_2': {
+    ms: 'Menganalisis corak aliran tunai',
+    en: 'Analyzing cash flow patterns'
+  },
+  'recommendation.thinking.detail1_3': {
+    ms: 'Menilai penanda aras industri',
+    en: 'Evaluating industry benchmarks'
+  },
+  'recommendation.thinking.detail1_4': {
+    ms: 'Memeriksa kriteria kelayakan',
+    en: 'Checking eligibility criteria'
+  },
+  'recommendation.thinking.detail2_1': {
+    ms: 'Mencari pangkalan data pembiayaan',
+    en: 'Searching funding database'
+  },
+  'recommendation.thinking.detail2_2': {
+    ms: 'Memadankan dengan keperluan industri',
+    en: 'Matching with industry requirements'
+  },
+  'recommendation.thinking.detail2_3': {
+    ms: 'Menapis mengikut kriteria kelayakan',
+    en: 'Filtering by eligibility criteria'
+  },
+  'recommendation.thinking.detail2_4': {
+    ms: 'Menyusun pilihan pembiayaan mengikut kesesuaian',
+    en: 'Ranking funding options by relevance'
+  },
+  'recommendation.thinking.detail3_1': {
+    ms: 'Menjana struktur cadangan',
+    en: 'Generating recommendation structure'
+  },
+  'recommendation.thinking.detail3_2': {
+    ms: 'Mengira skor padanan pembiayaan',
+    en: 'Calculating funding match score'
+  },
+  'recommendation.thinking.detail3_3': {
+    ms: 'Menentukan sebab cadangan',
+    en: 'Determining reason for recommendation'
+  },
+  'recommendation.thinking.detail3_4': {
+    ms: 'Menyelesaikan penilaian kelayakan',
+    en: 'Finalizing eligibility assessment'
+  },
+  'recommendation.thinking.detail4_1': {
+    ms: 'Mencipta persembahan visual',
+    en: 'Creating visual presentation'
+  },
+  'recommendation.thinking.detail4_2': {
+    ms: 'Memformat butiran penyedia',
+    en: 'Formatting provider details'
+  },
+  'recommendation.thinking.detail4_3': {
+    ms: 'Menyusun mengikut skor kesesuaian',
+    en: 'Sorting by suitability score'
+  },
+  'recommendation.thinking.detail4_4': {
+    ms: 'Menyelesaikan cadangan',
+    en: 'Finalizing recommendations'
+  },
+
+  // Common Recommendation Data
+  'recommendation.data.digital_grant.name': {
+    ms: 'Geran Digital PKS (Geran Digital PKS)',
+    en: 'Geran Digital PKS (SME Digital Grant)'
+  },
+  'recommendation.data.digital_grant.description': {
+    ms: 'Dapatkan sehingga RM5,000 untuk mendigitalkan perniagaan anda (contoh: POS, e-dagang, perakaunan).',
+    en: 'Get up to RM5,000 to digitalize your business (e.g., POS, e-commerce, accounting).'
+  },
+  'recommendation.data.digital_grant.highlight': {
+    ms: 'Sesuai untuk naik taraf ke e-dagang atau POS digital',
+    en: 'Perfect for upgrading to e-commerce or digital POS'
+  },
+  'recommendation.data.tekun.name': {
+    ms: 'Pembiayaan Mikro TEKUN Nasional',
+    en: 'TEKUN Nasional Micro Financing'
+  },
+  'recommendation.data.tekun.description': {
+    ms: 'Pinjaman mikro mudah untuk peniaga kecil dan penjaja, sehingga RM10,000.',
+    en: 'Easy micro-loans for small traders and hawkers, up to RM10,000.'
+  },
+  'recommendation.data.tekun.highlight': {
+    ms: 'Kelulusan pantas, dokumentasi rendah',
+    en: 'Fast approval, low documentation'
+  },
+  'recommendation.data.fund_for_food.name': {
+    ms: 'Dana untuk Makanan (3F)',
+    en: 'Fund for Food (3F)'
+  },
+  'recommendation.data.fund_for_food.description': {
+    ms: 'Pembiayaan untuk projek pengeluaran makanan (tanaman, ternakan, akuakultur, dll.) untuk meningkatkan keselamatan makanan Malaysia.',
+    en: 'Financing for food production projects (crops, livestock, aquaculture, etc.) to boost Malaysia\'s food security.'
+  },
+  'recommendation.data.fund_for_food.highlight': {
+    ms: 'Pembiayaan jangka panjang untuk pengeluaran makanan',
+    en: 'Long-term financing for food production'
+  },
+  'recommendation.data.beep.name': {
+    ms: 'Program Peningkatan Perusahaan Bumiputera (BEEP)',
+    en: 'Bumiputera Enterprise Enhancement Program (BEEP)'
+  },
+  'recommendation.data.beep.description': {
+    ms: 'Geran untuk usahawan agri-bumiputera untuk menaik taraf peralatan, penjenamaan, dan digitalisasi.',
+    en: 'Grant for Bumiputera agri-entrepreneurs to upgrade equipment, branding, and digitalisation.'
+  },
+  'recommendation.data.beep.highlight': {
+    ms: 'Naik taraf aset perniagaan agri anda',
+    en: 'Upgrade your agri-business assets'
+  },
+  'recommendation.data.budi_madani.name': {
+    ms: 'BUDI MADANI Agri-Komoditi',
+    en: 'BUDI MADANI Agri-Komoditi'
+  },
+  'recommendation.data.budi_madani.description': {
+    ms: 'Subsidi tunai diesel RM200/bulan untuk petani kecil dan penanam komoditi berdaftar.',
+    en: 'RM200/month diesel cash subsidy for registered small-scale farmers and commodity growers.'
+  },
+  'recommendation.data.budi_madani.highlight': {
+    ms: 'Kurangkan kos pertanian anda dengan subsidi diesel bulanan!',
+    en: 'Lower your farming costs with monthly diesel subsidy!'
+  },
+
+  // Success Metrics
+  'recommendation.metrics.businesses_matched': {
+    ms: 'perniagaan mikro dipadankan',
+    en: 'micro businesses matched'
+  },
+  'recommendation.metrics.amount_approved': {
+    ms: 'juta diluluskan',
+    en: 'million approved'
+  },
+  'recommendation.metrics.found_support': {
+    ms: 'mendapat sokongan yang layak',
+    en: 'found eligible support'
+  },
+
+  // Top Picks Insights
+  'recommendation.insights.revenue_increase': {
+    ms: 'Potensi peningkatan hasil: +12%',
+    en: 'Potential revenue increase: +12%'
+  },
+  'recommendation.insights.fast_track_agri': {
+    ms: 'Percepat pertumbuhan perniagaan agri anda',
+    en: 'Fast-track your agri-business growth'
+  },
+  'recommendation.insights.high_funding': {
+    ms: 'Pembiayaan tinggi, halangan rendah untuk pengembangan',
+    en: 'High funding, low barrier for expansion'
+  },
+  'recommendation.insights.upgrade_assets': {
+    ms: 'Naik taraf aset, tingkatkan produktiviti',
+    en: 'Upgrade assets, boost productivity'
+  },
+  'recommendation.insights.quick_approval': {
+    ms: 'Kelulusan geran pantas untuk Bumiputera',
+    en: 'Quick grant approval for Bumiputera'
+  },
+  'recommendation.insights.enhance_brand': {
+    ms: 'Tingkatkan jenama dan kehadiran digital',
+    en: 'Enhance brand and digital presence'
+  },
+  'recommendation.insights.save_fuel': {
+    ms: 'Jimat sehingga RM2,400/tahun untuk bahan api',
+    en: 'Save up to RM2,400/year on fuel'
+  },
+  'recommendation.insights.lower_costs': {
+    ms: 'Kurangkan kos operasi bulanan',
+    en: 'Lower monthly operating costs'
+  },
+  'recommendation.insights.govt_support': {
+    ms: 'Sokongan kerajaan yang mudah',
+    en: 'Simple, government-backed support'
+  },
+
+  // Why Recommended
+  'recommendation.why.title': {
+    ms: 'Mengapa ini dicadangkan untuk anda:',
+    en: 'Why this is recommended for you:'
+  },
+  'recommendation.why.digitalize_sme': {
+    ms: 'Sesuai untuk PKS yang ingin mendigitalkan operasi dan meningkatkan jualan dalam talian. Kadar kelulusan tinggi untuk perniagaan yang layak.',
+    en: 'Ideal for SMEs looking to digitalize operations and boost online sales. High approval rate for eligible businesses.'
+  },
+  'recommendation.why.bumiputera_grant': {
+    ms: 'Geran khas untuk usahawan Bumiputera. Proses kelulusan yang dipermudahkan dan sokongan teknikal.',
+    en: 'Special grant for Bumiputera entrepreneurs. Streamlined approval process and technical support.'
+  },
+  'recommendation.why.monthly_subsidy': {
+    ms: 'Subsidi bulanan yang berterusan untuk mengurangkan kos operasi. Mudah untuk memohon dan menerima.',
+    en: 'Continuous monthly subsidy to reduce operating costs. Easy to apply and receive.'
+  },
+  'recommendation.why.micro_funding': {
+    ms: 'Sesuai untuk perniagaan mikro yang memerlukan pembiayaan pantas tanpa kerumitan untuk menyokong operasi harian atau pengembangan.',
+    en: 'Perfect for micro businesses needing quick, hassle-free funding to support daily operations or expansion.'
+  },
+  'recommendation.why.larger_funding': {
+    ms: 'Bagus untuk perusahaan mikro yang mencari pembiayaan yang lebih besar dengan pilihan pembayaran balik yang mesra perniagaan.',
+    en: 'Great for micro enterprises seeking larger funding with business-friendly repayment options.'
+  },
+
+  // History Modal
+  'recommendation.history.title': {
+    ms: 'Sejarah Cadangan',
+    en: 'Recommendation History'
+  },
+  'recommendation.history.no_history': {
+    ms: 'Tiada sejarah dijumpai.',
+    en: 'No history found.'
+  },
+  'recommendation.history.restore': {
+    ms: 'Pulihkan input ini',
+    en: 'Restore these inputs'
+  },
+
+  // Badge Text
+  'recommendation.badge.top': {
+    ms: 'Nombor',
+    en: 'Top'
+  },
+
+  // Additional Recommendation Data
+  'recommendation.data.sme_digitalisation.name': {
+    ms: 'Geran Padanan Digitalisasi PKS',
+    en: 'SME Digitalisation Matching Grant'
+  },
+  'recommendation.data.sme_digitalisation.description': {
+    ms: 'Geran padanan 50% untuk penyelesaian digital (e-dagang, POS, gaji, dll.), sehingga RM5,000.',
+    en: '50% matching grant for digital solutions (e-commerce, POS, payroll, etc.), up to RM5,000.'
+  },
+  'recommendation.data.sme_digitalisation.highlight': {
+    ms: 'Potong kos digital anda separuh!',
+    en: 'Cut your digital costs in half!'
+  },
+  'recommendation.data.sme_bank_loan.name': {
+    ms: 'Pinjaman Perusahaan Mikro Bank PKS',
+    en: 'SME Bank Micro Enterprise Loan'
+  },
+  'recommendation.data.sme_bank_loan.description': {
+    ms: 'Pinjaman mikro fleksibel sehingga RM50,000 untuk pertumbuhan perniagaan dan modal kerja.',
+    en: 'Flexible micro loans up to RM50,000 for business growth and working capital.'
+  },
+  'recommendation.data.sme_bank_loan.highlight': {
+    ms: 'Pembayaran balik fleksibel, syarat mesra perniagaan',
+    en: 'Flexible repayment, business-friendly terms'
+  },
+  'recommendation.data.tus.name': {
+    ms: 'Tabung Usahawan Siswazah (TUS)',
+    en: 'Tabung Usahawan Siswazah (TUS)'
+  },
+  'recommendation.data.tus.description': {
+    ms: 'Skim pinjaman untuk graduan memulakan atau mengembangkan perniagaan, sehingga RM50,000.',
+    en: 'Loan scheme for graduates to start or expand businesses, up to RM50,000.'
+  },
+  'recommendation.data.tus.highlight': {
+    ms: 'Khas untuk graduan universiti/kolej',
+    en: 'Special for university/college graduates'
+  },
+
+  // Additional Grant Data
+  'recommendation.data.beep_sme.name': {
+    ms: 'Program Peningkatan Perusahaan Bumiputera (BEEP)',
+    en: 'Bumiputera Enterprise Enhancement Program (BEEP)'
+  },
+  'recommendation.data.beep_sme.description': {
+    ms: 'Geran untuk PKS Bumiputera untuk menaik taraf peralatan, penjenamaan, dan digitalisasi.',
+    en: 'Grant for Bumiputera SMEs to upgrade equipment, branding, and digitalization.'
+  },
+  'recommendation.data.beep_sme.highlight': {
+    ms: 'Naik taraf aset perniagaan anda!',
+    en: 'Upgrade your business assets!'
+  },
+  'recommendation.data.mbf.name': {
+    ms: 'Pembiayaan Mikro Biz (MBF)',
+    en: 'Micro Biz Financing (MBF)'
+  },
+  'recommendation.data.mbf.description': {
+    ms: 'Pembiayaan mikro untuk petani kecil dan agroprenuer pada kadar faedah rendah (2% setahun).',
+    en: 'Micro-financing for small-scale farmers and agropreneurs at a low interest rate (2% per annum).'
+  },
+  'recommendation.data.mbf.highlight': {
+    ms: 'Faedah rendah, kelulusan mudah',
+    en: 'Low interest, easy approval'
+  },
+
+  // Subsidy Data
+  'recommendation.data.electricity_rebate.name': {
+    ms: 'Rebat Tarif Elektrik PKS',
+    en: 'SME Electricity Tariff Rebate'
+  },
+  'recommendation.data.electricity_rebate.description': {
+    ms: 'Rebat bulanan pada bil elektrik untuk perniagaan mikro dan kecil.',
+    en: 'Monthly rebate on electricity bills for micro and small businesses.'
+  },
+  'recommendation.data.electricity_rebate.highlight': {
+    ms: 'Kurangkan kos utiliti bulanan anda',
+    en: 'Lower your monthly utility costs'
+  },
+  'recommendation.data.sst_exemption.name': {
+    ms: 'Pengecualian Cukai Jualan & Perkhidmatan (SST)',
+    en: 'Sales & Service Tax (SST) Exemption'
+  },
+  'recommendation.data.sst_exemption.description': {
+    ms: 'Pengecualian daripada SST untuk kategori perniagaan terpilih.',
+    en: 'Exemption from SST for selected business categories.'
+  },
+  'recommendation.data.sst_exemption.highlight': {
+    ms: 'Tingkatkan margin keuntungan anda!',
+    en: 'Boost your profit margins!'
+  },
+  'recommendation.data.perkeso_subsidy.name': {
+    ms: 'Subsidi Gaji PERKESO',
+    en: 'PERKESO Wage Subsidy'
+  },
+  'recommendation.data.perkeso_subsidy.description': {
+    ms: 'Subsidi gaji untuk majikan mengekalkan pekerja tempatan semasa masa sukar.',
+    en: 'Wage subsidy for employers to retain local workers during tough times.'
+  },
+  'recommendation.data.perkeso_subsidy.highlight': {
+    ms: 'Sokongan untuk mengekalkan pasukan anda!',
+    en: 'Support for keeping your team!'
+  },
+  'recommendation.data.micro_tax_incentive.name': {
+    ms: 'Insentif Cukai Perusahaan Mikro',
+    en: 'Micro Enterprise Tax Incentive'
+  },
+  'recommendation.data.micro_tax_incentive.description': {
+    ms: 'Kadar cukai dikurangkan untuk perusahaan mikro pada RM600,000 pertama pendapatan boleh cukai.',
+    en: 'Reduced tax rate for micro enterprises on the first RM600,000 chargeable income.'
+  },
+  'recommendation.data.micro_tax_incentive.highlight': {
+    ms: 'Bayar cukai kurang, berkembang lebih!',
+    en: 'Pay less tax, grow more!'
+  },
+  'recommendation.data.food_tax_incentive.name': {
+    ms: 'Insentif Cukai untuk Projek Pengeluaran Makanan',
+    en: 'Tax Incentives for Food Production Projects'
+  },
+  'recommendation.data.food_tax_incentive.description': {
+    ms: 'Pengecualian cukai dan elaun modal dipercepatkan untuk projek pengeluaran makanan/pertanian yang diluluskan.',
+    en: 'Tax exemptions and accelerated capital allowances for approved food production/agriculture projects.'
+  },
+  'recommendation.data.food_tax_incentive.highlight': {
+    ms: 'Pelepasan cukai untuk projek makanan/agri',
+    en: 'Tax relief for food/agri projects'
+  },
+
+  // Type Badges
+  'recommendation.type.grant': {
+    ms: 'Geran',
+    en: 'Grant'
+  },
+  'recommendation.type.loan': {
+    ms: 'Pinjaman',
+    en: 'Loan'
+  },
+  'recommendation.type.subsidy': {
+    ms: 'Subsidi',
+    en: 'Subsidy'
+  },
+  'recommendation.type.tax_relief': {
+    ms: 'Pelepasan Cukai',
+    en: 'Tax Relief'
+  },
+
+  // Provider Names
+  'recommendation.provider.mdec_bsn': {
+    ms: 'MDEC & BSN',
+    en: 'MDEC & BSN'
+  },
+  'recommendation.provider.tekun': {
+    ms: 'TEKUN Nasional',
+    en: 'TEKUN Nasional'
+  },
+  'recommendation.provider.bsn': {
+    ms: 'BSN',
+    en: 'BSN'
+  },
+  'recommendation.provider.sme_bank': {
+    ms: 'Bank PKS',
+    en: 'SME Bank'
+  },
+  'recommendation.provider.mara': {
+    ms: 'MARA',
+    en: 'MARA'
+  },
+  'recommendation.provider.sme_corp': {
+    ms: 'Perbadanan PKS',
+    en: 'SME Corp'
+  },
+  'recommendation.provider.agrobank': {
+    ms: 'Agrobank',
+    en: 'Agrobank'
+  },
+  'recommendation.provider.ministry_finance': {
+    ms: 'Kementerian Kewangan',
+    en: 'Ministry of Finance'
+  },
+  'recommendation.provider.tnb': {
+    ms: 'TNB',
+    en: 'TNB'
+  },
+  'recommendation.provider.lhdn': {
+    ms: 'LHDN',
+    en: 'LHDN'
+  },
+  'recommendation.provider.perkeso': {
+    ms: 'PERKESO',
+    en: 'PERKESO'
+  },
+
+  // Eligibility Criteria
+  'recommendation.eligibility.digital_grant': {
+    ms: 'PKS milik Malaysia, min 60% pemilikan tempatan, beroperasi >1 tahun, jualan tahunan <RM50j.',
+    en: 'Malaysian-owned SME, min 60% local shareholding, in operation >1 year, annual sales <RM50m.'
+  },
+  'recommendation.eligibility.tekun': {
+    ms: 'Warganegara Malaysia, 18-65 tahun, pemilik perniagaan mikro, berdaftar dengan SSM atau majlis tempatan.',
+    en: 'Malaysian, 18-65 years old, micro business owner, registered with SSM or local council.'
+  },
+  'recommendation.eligibility.sme_digitalisation': {
+    ms: 'PKS Malaysia, beroperasi >1 tahun, jualan tahunan <RM50j.',
+    en: 'Malaysian SME, in operation >1 year, annual sales <RM50m.'
+  },
+  'recommendation.eligibility.sme_bank_loan': {
+    ms: 'Perusahaan mikro Malaysia, berdaftar dengan SSM, beroperasi >1 tahun.',
+    en: 'Malaysian micro enterprise, registered with SSM, in operation >1 year.'
+  },
+  'recommendation.eligibility.tus': {
+    ms: 'Graduan Malaysia, berumur 18-40, perniagaan berdaftar dengan SSM.',
+    en: 'Malaysian graduates, aged 18-40, business registered with SSM.'
+  },
+  'recommendation.eligibility.beep_sme': {
+    ms: 'PKS milik Bumiputera, berdaftar dengan SSM, beroperasi >1 tahun.',
+    en: 'Bumiputera-owned SME, registered with SSM, in operation >1 year.'
+  },
+  'recommendation.eligibility.fund_for_food': {
+    ms: 'Petani Malaysia, agroprenuer, syarikat berasaskan agri',
+    en: 'Malaysian farmers, agropreneurs, agri-based companies'
+  },
+  'recommendation.eligibility.mbf': {
+    ms: 'Usahawan mikro Malaysia dalam bidang pertanian',
+    en: 'Malaysian micro-entrepreneurs in agriculture'
+  },
+  'recommendation.eligibility.beep_agri': {
+    ms: 'Perniagaan agri milik Bumiputera',
+    en: 'Bumiputera-owned agri-businesses'
+  },
+  'recommendation.eligibility.budi_madani': {
+    ms: 'Warganegara Malaysia berdaftar dengan GeoAgro atau lembaga komoditi (MPOB, LGM, dll.), pendapatan RM50k–RM300k setahun',
+    en: 'Malaysian citizens registered with GeoAgro or commodity boards (MPOB, LGM, etc.), earning RM50k–RM300k annually'
+  },
+  'recommendation.eligibility.electricity_rebate': {
+    ms: 'Perniagaan mikro dan kecil berdaftar, pelanggan TNB',
+    en: 'Registered micro and small businesses, TNB customers'
+  },
+  'recommendation.eligibility.sst_exemption': {
+    ms: 'Perniagaan mikro dan kecil yang layak, lihat garis panduan LHDN',
+    en: 'Eligible micro and small businesses, see LHDN guidelines'
+  },
+  'recommendation.eligibility.perkeso_subsidy': {
+    ms: 'Majikan berdaftar, pekerja tempatan, tertakluk kepada syarat PERKESO.',
+    en: 'Registered employer, local employees, subject to PERKESO terms.'
+  },
+  'recommendation.eligibility.micro_tax_incentive': {
+    ms: 'Perusahaan mikro, jualan tahunan <RM300,000, <5 pekerja.',
+    en: 'Micro enterprise, annual sales <RM300,000, <5 employees.'
+  },
+  'recommendation.eligibility.food_tax_incentive': {
+    ms: 'Projek pertanian yang diluluskan',
+    en: 'Approved agricultural projects'
+  },
+
+  // For Whom Fields
+  'recommendation.for_whom.online_sellers': {
+    ms: 'Penjual dalam talian, kedai runcit, warung, perniagaan mikro',
+    en: 'Online sellers, kedai runcit, warung, micro businesses'
+  },
+  'recommendation.for_whom.pasar_malam': {
+    ms: 'Penjual pasar malam, gerai makanan, perniagaan berasaskan rumah',
+    en: 'Pasar malam sellers, food stalls, home-based businesses'
+  },
+  'recommendation.for_whom.sme_digitalize': {
+    ms: 'PKS yang ingin mendigitalkan',
+    en: 'SMEs looking to digitalize'
+  },
+  'recommendation.for_whom.micro_businesses': {
+    ms: 'Perniagaan mikro, gerai makanan, penyedia perkhidmatan',
+    en: 'Micro businesses, food stalls, service providers'
+  },
+  'recommendation.for_whom.young_entrepreneurs': {
+    ms: 'Usahawan muda, graduan baru',
+    en: 'Young entrepreneurs, new graduates'
+  },
+  'recommendation.for_whom.bumiputera_sme': {
+    ms: 'Perniagaan mikro dan kecil Bumiputera',
+    en: 'Bumiputera micro and small businesses'
+  },
+  'recommendation.for_whom.farmers': {
+    ms: 'Petani, agroprenuer, perniagaan agri',
+    en: 'Farmers, agropreneurs, agri-businesses'
+  },
+  'recommendation.for_whom.smallholder_farmers': {
+    ms: 'Petani kecil, agroprenuer mikro',
+    en: 'Smallholder farmers, micro agropreneurs'
+  },
+  'recommendation.for_whom.bumiputera_agri': {
+    ms: 'Agroprenuer Bumiputera',
+    en: 'Bumiputera agri-entrepreneurs'
+  },
+  'recommendation.for_whom.smallholder_livestock': {
+    ms: 'Petani kecil, penternak, penanam komoditi (cth: kelapa sawit, getah, koko)',
+    en: 'Smallholder farmers, livestock breeders, and commodity growers (e.g., palm oil, rubber, cocoa)'
+  },
+  'recommendation.for_whom.all_micro_sme': {
+    ms: 'Semua perniagaan mikro dan kecil',
+    en: 'All micro and small businesses'
+  },
+  'recommendation.for_whom.retailers_fnb': {
+    ms: 'Peruncit, F&B, penyedia perkhidmatan',
+    en: 'Retailers, F&B, service providers'
+  },
+  'recommendation.for_whom.employers': {
+    ms: 'Majikan dengan kakitangan tempatan',
+    en: 'Employers with local staff'
+  },
+  'recommendation.for_whom.micro_businesses_simple': {
+    ms: 'Perniagaan mikro',
+    en: 'Micro businesses'
+  },
+  'recommendation.for_whom.farmers_agri': {
+    ms: 'Petani, perniagaan agri',
+    en: 'Farmers, agri-businesses'
   }
 }
 
