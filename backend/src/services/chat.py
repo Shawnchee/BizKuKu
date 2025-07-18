@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 
 SYSTEM_PROMPT = """
-/no_think
 You are the Chat Agent to assist MSMEs in Malaysia in given advice and answer financial queries.
 You handle general-purpose financial queries, financial terms, news, etc.
 You should provide helpful, clear, and concise responses while maintaining a professional tone.
@@ -25,7 +24,7 @@ class LLM:
         messages: List,
         temperature: float = 0,
         max_tokens: int = 2048,
-        model_name: str = "gemini-2.0-flash-lite",
+        model_name: str = "gemini-2.5-flash",
         response_mime_type: str = "text/plain",
     ) -> Optional[str]:
 
