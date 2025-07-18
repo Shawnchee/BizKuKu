@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { CheckCircle, Sparkles, Play } from 'lucide-react'
 import { OnboardingStorage } from '@/lib/onboarding-storage'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface OnboardingProgressBarProps {
   className?: string
@@ -12,6 +13,7 @@ export default function OnboardingProgressBar({ className = '' }: OnboardingProg
   const [completedSteps, setCompletedSteps] = useState(0)
   const [currentStep, setCurrentStep] = useState(1)
   const [hasProgress, setHasProgress] = useState(false)
+  const { t } = useLanguage()
 
   const totalSteps = 4
 
@@ -69,7 +71,7 @@ export default function OnboardingProgressBar({ className = '' }: OnboardingProg
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-              Setup Progress
+              {t('progress.title')}
               <span className={`ml-2 text-sm px-2 py-1 rounded-full font-medium ${
                 !hasProgress
                   ? 'bg-blue-100 text-blue-700'
@@ -80,19 +82,19 @@ export default function OnboardingProgressBar({ className = '' }: OnboardingProg
                   : 'bg-blue-100 text-blue-700'
               }`}>
                 {!hasProgress
-                  ? 'Get Started!'
+                  ? t('progress.get_started')
                   : completedSteps === totalSteps
-                  ? 'Completed!'
+                  ? t('progress.completed')
                   : completedSteps >= 2
-                  ? 'Almost Done!'
-                  : 'In Progress'
+                  ? t('progress.almost_done')
+                  : t('progress.in_progress')
                 }
               </span>
             </h3>
             <p className="text-sm text-gray-600">
               {hasProgress
-                ? `${completedSteps} of ${totalSteps} steps completed • Kemajuan setup`
-                : 'Start your business setup journey • Mulakan perjalanan setup perniagaan'
+                ? `${completedSteps} of ${totalSteps} ${t('progress.steps_completed')}`
+                : t('progress.start_journey')
               }
             </p>
           </div>
@@ -109,12 +111,12 @@ export default function OnboardingProgressBar({ className = '' }: OnboardingProg
             {!hasProgress ? (
               <>
                 <Play className="w-4 h-4 inline mr-1" />
-                Start Setup →
+                {t('progress.start_setup')}
               </>
             ) : completedSteps === totalSteps ? (
-              'View Dashboard →'
+              t('progress.view_dashboard')
             ) : (
-              'Continue Setup →'
+              t('progress.continue_setup')
             )}
           </a>
         </div>
@@ -154,19 +156,19 @@ export default function OnboardingProgressBar({ className = '' }: OnboardingProg
         <p className="text-sm text-gray-700">
           {!hasProgress ? (
             <>
-              <span className="font-medium text-blue-600">Ready to start?</span> Set up your business in just 4 simple steps! 🚀
+              <span className="font-medium text-blue-600">{t('progress.ready_start')}</span> {t('progress.setup_steps')} 🚀
             </>
           ) : completedSteps === totalSteps ? (
             <>
-              <span className="font-medium text-green-600">Congratulations!</span> Your business setup is complete! 🎉
+              <span className="font-medium text-green-600">{t('progress.congratulations')}</span> {t('progress.setup_complete')} 🎉
             </>
           ) : completedSteps >= 2 ? (
             <>
-              <span className="font-medium text-blue-600">Almost there!</span> Just {totalSteps - completedSteps} more step{totalSteps - completedSteps > 1 ? 's' : ''} to go! 🚀
+              <span className="font-medium text-blue-600">{t('progress.almost_there')}</span> {totalSteps - completedSteps} {t('progress.more_steps')} 🚀
             </>
           ) : (
             <>
-              <span className="font-medium text-blue-600">Great start!</span> Continue your setup journey! 💪
+              <span className="font-medium text-blue-600">{t('progress.great_start')}</span> {t('progress.continue_journey')} 💪
             </>
           )}
         </p>

@@ -149,26 +149,26 @@ export const socialLinks: SocialLinks = {
 export const features: Feature[] = [
   {
     id: '1',
-    title: 'Advanced Analytics',
-    description: 'Get deep insights into your business performance with our comprehensive analytics dashboard.',
+    title: 'Tengok Jualan • See Sales',
+    description: 'Tengok berapa duit masuk hari ini dan bulan ini dengan mudah • See how much money came in today and this month easily.',
     icon: BarChart3,
   },
   {
     id: '2',
-    title: 'Real-time Monitoring',
-    description: 'Monitor your key metrics in real-time and make data-driven decisions instantly.',
+    title: 'Pantau Masa Nyata • Live Updates',
+    description: 'Tengok jualan terkini setiap masa untuk buat keputusan bijak • See latest sales anytime to make smart decisions.',
     icon: TrendingUp,
   },
   {
     id: '3',
-    title: 'Secure & Reliable',
-    description: 'Enterprise-grade security with 99.9% uptime guarantee for your peace of mind.',
+    title: 'Selamat & Boleh Harap • Safe & Reliable',
+    description: 'Data anda selamat dan sistem sentiasa berfungsi untuk ketenangan fikiran • Your data is safe and system always works for peace of mind.',
     icon: Shield,
   },
   {
     id: '4',
-    title: 'Lightning Fast',
-    description: 'Optimized performance ensures your data loads quickly and efficiently.',
+    title: 'Pantas & Mudah • Fast & Easy',
+    description: 'Sistem yang pantas dan mudah digunakan untuk semua orang • Fast and easy system for everyone to use.',
     icon: Zap,
   },
 ]

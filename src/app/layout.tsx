@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Chatbot from '@/components/chatbot/Chatbot'
+import { LanguageProvider } from '@/contexts/LanguageContext'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BizzKu - Empowering Business Growth",
-  description: "Advanced analytics and business intelligence platform to help your business thrive in the digital age.",
+  title: "BizzKuku",
+  description: "Track sales, customers, and money easily. Perfect for small shops and stalls.",
 };
 
 export default function RootLayout({
@@ -30,12 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Header />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Chatbot />
-        <Footer />
+        <LanguageProvider>
+          <Header />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Chatbot />
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

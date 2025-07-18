@@ -6,16 +6,19 @@ import { usePathname } from 'next/navigation'
 import { Menu, X, BarChart3 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { NavItem } from '@/lib/types'
+import { useLanguage } from '@/contexts/LanguageContext'
+import LanguageToggle from '@/components/ui/LanguageToggle'
 
 const navigation: NavItem[] = [
-  { name: 'Home', href: '/' },
-  { name: 'Dashboard', href: '/dashboard' },
-  { name: 'Recommendation', href: '/recommendation' },
+  { name: 'nav.home', href: '/' },
+  { name: 'nav.dashboard', href: '/dashboard' },
+  { name: 'nav.recommendation', href: '/recommendation' },
 ]
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+  const { t } = useLanguage()
 
   const isActive = (href: string) => {
     if (href === '/') {
@@ -55,9 +58,10 @@ export default function Header() {
                   )}
                   aria-current={isActive(item.href) ? 'page' : undefined}
                 >
-                  {item.name}
+                  {t(item.name)}
                 </Link>
               ))}
+              <LanguageToggle />
             </div>
           </div>
 
@@ -96,9 +100,12 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   aria-current={isActive(item.href) ? 'page' : undefined}
                 >
-                  {item.name}
+                  {t(item.name)}
                 </Link>
               ))}
+              <div className="px-3 py-2">
+                <LanguageToggle />
+              </div>
             </div>
           </div>
         )}

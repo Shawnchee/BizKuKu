@@ -1,51 +1,53 @@
 'use client'
 
 import { DollarSign, HandHeart, TrendingUp, Star, ArrowRight, Sparkles } from 'lucide-react'
-
-// Recommended financial services for micro-enterprises
-const recommendedServices = [
-  {
-    id: '1',
-    title: 'Subsidy',
-    subtitle: 'Subsidi Kerajaan',
-    description: 'Get government help for your business',
-    icon: HandHeart,
-    color: 'from-green-500 to-emerald-500',
-    bgColor: 'from-green-50 to-emerald-50',
-    borderColor: 'border-green-200',
-    amount: 'Up to RM10,000',
-    popular: false,
-    href: '/services/subsidy'
-  },
-  {
-    id: '2',
-    title: 'Loans',
-    subtitle: 'Pinjaman Perniagaan',
-    description: 'Quick business loans with low interest',
-    icon: DollarSign,
-    color: 'from-blue-500 to-indigo-500',
-    bgColor: 'from-blue-50 to-indigo-50',
-    borderColor: 'border-blue-200',
-    amount: 'From RM1,000',
-    popular: false,
-    href: '/services/loans'
-  },
-  {
-    id: '3',
-    title: 'Grants',
-    subtitle: 'Geran Perniagaan',
-    description: 'Free money to grow your business',
-    icon: TrendingUp,
-    color: 'from-purple-500 to-pink-500',
-    bgColor: 'from-purple-50 to-pink-50',
-    borderColor: 'border-purple-200',
-    amount: 'Up to RM50,000',
-    popular: false,
-    href: '/services/grants'
-  },
-]
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function RecommendedSection() {
+  const { t } = useLanguage()
+
+  // Recommended financial services for micro-enterprises
+  const recommendedServices = [
+    {
+      id: '1',
+      titleKey: 'recommended.subsidy.title',
+      subtitleKey: 'recommended.subsidy.subtitle',
+      descriptionKey: 'recommended.subsidy.desc',
+      icon: HandHeart,
+      color: 'from-green-500 to-emerald-500',
+      bgColor: 'from-green-50 to-emerald-50',
+      borderColor: 'border-green-200',
+      amount: 'Up to RM10,000',
+      popular: false,
+      href: '/services/subsidy'
+    },
+    {
+      id: '2',
+      titleKey: 'recommended.loans.title',
+      subtitleKey: 'recommended.loans.subtitle',
+      descriptionKey: 'recommended.loans.desc',
+      icon: DollarSign,
+      color: 'from-blue-500 to-indigo-500',
+      bgColor: 'from-blue-50 to-indigo-50',
+      borderColor: 'border-blue-200',
+      amount: 'From RM1,000',
+      popular: false,
+      href: '/services/loans'
+    },
+    {
+      id: '3',
+      titleKey: 'recommended.insurance.title',
+      subtitleKey: 'recommended.insurance.subtitle',
+      descriptionKey: 'recommended.insurance.desc',
+      icon: TrendingUp,
+      color: 'from-purple-500 to-pink-500',
+      bgColor: 'from-purple-50 to-pink-50',
+      borderColor: 'border-purple-200',
+      amount: 'Up to RM50,000',
+      popular: false,
+      href: '/services/grants'
+    },
+  ]
   return (
     <section className="py-12 bg-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -54,17 +56,14 @@ export default function RecommendedSection() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Recommended
-                <span className="block text-lg text-gray-600 font-normal">
-                  Disyorkan
-                </span>
+                {t('recommended.title')}
               </h2>
               <p className="text-gray-600">
-                Financial help for your business • Bantuan kewangan untuk perniagaan anda
+                {t('recommended.subtitle')}
               </p>
             </div>
             <button className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center">
-              View All
+              {t('recommended.view_all')}
               <ArrowRight className="w-4 h-4 ml-1" />
             </button>
           </div>
@@ -82,7 +81,7 @@ export default function RecommendedSection() {
               {service.popular && (
                 <div className="absolute -top-2 -right-2 bg-gradient-to-r from-orange-400 to-red-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center">
                   <Star className="w-3 h-3 mr-1" />
-                  Popular
+                  {t('recommended.popular')}
                 </div>
               )}
 
@@ -94,13 +93,13 @@ export default function RecommendedSection() {
               {/* Content */}
               <div className="space-y-2">
                 <h3 className="text-lg font-bold text-gray-900">
-                  {service.title}
+                  {t(service.titleKey)}
                 </h3>
                 <p className="text-sm text-gray-500 font-medium">
-                  {service.subtitle}
+                  {t(service.subtitleKey)}
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  {service.description}
+                  {t(service.descriptionKey)}
                 </p>
                 
                 {/* Amount */}
@@ -126,7 +125,7 @@ export default function RecommendedSection() {
         <div className="mt-8 text-center">
           <div className="inline-flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
             <Sparkles className="w-4 h-4 mr-2" />
-            Apply in just 5 minutes • Mohon dalam 5 minit sahaja
+            {t('recommended.apply_minutes')}
           </div>
         </div>
       </div>
