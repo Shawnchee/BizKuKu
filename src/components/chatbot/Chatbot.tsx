@@ -101,7 +101,7 @@ const Chatbot: React.FC = () => {
             </button>
             {/* Title (centered) */}
             <span className="font-semibold text-base flex items-center gap-2">
-              BizzKu AI
+              AI Chatbot
             </span>
             {/* Expand/Collapse button */}
             <button

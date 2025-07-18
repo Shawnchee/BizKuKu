@@ -20,7 +20,7 @@ const translations = {
     en: 'Home'
   },
   'nav.dashboard': {
-    ms: 'Papan',
+    ms: 'Analysis',
     en: 'Dashboard'
   },
   'nav.recommendation': {
@@ -30,7 +30,7 @@ const translations = {
   
   // Hero Section
   'hero.badge': {
-    ms: 'Terbaik untuk Bisnes Kecil',
+    ms: 'Terbaik untuk Perusahaan Kecil',
     en: 'Best for Small Business'
   },
   'hero.title.main': {
@@ -64,7 +64,7 @@ const translations = {
   
   // Dashboard Preview
   'dashboard.title': {
-    ms: 'Papan Bisnes Anda',
+    ms: 'Papan Perusahaam Anda',
     en: 'Your Business Dashboard'
   },
   'dashboard.today': {
@@ -152,7 +152,7 @@ const translations = {
     en: 'steps completed'
   },
   'progress.start_journey': {
-    ms: 'Mulakan perjalanan setup bisnes anda',
+    ms: 'Mulakan perjalanan setup perniagaan anda',
     en: 'Start your business setup journey'
   },
   'progress.start_setup': {
@@ -172,7 +172,7 @@ const translations = {
     en: 'Ready to start?'
   },
   'progress.setup_steps': {
-    ms: 'Setup bisnes anda dalam 4 langkah mudah!',
+    ms: 'Setup perniagaan anda dalam 4 langkah mudah!',
     en: 'Set up your business in just 4 simple steps!'
   },
   'progress.congratulations': {
@@ -180,7 +180,7 @@ const translations = {
     en: 'Congratulations!'
   },
   'progress.setup_complete': {
-    ms: 'Setup bisnes anda sudah selesai!',
+    ms: 'Setup perniagaan anda sudah selesai!',
     en: 'Your business setup is complete!'
   },
   'progress.almost_there': {
@@ -206,7 +206,7 @@ const translations = {
     en: 'Recommended'
   },
   'recommended.subtitle': {
-    ms: 'Bantuan kewangan untuk bisnes anda',
+    ms: 'Bantuan kewangan untuk perniagaan anda',
     en: 'Financial help for your business'
   },
   'recommended.view_all': {
@@ -222,7 +222,7 @@ const translations = {
     en: 'Government Subsidy'
   },
   'recommended.subsidy.desc': {
-    ms: 'Dapatkan bantuan kerajaan untuk bisnes anda',
+    ms: 'Dapatkan bantuan kerajaan untuk perniagaan anda',
     en: 'Get government help for your business'
   },
   'recommended.loans.title': {
@@ -230,11 +230,11 @@ const translations = {
     en: 'Loans'
   },
   'recommended.loans.subtitle': {
-    ms: 'Pinjaman Bisnes',
+    ms: 'Pinjaman Perniagaan',
     en: 'Business Loans'
   },
   'recommended.loans.desc': {
-    ms: 'Pinjaman bisnes pantas dengan faedah rendah',
+    ms: 'Pinjaman perniagaan pantas dengan faedah rendah',
     en: 'Quick business loans with low interest'
   },
   'recommended.insurance.title': {
@@ -242,11 +242,11 @@ const translations = {
     en: 'Insurance'
   },
   'recommended.insurance.subtitle': {
-    ms: 'Perlindungan Bisnes',
+    ms: 'Perlindungan Perniagaan',
     en: 'Business Protection'
   },
   'recommended.insurance.desc': {
-    ms: 'Lindungi bisnes anda dari risiko',
+    ms: 'Lindungi perniagaan anda dari risiko',
     en: 'Protect your business from risks'
   },
   'recommended.popular': {
@@ -336,7 +336,7 @@ const translations = {
 
   // Features Section Bottom CTA
   'features.ready_transform': {
-    ms: 'Sedia untuk ubah bisnes anda?',
+    ms: 'Sedia untuk ubah perniagaan anda?',
     en: 'Ready to transform your business?'
   },
   'features.start_journey': {
@@ -356,8 +356,8 @@ const translations = {
 
   // Footer
   'footer.copyright': {
-    ms: '© 2025 BizzKu. Semua hak terpelihara.',
-    en: '© 2025 BizzKu. All rights reserved.'
+    ms: '© 2025 BizKuku. Semua hak terpelihara.',
+    en: '© 2025 BizKuku. All rights reserved.'
   },
 
   // Onboarding - Main Steps

@@ -67,7 +67,7 @@ export default function CTASection() {
                 size="lg"
                 className="bg-white text-blue-600 hover:bg-gray-50 text-lg px-10 py-4 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 font-bold"
               >
-                Try BizzKu Now - Free →
+                Try BizKuku Now - Free →
               </Button>
             </Link>
             <Link href="/demo">

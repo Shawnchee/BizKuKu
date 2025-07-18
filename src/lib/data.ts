@@ -120,7 +120,7 @@ import {
 
 // Company Information
 export const companyInfo = {
-  name: 'BizzKu',
+  name: 'BizKuku',
   tagline: 'Empowering Business Growth Through Innovation',
   mission: 'To provide cutting-edge solutions that help businesses thrive in the digital age.',
   vision: 'To be the leading platform for business transformation and growth.',
