@@ -9,6 +9,7 @@ import DataTable from '@/components/ui/DataTable'
 import LineChart from '@/components/charts/LineChart'
 import BarChart from '@/components/charts/BarChart'
 import PieChart from '@/components/charts/PieChart'
+import CountUp from '@/components/animation/CountUp'
 import { 
   msmeBusinessProfile,
   msmeKPIData,
@@ -163,9 +164,16 @@ export default function MSMEDashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-green-700">Total Balance</p>
-                <p className="text-2xl font-bold text-green-900">
-                  {showBalance ? formatCurrency(getTotalBalance()) : 'RM ••••••'}
-                </p>
+                <div className="text-2xl font-bold text-green-900">
+                  {showBalance ? (
+                    <div className="flex items-center">
+                      <span className="mr-1">RM</span>
+                      <CountUp to={getTotalBalance()} duration={2} separator="," />
+                    </div>
+                  ) : (
+                    'RM ••••••'
+                  )}
+                </div>
                 <p className="text-xs text-green-600 mt-1">Across 3 bank accounts</p>
               </div>
               <div className="p-3 bg-green-200 rounded-full">
@@ -178,9 +186,20 @@ export default function MSMEDashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-blue-700">Monthly Cash Inflow</p>
-                <p className="text-2xl font-bold text-blue-900">
-                  {showBalance ? formatCurrency(msmeConsolidatedFinancialData.totalIncome) : 'RM ••••••'}
-                </p>
+                <div className="text-2xl font-bold text-blue-900">
+                  {showBalance ? (
+                    <div className="flex items-center">
+                      <span className="mr-1">RM</span>
+                      <CountUp
+                        to={msmeConsolidatedFinancialData.totalIncome}
+                        duration={2}
+                        separator=","
+                      />
+                    </div>
+                  ) : (
+                    'RM ••••••'
+                  )}
+                </div>
                 <p className="text-xs text-blue-600 mt-1 flex items-center gap-1">
                   <ArrowUpRight className="h-3 w-3" />
                   +15.2% from last month
@@ -196,7 +215,9 @@ export default function MSMEDashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-purple-700">Digital Payments</p>
-                <p className="text-2xl font-bold text-purple-900">76%</p>
+                <div className="text-2xl font-bold text-purple-900">
+                  <CountUp to={76} duration={2} />%
+                </div>
                 <p className="text-xs text-purple-600 mt-1">of total transactions</p>
               </div>
               <div className="p-3 bg-purple-200 rounded-full">
@@ -209,7 +230,9 @@ export default function MSMEDashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-orange-700">Daily Transactions</p>
-                <p className="text-2xl font-bold text-orange-900">47</p>
+                <div className="text-2xl font-bold text-orange-900">
+                  <CountUp to={47} duration={2} />
+                </div>
                 <p className="text-xs text-orange-600 mt-1">Average per day</p>
               </div>
               <div className="p-3 bg-orange-200 rounded-full">

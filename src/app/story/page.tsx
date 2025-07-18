@@ -7,6 +7,7 @@ import FoodStoryCard from '@/components/story/FoodStoryCard'
 import InteractiveStoryTimeline from '@/components/story/InteractiveStoryTimeline'
 import { Card } from '@/components/ui'
 import { Button } from '@/components/ui'
+import CountUp from '@/components/animation/CountUp'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { msmeBusinessProfile, msmeKPIData, msmeFinancialKPIs, msmeBankAccounts, msmeTransactions, msmeDailySalesPattern, msmeRevenueBreakdown, msmeMenuPerformance, msmeCustomerDemographics, msmePaymentMethodPerformance } from '@/lib/msme-data'
 import { formatCurrency, formatNumber } from '@/lib/utils'
@@ -317,20 +318,46 @@ export default function StoryPage() {
               <div className="flex items-center gap-3">
                 <div className="text-2xl">💳</div>
                 <p className="text-gray-700">
-                  {language === 'ms' ? 
-                    `Kak Siti terima bayaran sejumlah ${formatCurrency(todayInflow)} hari ini.` :
-                    `Kak Siti received payments totaling ${formatCurrency(todayInflow)} today.`
-                  }
+                  {language === 'ms' ? (
+                    <>
+                      Kak Siti terima bayaran sejumlah{' '}
+                      <span className="font-bold">
+                        RM<CountUp to={todayInflow} duration={2} separator="," />
+                      </span>{' '}
+                      hari ini.
+                    </>
+                  ) : (
+                    <>
+                      Kak Siti received payments totaling{' '}
+                      <span className="font-bold">
+                        RM<CountUp to={todayInflow} duration={2} separator="," />
+                      </span>{' '}
+                      today.
+                    </>
+                  )}
                 </p>
               </div>
               
               <div className="flex items-center gap-3">
                 <div className="text-2xl">💰</div>
                 <p className="text-gray-700">
-                  {language === 'ms' ? 
-                    `Wang bersih hari ini ${formatCurrency(todayNetFlow)}.` :
-                    `Today's net cash flow is ${formatCurrency(todayNetFlow)}.`
-                  }
+                  {language === 'ms' ? (
+                    <>
+                      Wang bersih hari ini{' '}
+                      <span className="font-bold">
+                        RM<CountUp to={todayNetFlow.toFixed(2)} duration={2} separator="," />
+                      </span>
+                      .
+                    </>
+                  ) : (
+                    <>
+                      Today's net cash flow is{' '}
+                      <span className="font-bold">
+                        RM<CountUp to={todayNetFlow.toFixed(2)} duration={2} separator="," />
+                      </span>
+                      .
+                    </>
+                  )}
                 </p>
               </div>
               
@@ -371,7 +398,7 @@ export default function StoryPage() {
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{method.name}</h3>
                   <div className="text-3xl font-bold text-blue-600 mb-2">
-                    {method.value}
+                    <CountUp to={method.value} duration={2} separator="," />
                   </div>
                   <p className="text-gray-600 text-sm mb-4">
                     {language === 'ms' ? 'transaksi bulan ini' : 'transactions this month'}
@@ -415,7 +442,7 @@ export default function StoryPage() {
                   {language === 'ms' ? 'Minggu Ini' : 'This Week'}
                 </div>
                 <div className="text-3xl font-bold text-gray-900">
-                  {formatCurrency(todayInflow * 7)}
+                  RM<CountUp to={todayInflow * 7} duration={2} separator="," />
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-2">
                   <ArrowUp className="h-5 w-5 text-green-500" />
@@ -431,7 +458,7 @@ export default function StoryPage() {
                   {language === 'ms' ? 'Minggu Lepas' : 'Last Week'}
                 </div>
                 <div className="text-3xl font-bold text-gray-600">
-                  {formatCurrency(todayInflow * 7 * 0.85)}
+                  RM<CountUp to={todayInflow * 7 * 0.85} duration={2} separator="," />
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-2">
                   <span className="text-gray-500">
