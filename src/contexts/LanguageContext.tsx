@@ -34,12 +34,12 @@ const translations = {
     en: 'Best for Small Business'
   },
   'hero.title.main': {
-    ms: 'Jaga Bisnes Anda',
-    en: 'Manage Your Business'
+    ms: 'Mula dan Kembangkan',
+    en: 'Onboard and Grow'
   },
   'hero.title.sub': {
-    ms: 'Dengan Mudah',
-    en: 'Easily'
+    ms: 'Perusahaan Anda',
+    en: 'Your Business Easily'
   },
   'hero.description.main': {
     ms: 'Tengok jualan, pelanggan, dan duit dengan senang.',

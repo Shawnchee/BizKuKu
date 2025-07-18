@@ -13,12 +13,14 @@ export default function HeroSection() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/home_page_bg.jpg')",
+          backgroundImage: "url('/background.jpeg')",
         }}
       ></div>
+      {/* Extra black overlay for more darkness */}
+      <div className="absolute inset-0 bg-black/70"></div>
 
       {/* Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-indigo-900/60 to-purple-900/70"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-black-900/90 via-black-900/80 to-black-900/90"></div>
 
       {/* Background decorations */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
@@ -41,7 +43,7 @@ export default function HeroSection() {
 
             {/* Enhanced Heading */}
             <h1 className="text-4xl font-bold text-white sm:text-5xl mb-6 leading-tight drop-shadow-lg">
-              <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-500 to-indigo-400 bg-clip-text text-transparent">
                 {t('hero.title.main')}
               </span>
               <br />
@@ -52,7 +54,7 @@ export default function HeroSection() {
             <p className="text-xl text-white/90 mb-8 leading-relaxed drop-shadow-md">
               {t('hero.description.main')}
               <br />
-              <span className="font-medium text-yellow-200">{t('hero.description.sub')}</span>
+              <span className="font-medium text-blue-200">{t('hero.description.sub')}</span>
             </p>
 
             {/* Enhanced Button with stats */}
@@ -60,6 +62,9 @@ export default function HeroSection() {
               <Link href="/onboarding">
                 <Button size="lg" className="text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                   {t('hero.button')} !
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 ml-1">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3" />
+                  </svg>
                 </Button>
               </Link>
               <div className="mt-4 flex items-center justify-center lg:justify-start space-x-6 text-sm text-white/80">
