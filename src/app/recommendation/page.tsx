@@ -139,21 +139,57 @@ export default function RecommendationPage() {
       apply_url: 'https://www.smecorp.gov.my/',
       for_whom: 'Bumiputera micro and small businesses',
       highlight: 'Upgrade your business assets!'
+    },
+    {
+      id: 10007,
+      name: 'Fund for Food (3F)',
+      description: 'Financing for food production projects (crops, livestock, aquaculture, etc.) to boost Malaysia’s food security.',
+      type: 'Loan',
+      max_amount: 5000000,
+      provider: 'Agrobank',
+      eligibility: 'Malaysian farmers, agropreneurs, agri-based companies',
+      apply_url: 'https://www.agrobank.com.my/',
+      for_whom: 'Farmers, agropreneurs, agri-businesses',
+      highlight: 'Long-term financing for food production'
+    },
+    {
+      id: 10008,
+      name: 'Micro Biz Financing (MBF)',
+      description: 'Micro-financing for small-scale farmers and agropreneurs at a low interest rate (2% per annum).',
+      type: 'Loan',
+      max_amount: 50000,
+      provider: 'Agrobank',
+      eligibility: 'Malaysian micro-entrepreneurs in agriculture',
+      apply_url: 'https://www.agrobank.com.my/',
+      for_whom: 'Smallholder farmers, micro agropreneurs',
+      highlight: 'Low interest, easy approval'
+    },
+    {
+      id: 10009,
+      name: 'Bumiputera Enterprise Enhancement Program (BEEP)',
+      description: 'Grant for Bumiputera agri-entrepreneurs to upgrade equipment, branding, and digitalisation.',
+      type: 'Grant',
+      max_amount: 20000,
+      provider: 'SME Corp',
+      eligibility: 'Bumiputera-owned agri-businesses',
+      apply_url: 'https://www.smecorp.gov.my/',
+      for_whom: 'Bumiputera agri-entrepreneurs',
+      highlight: 'Upgrade your agri-business assets'
     }
   ]
 
   const subsidiesAndSchemes = [
     {
       id: 20001,
-      name: 'Fertilizer Subsidy Program (MOA)',
-      description: 'Up to 30% discount on fertilizer for eligible farmers.',
+      name: 'BUDI MADANI Agri-Komoditi',
+      description: 'RM200/month diesel cash subsidy for registered small-scale farmers and commodity growers.',
       type: 'Subsidy',
-      max_amount: 0,
-      provider: 'Ministry of Agriculture',
-      eligibility: 'Registered farmers in Kelantan, Terengganu',
-      apply_url: 'https://www.moa.gov.my/',
-      for_whom: 'Paddy, vegetable, and fruit farmers',
-      highlight: 'Reduce your input costs!'
+      max_amount: 200,
+      provider: 'Ministry of Finance',
+      eligibility: 'Malaysian citizens registered with GeoAgro or commodity boards (MPOB, LGM, etc.), earning RM50k–RM300k annually',
+      apply_url: 'https://budimadani.gov.my',
+      for_whom: 'Smallholder farmers, livestock breeders, and commodity growers (e.g., palm oil, rubber, cocoa)',
+      highlight: 'Lower your farming costs with monthly diesel subsidy!'
     },
     {
       id: 20002,
@@ -180,7 +216,7 @@ export default function RecommendationPage() {
       highlight: 'Boost your profit margins!'
     },
     {
-      id: 20005,
+      id: 20004,
       name: 'PERKESO Wage Subsidy',
       description: 'Wage subsidy for employers to retain local workers during tough times.',
       type: 'Subsidy',
@@ -192,7 +228,7 @@ export default function RecommendationPage() {
       highlight: 'Support for keeping your team!'
     },
     {
-      id: 20006,
+      id: 20005,
       name: 'Micro Enterprise Tax Incentive',
       description: 'Reduced tax rate for micro enterprises on the first RM600,000 chargeable income.',
       type: 'Tax Relief',
@@ -202,6 +238,18 @@ export default function RecommendationPage() {
       apply_url: 'https://www.hasil.gov.my/',
       for_whom: 'Micro businesses',
       highlight: 'Pay less tax, grow more!'
+    },
+    {
+      id: 20006,
+      name: 'Tax Incentives for Food Production Projects',
+      description: 'Tax exemptions and accelerated capital allowances for approved food production/agriculture projects.',
+      type: 'Tax Relief',
+      max_amount: 0,
+      provider: 'LHDN',
+      eligibility: 'Approved agricultural projects',
+      apply_url: 'https://www.hasil.gov.my/',
+      for_whom: 'Farmers, agri-businesses',
+      highlight: 'Tax relief for food/agri projects'
     }
   ]
 
@@ -219,7 +267,7 @@ export default function RecommendationPage() {
       // Show grants & loans by default
       setRecommendations(grantsAndLoans)
       setActiveTab('funding')
-    }, 7000)
+    }, 5000)
   }
 
   const handleHistoryOpen = () => {
@@ -388,11 +436,89 @@ export default function RecommendationPage() {
           <ThinkingProcess isVisible={isThinking} />
         )}
 
+        {/* Top 3 Picks Section */}
+        {(!isThinking && recommendations.length > 0) && (
+          <div className="mb-10">
+            <h2 className="text-2xl font-bold mb-4 text-blue-900 flex items-center gap-2">
+              <span>🏆</span> Top 3 Picks for Your Business
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Top 3 hardcoded picks with insights */}
+              {[grantsAndLoans[6], grantsAndLoans[8], subsidiesAndSchemes[0]].map((rec, idx) => (
+                <div key={rec.id} className="bg-white border-2 border-blue-300 rounded-2xl shadow-lg p-6 flex flex-col h-full relative">
+                  <div className="absolute top-4 right-4">
+                    <Badge className="bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow">Top {idx + 1}</Badge>
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge>{rec.type}</Badge>
+                    <span className="text-xs text-blue-700 font-semibold">{rec.provider}</span>
+                  </div>
+                  <div className="font-bold text-lg mb-1 text-blue-900">{rec.name}</div>
+                  <div className="text-sm text-gray-600 mb-2">{rec.description}</div>
+                  <div className="mb-2">
+                    <span className="inline-block bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded">{rec.highlight}</span>
+                  </div>
+                  <div className="mb-2">
+                    <span className="font-semibold text-gray-700">Max Amount: </span>
+                    <span className="text-gray-900">RM{rec.max_amount.toLocaleString()}</span>
+                  </div>
+                  {/* Insights */}
+                  <div className="mb-2 mt-2">
+                    <ul className="space-y-1 text-sm">
+                      {idx === 0 && (
+                        <>
+                          <li>📈 <span className="font-semibold text-green-700">Potential revenue increase: +12%</span></li>
+                          <li>🚀 <span className="font-semibold text-blue-700">Fast-track your agri-business growth</span></li>
+                          <li>💰 <span className="font-semibold text-yellow-700">High funding, low barrier for expansion</span></li>
+                        </>
+                      )}
+                      {idx === 1 && (
+                        <>
+                          <li>💡 <span className="font-semibold text-green-700">Upgrade assets, boost productivity</span></li>
+                          <li>⚡ <span className="font-semibold text-blue-700">Quick grant approval for Bumiputera</span></li>
+                          <li>📊 <span className="font-semibold text-yellow-700">Enhance brand and digital presence</span></li>
+                        </>
+                      )}
+                      {idx === 2 && (
+                        <>
+                          <li>💸 <span className="font-semibold text-green-700">Save up to RM2,400/year on fuel</span></li>
+                          <li>🌱 <span className="font-semibold text-blue-700">Lower monthly operating costs</span></li>
+                          <li>🏅 <span className="font-semibold text-yellow-700">Simple, government-backed support</span></li>
+                        </>
+                      )}
+                    </ul>
+                  </div>
+                  {/* Why recommended */}
+                  <div className="mb-4 mt-2">
+                    <div className="text-xs text-gray-500 font-semibold mb-1">Why this is recommended for you:</div>
+                    <div className="text-sm text-gray-700">
+                      {idx === 0 && (
+                        <>Ideal for SMEs looking to digitalize operations and boost online sales. High approval rate for eligible businesses.</>
+                      )}
+                      {idx === 1 && (
+                        <>Perfect for micro businesses needing quick, hassle-free funding to support daily operations or expansion.</>
+                      )}
+                      {idx === 2 && (
+                        <>Great for micro enterprises seeking larger funding with business-friendly repayment options.</>
+                      )}
+                    </div>
+                  </div>
+                  <Button asChild variant="primary" size="sm" className="w-full mt-auto">
+                    <a href={rec.apply_url} target="_blank" rel="noopener noreferrer">
+                      Apply Now
+                    </a>
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Recommendations with Tabs */}
         {!isThinking && recommendations.length > 0 && (
           <>
             <div className="mb-4 flex items-center gap-2">
-              <h2 className="text-xl font-semibold">Results Tailored for Your Business:</h2>
+              <h2 className="text-xl font-semibold">Other Eligible Funding & Support</h2>
             </div>
             <div className="mb-2 flex gap-2">
               <button

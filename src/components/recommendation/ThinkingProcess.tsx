@@ -22,7 +22,7 @@ const thinkingStages = [
   {
     id: 'rag',
     label: 'Retrieving relevant funding information',
-    duration: 2000,
+    duration: 1500,
     icon: (
       <span className="inline-block mr-2 text-blue-500">
         <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
@@ -38,7 +38,7 @@ const thinkingStages = [
   {
     id: 'formulating',
     label: 'Formulating personalized recommendations',
-    duration: 2000,
+    duration: 1500,
     icon: (
       <span className="inline-block mr-2 text-blue-500">
         <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M8 8h8v8H8z" /></svg>
