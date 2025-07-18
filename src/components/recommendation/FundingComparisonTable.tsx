@@ -4,6 +4,7 @@ import React, { useRef } from 'react'
 import { Card, Button } from '@/components/ui'
 import { Badge } from '@/components/ui/Badge'
 import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 type LoanRecommendation = {
   id: number;
@@ -23,6 +24,7 @@ interface FundingComparisonTableProps {
 }
 
 const FundingComparisonTable: React.FC<FundingComparisonTableProps> = ({ recommendations }) => {
+  const { t } = useLanguage()
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -80,21 +82,21 @@ const FundingComparisonTable: React.FC<FundingComparisonTableProps> = ({ recomme
                 <span className="inline-block bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded">{rec.highlight}</span>
               </div>
               <div className="mb-2">
-                <span className="font-semibold text-gray-700">Max Amount: </span>
+                <span className="font-semibold text-gray-700">{t('recommendation.card.max_amount')} </span>
                 <span className="text-gray-900">RM{rec.max_amount.toLocaleString()}</span>
               </div>
               <div className="mb-2">
-                <span className="font-semibold text-gray-700">For: </span>
+                <span className="font-semibold text-gray-700">{t('recommendation.card.for')} </span>
                 <span className="text-gray-900">{rec.for_whom}</span>
               </div>
               <div className="mb-2">
-                <span className="font-semibold text-gray-700">Eligibility: </span>
+                <span className="font-semibold text-gray-700">{t('recommendation.card.eligibility')} </span>
                 <span className="text-gray-900">{rec.eligibility}</span>
               </div>
               <div className="mt-auto flex items-center gap-2">
                 <Button asChild variant="primary" size="sm" className="w-full">
                   <a href={rec.apply_url} target="_blank" rel="noopener noreferrer">
-                    Apply Now <ExternalLink className="inline-block ml-1 h-4 w-4" />
+                    {t('recommendation.card.apply_now')} <ExternalLink className="inline-block ml-1 h-4 w-4" />
                   </a>
                 </Button>
               </div>

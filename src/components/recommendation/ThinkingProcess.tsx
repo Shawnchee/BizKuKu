@@ -1,82 +1,86 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
-const thinkingStages = [
-  {
-    id: 'analyzing',
-    label: 'Analyzing company profile and financial data',
-    duration: 1000,
-    icon: (
-      <span className="inline-block mr-2 text-blue-500">
-        <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>
-      </span>
-    ),
-    details: [
-      'Processing financial statements',
-      'Analyzing cash flow patterns',
-      'Evaluating industry benchmarks',
-      'Checking eligibility criteria'
-    ]
-  },
-  {
-    id: 'rag',
-    label: 'Retrieving relevant funding information',
-    duration: 1500,
-    icon: (
-      <span className="inline-block mr-2 text-blue-500">
-        <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
-      </span>
-    ),
-    details: [
-      'Searching funding database',
-      'Matching with industry requirements',
-      'Filtering by eligibility criteria',
-      'Ranking funding options by relevance'
-    ]
-  },
-  {
-    id: 'formulating',
-    label: 'Formulating personalized recommendations',
-    duration: 1500,
-    icon: (
-      <span className="inline-block mr-2 text-blue-500">
-        <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M8 8h8v8H8z" /></svg>
-      </span>
-    ),
-    details: [
-      'Generating recommendation structure',
-      'Calculating funding match score',
-      'Determining reason for recommendation',
-      'Finalizing eligibility assessment'
-    ]
-  },
-  {
-    id: 'finalizing',
-    label: 'Preparing your funding options',
-    duration: 1000,
-    icon: (
-      <span className="inline-block mr-2 text-blue-500">
-        <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M6.05 17.95l-1.414 1.414m12.728 0l-1.414-1.414M6.05 6.05L4.636 4.636" /></svg>
-      </span>
-    ),
-    details: [
-      'Creating visual presentation',
-      'Formatting provider details',
-      'Sorting by suitability score',
-      'Finalizing recommendations'
-    ]
-  }
-]
+
 
 interface ThinkingProcessProps {
   isVisible: boolean
 }
 
 const ThinkingProcess: React.FC<ThinkingProcessProps> = ({ isVisible }) => {
+  const { t } = useLanguage()
   const [currentStage, setCurrentStage] = useState(0)
   const [detailIndex, setDetailIndex] = useState(0)
   const [progress, setProgress] = useState(0)
+
+  const thinkingStages = [
+    {
+      id: 'analyzing',
+      label: t('recommendation.thinking.stage1'),
+      duration: 1000,
+      icon: (
+        <span className="inline-block mr-2 text-blue-500">
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>
+        </span>
+      ),
+      details: [
+        t('recommendation.thinking.detail1_1'),
+        t('recommendation.thinking.detail1_2'),
+        t('recommendation.thinking.detail1_3'),
+        t('recommendation.thinking.detail1_4')
+      ]
+    },
+    {
+      id: 'rag',
+      label: t('recommendation.thinking.stage2'),
+      duration: 1500,
+      icon: (
+        <span className="inline-block mr-2 text-blue-500">
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
+        </span>
+      ),
+      details: [
+        t('recommendation.thinking.detail2_1'),
+        t('recommendation.thinking.detail2_2'),
+        t('recommendation.thinking.detail2_3'),
+        t('recommendation.thinking.detail2_4')
+      ]
+    },
+    {
+      id: 'formulating',
+      label: t('recommendation.thinking.stage3'),
+      duration: 1500,
+      icon: (
+        <span className="inline-block mr-2 text-blue-500">
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M8 8h8v8H8z" /></svg>
+        </span>
+      ),
+      details: [
+        t('recommendation.thinking.detail3_1'),
+        t('recommendation.thinking.detail3_2'),
+        t('recommendation.thinking.detail3_3'),
+        t('recommendation.thinking.detail3_4')
+      ]
+    },
+    {
+      id: 'finalizing',
+      label: t('recommendation.thinking.stage4'),
+      duration: 1000,
+      icon: (
+        <span className="inline-block mr-2 text-blue-500">
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M6.05 17.95l-1.414 1.414m12.728 0l-1.414-1.414M6.05 6.05L4.636 4.636" /></svg>
+        </span>
+      ),
+      details: [
+        t('recommendation.thinking.detail4_1'),
+        t('recommendation.thinking.detail4_2'),
+        t('recommendation.thinking.detail4_3'),
+        t('recommendation.thinking.detail4_4')
+      ]
+    }
+  ]
 
   useEffect(() => {
     if (isVisible) {
@@ -131,10 +135,10 @@ const ThinkingProcess: React.FC<ThinkingProcessProps> = ({ isVisible }) => {
       </div>
       <div className="flex items-center mb-2 mt-2">
         <svg className="h-6 w-6 text-blue-500 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" /></svg>
-        <span className="font-semibold text-blue-700 text-lg">AI Agent is Thinking...</span>
+        <span className="font-semibold text-blue-700 text-lg">{t('recommendation.thinking.title')}</span>
       </div>
       <div className="text-gray-500 mb-4 text-sm">
-        Give us a moment while our AI analyzes your requirements and generates personalized funding recommendations.
+        {t('recommendation.thinking.subtitle')}
       </div>
       <div className="space-y-3">
         {thinkingStages.map((stage, idx) => (
@@ -153,10 +157,10 @@ const ThinkingProcess: React.FC<ThinkingProcessProps> = ({ isVisible }) => {
               )}
             </div>
             {idx < currentStage && (
-              <span className="ml-2 px-2 py-0.5 text-xs rounded bg-green-100 text-green-700 border border-green-300">Completed</span>
+              <span className="ml-2 px-2 py-0.5 text-xs rounded bg-green-100 text-green-700 border border-green-300">{t('recommendation.thinking.completed')}</span>
             )}
             {idx === currentStage && (
-              <span className="ml-2 px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-700 border border-blue-300">In Progress</span>
+              <span className="ml-2 px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-700 border border-blue-300">{t('recommendation.thinking.in_progress')}</span>
             )}
           </div>
         ))}

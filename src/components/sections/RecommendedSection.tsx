@@ -17,7 +17,7 @@ export default function RecommendedSection() {
       color: 'from-green-500 to-emerald-500',
       bgColor: 'from-green-50 to-emerald-50',
       borderColor: 'border-green-200',
-      amount: 'Up to RM10,000',
+      amountKey: 'recommended.amount.subsidy',
       popular: false,
       href: '/services/subsidy'
     },
@@ -30,7 +30,7 @@ export default function RecommendedSection() {
       color: 'from-blue-500 to-indigo-500',
       bgColor: 'from-blue-50 to-indigo-50',
       borderColor: 'border-blue-200',
-      amount: 'From RM1,000',
+      amountKey: 'recommended.amount.loans',
       popular: false,
       href: '/services/loans'
     },
@@ -43,7 +43,7 @@ export default function RecommendedSection() {
       color: 'from-purple-500 to-pink-500',
       bgColor: 'from-purple-50 to-pink-50',
       borderColor: 'border-purple-200',
-      amount: 'Up to RM50,000',
+      amountKey: 'recommended.amount.insurance',
       popular: false,
       href: '/services/grants'
     },
@@ -105,7 +105,7 @@ export default function RecommendedSection() {
                 {/* Amount */}
                 <div className="pt-2">
                   <span className={`inline-block text-sm font-bold bg-gradient-to-r ${service.color} bg-clip-text text-transparent`}>
-                    {service.amount}
+                    {t(service.amountKey)}
                   </span>
                 </div>
               </div>

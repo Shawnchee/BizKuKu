@@ -3,20 +3,29 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, MessageCircle, Send, SquarePen, Maximize2, Minimize2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-
-const initialMessages = [
-  { role: 'model', content: 'Hi! 👋 How can I help you with your business support today?' }
-];
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/chat' : '/api/chat';
 
 const Chatbot: React.FC = () => {
+  const { t, language } = useLanguage();
+
+  // Create initial messages using translation
+  const getInitialMessages = () => [
+    { role: 'model', content: t('chatbot.greeting') }
+  ];
+
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState(getInitialMessages());
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState(false);
+
+  // Update greeting message when language changes
+  useEffect(() => {
+    setMessages(getInitialMessages());
+  }, [language]);
 
   // Shift body when expanded
   useEffect(() => {
@@ -38,7 +47,7 @@ const Chatbot: React.FC = () => {
 
   // Edit button: clears chat
   const handleEdit = () => {
-    setMessages(initialMessages);
+    setMessages(getInitialMessages());
     setInput('');
   };
 
@@ -61,7 +70,7 @@ const Chatbot: React.FC = () => {
       const botMsg = { role: 'model', content: data.response };
       setMessages((msgs) => [...msgs, botMsg]);
     } catch (err) {
-      setMessages((msgs) => [...msgs, { role: 'model', content: 'Sorry, there was an error. Please try again.' }]);
+      setMessages((msgs) => [...msgs, { role: 'model', content: t('chatbot.error') }]);
     } finally {
       setLoading(false);
     }
@@ -148,7 +157,7 @@ const Chatbot: React.FC = () => {
             <input
               className="flex-1 rounded-full border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               type="text"
-              placeholder="Type your message..."
+              placeholder={t('chatbot.placeholder')}
               value={input}
               onChange={e => setInput(e.target.value)}
               autoFocus={open}

@@ -363,6 +363,18 @@ const translations = {
     ms: 'Popular',
     en: 'Popular'
   },
+  'recommended.amount.subsidy': {
+    ms: 'Sehingga RM10,000',
+    en: 'Up to RM10,000'
+  },
+  'recommended.amount.loans': {
+    ms: 'Dari RM1,000',
+    en: 'From RM1,000'
+  },
+  'recommended.amount.insurance': {
+    ms: 'Sehingga RM50,000',
+    en: 'Up to RM50,000'
+  },
 
   // Features Section
   'features.section.badge': {

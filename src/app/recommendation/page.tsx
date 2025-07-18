@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useEffect, useState } from 'react'
 import { Card, Button } from '@/components/ui'
@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Loader2, History, RotateCcw, X } from 'lucide-react'
 import FundingComparisonTable from '@/components/recommendation/FundingComparisonTable'
 import ThinkingProcess from '@/components/recommendation/ThinkingProcess'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 type LoanRecommendation = {
   id: number;
@@ -30,6 +31,8 @@ type RecommendationHistory = {
 };
 
 export default function RecommendationPage() {
+  const { t } = useLanguage()
+
   // State
   const [loanPurpose, setLoanPurpose] = useState('')
   const [loanAmount, setLoanAmount] = useState('')
@@ -46,18 +49,18 @@ export default function RecommendationPage() {
   const [companyId, setCompanyId] = useState<number>(1)
 
   const fundingPurposes = [
-    { value: 'equipment', label: 'Equipment' },
-    { value: 'digitalization', label: 'Digitalization' },
-    { value: 'working_capital', label: 'Working Capital' },
-    { value: 'expansion', label: 'Business Expansion' },
-    { value: 'inventory', label: 'Inventory' },
+    { value: 'equipment', label: t('recommendation.purpose.equipment') },
+    { value: 'digitalization', label: t('recommendation.purpose.digitalization') },
+    { value: 'working_capital', label: t('recommendation.purpose.working_capital') },
+    { value: 'expansion', label: t('recommendation.purpose.expansion') },
+    { value: 'inventory', label: t('recommendation.purpose.inventory') },
   ]
 
   const preferenceOptions = [
-    { value: 'grant', label: 'Grant only' },
-    { value: 'loan', label: 'Loan only' },
-    { value: 'low_interest', label: 'Low-interest' },
-    { value: 'fast_approval', label: 'Fast approval' },
+    { value: 'grant', label: t('recommendation.preference.grant') },
+    { value: 'loan', label: t('recommendation.preference.loan') },
+    { value: 'low_interest', label: t('recommendation.preference.low_interest') },
+    { value: 'fast_approval', label: t('recommendation.preference.fast_approval') },
   ]
 
   const [fundingPurpose, setFundingPurpose] = useState('')
@@ -70,186 +73,186 @@ export default function RecommendationPage() {
   const grantsAndLoans = [
     {
       id: 10001,
-      name: 'Geran Digital PKS (SME Digital Grant)',
-      description: 'Get up to RM5,000 to digitalize your business (e.g., POS, e-commerce, accounting).',
-      type: 'Grant',
+      name: t('recommendation.data.digital_grant.name'),
+      description: t('recommendation.data.digital_grant.description'),
+      type: t('recommendation.type.grant'),
       max_amount: 5000,
-      provider: 'MDEC & BSN',
-      eligibility: 'Malaysian-owned SME, min 60% local shareholding, in operation >1 year, annual sales <RM50m.',
+      provider: t('recommendation.provider.mdec_bsn'),
+      eligibility: t('recommendation.eligibility.digital_grant'),
       apply_url: 'https://mdec.my/grants',
-      for_whom: 'Online sellers, kedai runcit, warung, micro businesses',
-      highlight: 'Perfect for upgrading to e-commerce or digital POS'
+      for_whom: t('recommendation.for_whom.online_sellers'),
+      highlight: t('recommendation.data.digital_grant.highlight')
     },
     {
       id: 10002,
-      name: 'TEKUN Nasional Micro Financing',
-      description: 'Easy micro-loans for small traders and hawkers, up to RM10,000.',
-      type: 'Loan',
+      name: t('recommendation.data.tekun.name'),
+      description: t('recommendation.data.tekun.description'),
+      type: t('recommendation.type.loan'),
       max_amount: 10000,
-      provider: 'TEKUN Nasional',
-      eligibility: 'Malaysian, 18-65 years old, micro business owner, registered with SSM or local council.',
+      provider: t('recommendation.provider.tekun'),
+      eligibility: t('recommendation.eligibility.tekun'),
       apply_url: 'https://www.tekun.gov.my/',
-      for_whom: 'Pasar malam sellers, food stalls, home-based businesses',
-      highlight: 'Fast approval, low documentation'
+      for_whom: t('recommendation.for_whom.pasar_malam'),
+      highlight: t('recommendation.data.tekun.highlight')
     },
     {
       id: 10003,
-      name: 'SME Digitalisation Matching Grant',
-      description: '50% matching grant for digital solutions (e-commerce, POS, payroll, etc.), up to RM5,000.',
-      type: 'Grant',
+      name: t('recommendation.data.sme_digitalisation.name'),
+      description: t('recommendation.data.sme_digitalisation.description'),
+      type: t('recommendation.type.grant'),
       max_amount: 5000,
-      provider: 'BSN',
-      eligibility: 'Malaysian SME, in operation >1 year, annual sales <RM50m.',
+      provider: t('recommendation.provider.bsn'),
+      eligibility: t('recommendation.eligibility.sme_digitalisation'),
       apply_url: 'https://www.bsn.com.my/',
-      for_whom: 'SMEs looking to digitalize',
-      highlight: 'Cut your digital costs in half!'
+      for_whom: t('recommendation.for_whom.sme_digitalize'),
+      highlight: t('recommendation.data.sme_digitalisation.highlight')
     },
     {
       id: 10004,
-      name: 'SME Bank Micro Enterprise Loan',
-      description: 'Flexible micro loans up to RM50,000 for business growth and working capital.',
-      type: 'Loan',
+      name: t('recommendation.data.sme_bank_loan.name'),
+      description: t('recommendation.data.sme_bank_loan.description'),
+      type: t('recommendation.type.loan'),
       max_amount: 50000,
-      provider: 'SME Bank',
-      eligibility: 'Malaysian micro enterprise, registered with SSM, in operation >1 year.',
+      provider: t('recommendation.provider.sme_bank'),
+      eligibility: t('recommendation.eligibility.sme_bank_loan'),
       apply_url: 'https://www.smebank.com.my/',
-      for_whom: 'Micro businesses, food stalls, service providers',
-      highlight: 'Flexible repayment, business-friendly terms'
+      for_whom: t('recommendation.for_whom.micro_businesses'),
+      highlight: t('recommendation.data.sme_bank_loan.highlight')
     },
     {
       id: 10005,
-      name: 'Tabung Usahawan Siswazah (TUS)',
-      description: 'Loan scheme for graduates to start or expand businesses, up to RM50,000.',
-      type: 'Loan',
+      name: t('recommendation.data.tus.name'),
+      description: t('recommendation.data.tus.description'),
+      type: t('recommendation.type.loan'),
       max_amount: 50000,
-      provider: 'MARA',
-      eligibility: 'Malaysian graduates, aged 18-40, business registered with SSM.',
+      provider: t('recommendation.provider.mara'),
+      eligibility: t('recommendation.eligibility.tus'),
       apply_url: 'https://www.mara.gov.my/bantuan-perniagaan/tus/',
-      for_whom: 'Young entrepreneurs, new graduates',
-      highlight: 'Special for university/college graduates'
+      for_whom: t('recommendation.for_whom.young_entrepreneurs'),
+      highlight: t('recommendation.data.tus.highlight')
     },
     {
       id: 10006,
-      name: 'Bumiputera Enterprise Enhancement Program (BEEP)',
-      description: 'Grant for Bumiputera SMEs to upgrade equipment, branding, and digitalization.',
-      type: 'Grant',
+      name: t('recommendation.data.beep_sme.name'),
+      description: t('recommendation.data.beep_sme.description'),
+      type: t('recommendation.type.grant'),
       max_amount: 20000,
-      provider: 'SME Corp',
-      eligibility: 'Bumiputera-owned SME, registered with SSM, in operation >1 year.',
+      provider: t('recommendation.provider.sme_corp'),
+      eligibility: t('recommendation.eligibility.beep_sme'),
       apply_url: 'https://www.smecorp.gov.my/',
-      for_whom: 'Bumiputera micro and small businesses',
-      highlight: 'Upgrade your business assets!'
+      for_whom: t('recommendation.for_whom.bumiputera_sme'),
+      highlight: t('recommendation.data.beep_sme.highlight')
     },
     {
       id: 10007,
-      name: 'Fund for Food (3F)',
-      description: 'Financing for food production projects (crops, livestock, aquaculture, etc.) to boost Malaysia’s food security.',
-      type: 'Loan',
+      name: t('recommendation.data.fund_for_food.name'),
+      description: t('recommendation.data.fund_for_food.description'),
+      type: t('recommendation.type.loan'),
       max_amount: 5000000,
-      provider: 'Agrobank',
-      eligibility: 'Malaysian farmers, agropreneurs, agri-based companies',
+      provider: t('recommendation.provider.agrobank'),
+      eligibility: t('recommendation.eligibility.fund_for_food'),
       apply_url: 'https://www.agrobank.com.my/',
-      for_whom: 'Farmers, agropreneurs, agri-businesses',
-      highlight: 'Long-term financing for food production'
+      for_whom: t('recommendation.for_whom.farmers'),
+      highlight: t('recommendation.data.fund_for_food.highlight')
     },
     {
       id: 10008,
-      name: 'Micro Biz Financing (MBF)',
-      description: 'Micro-financing for small-scale farmers and agropreneurs at a low interest rate (2% per annum).',
-      type: 'Loan',
+      name: t('recommendation.data.mbf.name'),
+      description: t('recommendation.data.mbf.description'),
+      type: t('recommendation.type.loan'),
       max_amount: 50000,
-      provider: 'Agrobank',
-      eligibility: 'Malaysian micro-entrepreneurs in agriculture',
+      provider: t('recommendation.provider.agrobank'),
+      eligibility: t('recommendation.eligibility.mbf'),
       apply_url: 'https://www.agrobank.com.my/',
-      for_whom: 'Smallholder farmers, micro agropreneurs',
-      highlight: 'Low interest, easy approval'
+      for_whom: t('recommendation.for_whom.smallholder_farmers'),
+      highlight: t('recommendation.data.mbf.highlight')
     },
     {
       id: 10009,
-      name: 'Bumiputera Enterprise Enhancement Program (BEEP)',
-      description: 'Grant for Bumiputera agri-entrepreneurs to upgrade equipment, branding, and digitalisation.',
-      type: 'Grant',
+      name: t('recommendation.data.beep.name'),
+      description: t('recommendation.data.beep.description'),
+      type: t('recommendation.type.grant'),
       max_amount: 20000,
-      provider: 'SME Corp',
-      eligibility: 'Bumiputera-owned agri-businesses',
+      provider: t('recommendation.provider.sme_corp'),
+      eligibility: t('recommendation.eligibility.beep_agri'),
       apply_url: 'https://www.smecorp.gov.my/',
-      for_whom: 'Bumiputera agri-entrepreneurs',
-      highlight: 'Upgrade your agri-business assets'
+      for_whom: t('recommendation.for_whom.bumiputera_agri'),
+      highlight: t('recommendation.data.beep.highlight')
     }
   ]
 
   const subsidiesAndSchemes = [
     {
       id: 20001,
-      name: 'BUDI MADANI Agri-Komoditi',
-      description: 'RM200/month diesel cash subsidy for registered small-scale farmers and commodity growers.',
-      type: 'Subsidy',
+      name: t('recommendation.data.budi_madani.name'),
+      description: t('recommendation.data.budi_madani.description'),
+      type: t('recommendation.type.subsidy'),
       max_amount: 200,
-      provider: 'Ministry of Finance',
-      eligibility: 'Malaysian citizens registered with GeoAgro or commodity boards (MPOB, LGM, etc.), earning RM50k–RM300k annually',
+      provider: t('recommendation.provider.ministry_finance'),
+      eligibility: t('recommendation.eligibility.budi_madani'),
       apply_url: 'https://budimadani.gov.my',
-      for_whom: 'Smallholder farmers, livestock breeders, and commodity growers (e.g., palm oil, rubber, cocoa)',
-      highlight: 'Lower your farming costs with monthly diesel subsidy!'
+      for_whom: t('recommendation.for_whom.smallholder_livestock'),
+      highlight: t('recommendation.data.budi_madani.highlight')
     },
     {
       id: 20002,
-      name: 'SME Electricity Tariff Rebate',
-      description: 'Monthly rebate on electricity bills for micro and small businesses.',
-      type: 'Subsidy',
+      name: t('recommendation.data.electricity_rebate.name'),
+      description: t('recommendation.data.electricity_rebate.description'),
+      type: t('recommendation.type.subsidy'),
       max_amount: 0,
-      provider: 'TNB',
-      eligibility: 'Registered micro and small businesses, TNB customers',
+      provider: t('recommendation.provider.tnb'),
+      eligibility: t('recommendation.eligibility.electricity_rebate'),
       apply_url: 'https://www.tnb.com.my/',
-      for_whom: 'All micro and small businesses',
-      highlight: 'Lower your monthly utility costs'
+      for_whom: t('recommendation.for_whom.all_micro_sme'),
+      highlight: t('recommendation.data.electricity_rebate.highlight')
     },
     {
       id: 20003,
-      name: 'Sales & Service Tax (SST) Exemption',
-      description: 'Exemption from SST for selected business categories.',
-      type: 'Tax Relief',
+      name: t('recommendation.data.sst_exemption.name'),
+      description: t('recommendation.data.sst_exemption.description'),
+      type: t('recommendation.type.tax_relief'),
       max_amount: 0,
-      provider: 'LHDN',
-      eligibility: 'Eligible micro and small businesses, see LHDN guidelines',
+      provider: t('recommendation.provider.lhdn'),
+      eligibility: t('recommendation.eligibility.sst_exemption'),
       apply_url: 'https://www.hasil.gov.my/',
-      for_whom: 'Retailers, F&B, service providers',
-      highlight: 'Boost your profit margins!'
+      for_whom: t('recommendation.for_whom.retailers_fnb'),
+      highlight: t('recommendation.data.sst_exemption.highlight')
     },
     {
       id: 20004,
-      name: 'PERKESO Wage Subsidy',
-      description: 'Wage subsidy for employers to retain local workers during tough times.',
-      type: 'Subsidy',
+      name: t('recommendation.data.perkeso_subsidy.name'),
+      description: t('recommendation.data.perkeso_subsidy.description'),
+      type: t('recommendation.type.subsidy'),
       max_amount: 0,
-      provider: 'PERKESO',
-      eligibility: 'Registered employer, local employees, subject to PERKESO terms.',
+      provider: t('recommendation.provider.perkeso'),
+      eligibility: t('recommendation.eligibility.perkeso_subsidy'),
       apply_url: 'https://www.perkeso.gov.my/',
-      for_whom: 'Employers with local staff',
-      highlight: 'Support for keeping your team!'
+      for_whom: t('recommendation.for_whom.employers'),
+      highlight: t('recommendation.data.perkeso_subsidy.highlight')
     },
     {
       id: 20005,
-      name: 'Micro Enterprise Tax Incentive',
-      description: 'Reduced tax rate for micro enterprises on the first RM600,000 chargeable income.',
-      type: 'Tax Relief',
+      name: t('recommendation.data.micro_tax_incentive.name'),
+      description: t('recommendation.data.micro_tax_incentive.description'),
+      type: t('recommendation.type.tax_relief'),
       max_amount: 0,
-      provider: 'LHDN',
-      eligibility: 'Micro enterprise, annual sales <RM300,000, <5 employees.',
+      provider: t('recommendation.provider.lhdn'),
+      eligibility: t('recommendation.eligibility.micro_tax_incentive'),
       apply_url: 'https://www.hasil.gov.my/',
-      for_whom: 'Micro businesses',
-      highlight: 'Pay less tax, grow more!'
+      for_whom: t('recommendation.for_whom.micro_businesses_simple'),
+      highlight: t('recommendation.data.micro_tax_incentive.highlight')
     },
     {
       id: 20006,
-      name: 'Tax Incentives for Food Production Projects',
-      description: 'Tax exemptions and accelerated capital allowances for approved food production/agriculture projects.',
-      type: 'Tax Relief',
+      name: t('recommendation.data.food_tax_incentive.name'),
+      description: t('recommendation.data.food_tax_incentive.description'),
+      type: t('recommendation.type.tax_relief'),
       max_amount: 0,
-      provider: 'LHDN',
-      eligibility: 'Approved agricultural projects',
+      provider: t('recommendation.provider.lhdn'),
+      eligibility: t('recommendation.eligibility.food_tax_incentive'),
       apply_url: 'https://www.hasil.gov.my/',
-      for_whom: 'Farmers, agri-businesses',
-      highlight: 'Tax relief for food/agri projects'
+      for_whom: t('recommendation.for_whom.farmers_agri'),
+      highlight: t('recommendation.data.food_tax_incentive.highlight')
     }
   ]
 
@@ -314,7 +317,7 @@ export default function RecommendationPage() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="flex flex-col items-center">
           <Loader2 className="animate-spin h-8 w-8 text-blue-500 mb-4" />
-          <div className="text-lg font-semibold">Loading...</div>
+          <div className="text-lg font-semibold">{t('recommendation.loading')}</div>
         </div>
       </div>
     )
@@ -325,9 +328,9 @@ export default function RecommendationPage() {
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Discover tailored financial support!</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('recommendation.title')}</h1>
           <p className="mt-2 text-gray-600 text-lg">
-          We analyze your business profile and suggests relevant grants, loans, subsidies, and incentive schemes — all in one place.
+            {t('recommendation.subtitle')}
           </p>
         </div>
 
@@ -336,13 +339,13 @@ export default function RecommendationPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Funding Purpose */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Funding Purpose</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">{t('recommendation.form.purpose.label')}</label>
               <select
                 className="w-full h-11 border border-gray-300 rounded-lg px-3 pr-8 text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none transition"
                 value={fundingPurpose}
                 onChange={e => setFundingPurpose(e.target.value)}
               >
-                <option value="">Select purpose...</option>
+                <option value="">{t('recommendation.form.purpose.placeholder')}</option>
                 {fundingPurposes.map(opt => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
@@ -350,20 +353,20 @@ export default function RecommendationPage() {
             </div>
             {/* Requested Amount */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Requested Amount (RM)</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">{t('recommendation.form.amount.label')}</label>
               <input
                 className="w-full h-11 border border-gray-300 rounded-lg px-3 text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 type="number"
                 value={loanAmount}
                 onChange={e => setLoanAmount(e.target.value)}
-                placeholder="e.g. 50000"
+                placeholder={t('recommendation.form.amount.placeholder')}
                 min={0}
               />
             </div>
           </div>
           {/* Preferences */}
           <div className="mt-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Preferences</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">{t('recommendation.preferences.label')}</label>
             <div className="flex flex-wrap gap-2">
               {preferenceOptions.map(opt => (
                 <button
@@ -389,12 +392,12 @@ export default function RecommendationPage() {
           </div>
           {/* Additional Requirements */}
           <div className="mt-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Additional Requirements</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">{t('recommendation.form.additional.label')}</label>
             <textarea
               className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               value={additionalContext}
               onChange={e => setAdditionalContext(e.target.value)}
-              placeholder="Describe any special needs, e.g. halal certification, women-only, etc."
+              placeholder={t('recommendation.form.additional.placeholder')}
               rows={2}
             />
           </div>
@@ -402,11 +405,11 @@ export default function RecommendationPage() {
           <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
             <Button onClick={fetchRecommendations} disabled={isGenerating} size="lg" className="w-full sm:w-auto">
               {isGenerating ? <Loader2 className="animate-spin h-4 w-4 mr-2" /> : null}
-              Get Recommendations
+              {isGenerating ? t('recommendation.form.button.generating') : t('recommendation.form.button.generate')}
             </Button>
             <Button variant="outline" onClick={handleHistoryOpen} className="w-full sm:w-auto">
               <History className="h-4 w-4 mr-2" />
-              History
+              {t('recommendation.history.button')}
             </Button>
           </div>
         </Card>
@@ -417,15 +420,15 @@ export default function RecommendationPage() {
             <div className="flex items-center gap-4 flex-wrap">
               <div className="flex items-center gap-2 text-green-700 font-semibold bg-green-50 px-3 py-1 rounded-lg">
                 <span className="text-lg">✅</span>
-                <span>3,214 micro businesses matched</span>
+                <span>3,214 {t('recommendation.metrics.businesses_matched')}</span>
               </div>
               <div className="flex items-center gap-2 text-blue-700 font-semibold bg-blue-50 px-3 py-1 rounded-lg">
                 <span className="text-lg">📈</span>
-                <span>RM12.4 million approved</span>
+                <span>RM12.4 {t('recommendation.metrics.amount_approved')}</span>
               </div>
               <div className="flex items-center gap-2 text-yellow-700 font-semibold bg-yellow-50 px-3 py-1 rounded-lg">
                 <span className="text-lg">🎉</span>
-                <span>87% found eligible support</span>
+                <span>87% {t('recommendation.metrics.found_support')}</span>
               </div>
             </div>
           </div>
@@ -440,14 +443,14 @@ export default function RecommendationPage() {
         {(!isThinking && recommendations.length > 0) && (
           <div className="mb-10">
             <h2 className="text-2xl font-bold mb-4 text-blue-900 flex items-center gap-2">
-              <span>🏆</span> Top 3 Picks for Your Business
+              <span>🏆</span> {t('recommendation.top_picks.title')}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Top 3 hardcoded picks with insights */}
               {[grantsAndLoans[6], grantsAndLoans[8], subsidiesAndSchemes[0]].map((rec, idx) => (
                 <div key={rec.id} className="bg-white border-2 border-blue-300 rounded-2xl shadow-lg p-6 flex flex-col h-full relative">
                   <div className="absolute top-4 right-4">
-                    <Badge className="bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow">Top {idx + 1}</Badge>
+                    <Badge className="bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow">{t('recommendation.badge.top')} {idx + 1}</Badge>
                   </div>
                   <div className="flex items-center gap-2 mb-2">
                     <Badge>{rec.type}</Badge>
@@ -459,7 +462,7 @@ export default function RecommendationPage() {
                     <span className="inline-block bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded">{rec.highlight}</span>
                   </div>
                   <div className="mb-2">
-                    <span className="font-semibold text-gray-700">Max Amount: </span>
+                    <span className="font-semibold text-gray-700">{t('recommendation.card.max_amount')} </span>
                     <span className="text-gray-900">RM{rec.max_amount.toLocaleString()}</span>
                   </div>
                   {/* Insights */}
@@ -467,45 +470,45 @@ export default function RecommendationPage() {
                     <ul className="space-y-1 text-sm">
                       {idx === 0 && (
                         <>
-                          <li>📈 <span className="font-semibold text-green-700">Potential revenue increase: +12%</span></li>
-                          <li>🚀 <span className="font-semibold text-blue-700">Fast-track your agri-business growth</span></li>
-                          <li>💰 <span className="font-semibold text-yellow-700">High funding, low barrier for expansion</span></li>
+                          <li>📈 <span className="font-semibold text-green-700">{t('recommendation.insights.revenue_increase')}</span></li>
+                          <li>🚀 <span className="font-semibold text-blue-700">{t('recommendation.insights.fast_track_agri')}</span></li>
+                          <li>💰 <span className="font-semibold text-yellow-700">{t('recommendation.insights.high_funding')}</span></li>
                         </>
                       )}
                       {idx === 1 && (
                         <>
-                          <li>💡 <span className="font-semibold text-green-700">Upgrade assets, boost productivity</span></li>
-                          <li>⚡ <span className="font-semibold text-blue-700">Quick grant approval for Bumiputera</span></li>
-                          <li>📊 <span className="font-semibold text-yellow-700">Enhance brand and digital presence</span></li>
+                          <li>💡 <span className="font-semibold text-green-700">{t('recommendation.insights.upgrade_assets')}</span></li>
+                          <li>⚡ <span className="font-semibold text-blue-700">{t('recommendation.insights.quick_approval')}</span></li>
+                          <li>📊 <span className="font-semibold text-yellow-700">{t('recommendation.insights.enhance_brand')}</span></li>
                         </>
                       )}
                       {idx === 2 && (
                         <>
-                          <li>💸 <span className="font-semibold text-green-700">Save up to RM2,400/year on fuel</span></li>
-                          <li>🌱 <span className="font-semibold text-blue-700">Lower monthly operating costs</span></li>
-                          <li>🏅 <span className="font-semibold text-yellow-700">Simple, government-backed support</span></li>
+                          <li>💸 <span className="font-semibold text-green-700">{t('recommendation.insights.save_fuel')}</span></li>
+                          <li>🌱 <span className="font-semibold text-blue-700">{t('recommendation.insights.lower_costs')}</span></li>
+                          <li>🏅 <span className="font-semibold text-yellow-700">{t('recommendation.insights.govt_support')}</span></li>
                         </>
                       )}
                     </ul>
                   </div>
                   {/* Why recommended */}
                   <div className="mb-4 mt-2">
-                    <div className="text-xs text-gray-500 font-semibold mb-1">Why this is recommended for you:</div>
+                    <div className="text-xs text-gray-500 font-semibold mb-1">{t('recommendation.why.title')}</div>
                     <div className="text-sm text-gray-700">
                       {idx === 0 && (
-                        <>Ideal for SMEs looking to digitalize operations and boost online sales. High approval rate for eligible businesses.</>
+                        <>{t('recommendation.why.digitalize_sme')}</>
                       )}
                       {idx === 1 && (
-                        <>Perfect for micro businesses needing quick, hassle-free funding to support daily operations or expansion.</>
+                        <>{t('recommendation.why.micro_funding')}</>
                       )}
                       {idx === 2 && (
-                        <>Great for micro enterprises seeking larger funding with business-friendly repayment options.</>
+                        <>{t('recommendation.why.larger_funding')}</>
                       )}
                     </div>
                   </div>
                   <Button asChild variant="primary" size="sm" className="w-full mt-auto">
                     <a href={rec.apply_url} target="_blank" rel="noopener noreferrer">
-                      Apply Now
+                      {t('recommendation.card.apply_now')}
                     </a>
                   </Button>
                 </div>
@@ -518,7 +521,7 @@ export default function RecommendationPage() {
         {!isThinking && recommendations.length > 0 && (
           <>
             <div className="mb-4 flex items-center gap-2">
-              <h2 className="text-xl font-semibold">Other Eligible Funding & Support</h2>
+              <h2 className="text-xl font-semibold">{t('recommendation.other_funding.title')}</h2>
             </div>
             <div className="mb-2 flex gap-2">
               <button
@@ -529,7 +532,7 @@ export default function RecommendationPage() {
                 aria-selected={activeTab === 'funding'}
                 tabIndex={0}
               >
-                Grants & Loans
+                {t('recommendation.tabs.grants_loans')}
               </button>
               <button
                 className={`px-6 py-2 rounded-t-lg font-semibold transition-colors duration-150 border-b-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 shadow-sm
@@ -539,7 +542,7 @@ export default function RecommendationPage() {
                 aria-selected={activeTab === 'subsidy'}
                 tabIndex={0}
               >
-                Subsidies & Schemes
+                {t('recommendation.tabs.subsidies_schemes')}
               </button>
             </div>
             <FundingComparisonTable recommendations={recommendations} />
@@ -551,7 +554,7 @@ export default function RecommendationPage() {
           <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">Recommendation History</h3>
+                <h3 className="text-lg font-semibold">{t('recommendation.history.title')}</h3>
                 <Button variant="ghost" onClick={handleHistoryClose}>
                   <X className="h-4 w-4" />
                 </Button>
@@ -562,7 +565,7 @@ export default function RecommendationPage() {
                     <Loader2 className="animate-spin h-6 w-6 text-blue-500" />
                   </div>
                 ) : recommendationHistory.length === 0 ? (
-                  <div className="text-gray-500">No history found.</div>
+                  <div className="text-gray-500">{t('recommendation.history.no_history')}</div>
                 ) : (
                   <ul>
                     {recommendationHistory.map(item => (
@@ -574,7 +577,7 @@ export default function RecommendationPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          title="Restore these inputs"
+                          title={t('recommendation.history.restore')}
                           onClick={() => restoreRecommendation(item)}
                         >
                           <RotateCcw className="h-4 w-4" />
