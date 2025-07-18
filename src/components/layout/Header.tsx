@@ -31,10 +31,12 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
-                <BarChart3 className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-gray-900">BizzKu</span>
+              <img
+                src="/bizkuku logo.png"
+                alt="BizzKu Logo"
+                className="h-20 w-auto"
+                style={{ display: 'block' }}
+              />
             </Link>
           </div>
 
