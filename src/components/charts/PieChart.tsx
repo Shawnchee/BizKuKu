@@ -4,13 +4,14 @@ import { PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer, Tooltip, 
 import { ChartData } from '@/lib/types'
 
 interface PieChartProps {
-  data: ChartData[]
+  data: ChartData[] | any[]
   title?: string
+  dataKey?: string
 }
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
 
-export default function PieChart({ data, title }: PieChartProps) {
+export default function PieChart({ data, title, dataKey = 'value' }: PieChartProps) {
   return (
     <div className="w-full h-80">
       {title && (
@@ -26,7 +27,7 @@ export default function PieChart({ data, title }: PieChartProps) {
             label={({ name, percent }) => `${name} ${percent ? (percent * 100).toFixed(0) : 0}%`}
             outerRadius={80}
             fill="#8884d8"
-            dataKey="value"
+            dataKey={dataKey}
           >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

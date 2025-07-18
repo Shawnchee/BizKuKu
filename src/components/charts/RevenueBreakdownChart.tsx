@@ -155,12 +155,17 @@ export default function RevenueBreakdownChart({ data, title, height = 400 }: Rev
                 {formatCurrency(item.amount)}
               </div>
               <div className="text-xs text-gray-600">
-                {item.percentage.toFixed(1)}% • 
-                <span className={`ml-1 ${
-                  item.change > 0 ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  {item.change > 0 ? '+' : ''}{item.change.toFixed(1)}%
-                </span>
+                {item.percentage.toFixed(1)}%
+                {item.change !== undefined && (
+                  <>
+                    {' • '}
+                    <span className={`ml-1 ${
+                      item.change > 0 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {item.change > 0 ? '+' : ''}{item.change.toFixed(1)}%
+                    </span>
+                  </>
+                )}
               </div>
             </div>
           </div>

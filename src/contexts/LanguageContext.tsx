@@ -23,6 +23,10 @@ const translations = {
     ms: 'Analysis',
     en: 'Dashboard'
   },
+  'nav.story': {
+    ms: 'Cerita',
+    en: 'Story'
+  },
   'nav.recommendation': {
     ms: 'Cadangan',
     en: 'Recommendation'
@@ -90,6 +94,112 @@ const translations = {
   'dashboard.charts': {
     ms: 'Tak ada carta susah.',
     en: 'No complicated charts.'
+  },
+  
+  // Story Page
+  'story.title': {
+    ms: 'Cerita Warung Kita',
+    en: 'Our Warung Story'
+  },
+  'story.subtitle': {
+    ms: 'Tengok cerita bisnes hari ini dengan mudah',
+    en: 'See today\'s business story easily'
+  },
+  'story.greeting': {
+    ms: 'Selamat Pagi, Kak Siti!',
+    en: 'Good Morning, Kak Siti!'
+  },
+  'story.greeting.sub': {
+    ms: 'Mari kita tengok cerita warung hari ini',
+    en: 'Let\'s see today\'s warung story'
+  },
+  'story.moneyJars.title': {
+    ms: 'Balang Duit Kita',
+    en: 'Our Money Jars'
+  },
+  'story.moneyJars.subtitle': {
+    ms: 'Tengok berapa duit dalam setiap balang',
+    en: 'See how much money in each jar'
+  },
+  'story.todayMoney': {
+    ms: 'Duit Hari Ini',
+    en: 'Today\'s Money'
+  },
+  'story.savings': {
+    ms: 'Simpanan',
+    en: 'Savings'
+  },
+  'story.profit': {
+    ms: 'Untung',
+    en: 'Profit'
+  },
+  'story.customers.title': {
+    ms: 'Pelanggan Hari Ini',
+    en: 'Today\'s Customers'
+  },
+  'story.food.title': {
+    ms: 'Makanan Popular',
+    en: 'Popular Food'
+  },
+  'story.food.subtitle': {
+    ms: 'Nasi lemak mana yang paling laris?',
+    en: 'Which nasi lemak sells the most?'
+  },
+  'story.comparison.title': {
+    ms: 'Banding Minggu Ini',
+    en: 'This Week Comparison'
+  },
+  'story.thisWeek': {
+    ms: 'Minggu Ini',
+    en: 'This Week'
+  },
+  'story.lastWeek': {
+    ms: 'Minggu Lepas',
+    en: 'Last Week'
+  },
+  'story.audio': {
+    ms: 'Suara',
+    en: 'Audio'
+  },
+  'story.hide': {
+    ms: 'Sorok',
+    en: 'Hide'
+  },
+  'story.listen': {
+    ms: 'Dengar',
+    en: 'Listen'
+  },
+  'story.sold': {
+    ms: 'dijual',
+    en: 'sold'
+  },
+  'story.price': {
+    ms: 'Harga',
+    en: 'Price'
+  },
+  'story.total': {
+    ms: 'Jumlah',
+    en: 'Total'
+  },
+  'story.todayStory': {
+    ms: 'Cerita Hari Ini',
+    en: 'Today\'s Story'
+  },
+  'story.up': {
+    ms: 'Naik',
+    en: 'Up'
+  },
+  'story.sunnyWeather': {
+    ms: 'Cuaca cerah',
+    en: 'Sunny weather'
+  },
+  'story.goodMood': {
+    ms: 'Mood baik',
+    en: 'Good mood'
+  },
+  'story.manyCustomers': {
+    ms: 'Ramai pelanggan',
+    en: 'Many customers'
   },
   
   // Features
