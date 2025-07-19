@@ -1,7 +1,7 @@
 # BizKuKu - Comprehensive Support for MSMEs — from A to Z
 
 <p align="center">
-  <img src="public/logo.png" alt="BizKuKu Logo" width="300"/>
+  <img src="public/logo.png" alt="BizKuKu Logo" width="400"/>
 </p>
 
 **Seamless MSMEs onboarding for the forgotten majority**  
