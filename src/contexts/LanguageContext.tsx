@@ -31,6 +31,10 @@ const translations = {
     ms: 'Cadangan',
     en: 'Recommendation'
   },
+  'nav.application-status': {
+    ms: 'Status Permohonan',
+    en: 'Application Status'
+  },
   
   // Hero Section
   'hero.badge': {

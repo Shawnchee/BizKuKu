@@ -11,6 +11,7 @@ import LanguageToggle from '@/components/ui/LanguageToggle'
 
 const navigation: NavItem[] = [
   { name: 'nav.home', href: '/' },
+  { name: 'nav.application-status', href: '/application-status' },
   { name: 'nav.dashboard', href: '/dashboard' },
   { name: 'nav.recommendation', href: '/recommendation' },
 ]
