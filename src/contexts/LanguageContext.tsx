@@ -39,6 +39,10 @@ const translations = {
     ms: 'Perkhidmatan Mini',
     en: 'Mini Services'
   },
+  'nav.login': {
+    ms: 'Log Masuk',
+    en: 'Login'
+  },
   
   // Hero Section
   'hero.badge': {

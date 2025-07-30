@@ -15,6 +15,7 @@ const navigation: NavItem[] = [
   { name: 'nav.mini-services', href: '/mini-services' },
   { name: 'nav.dashboard', href: '/dashboard' },
   { name: 'nav.recommendation', href: '/recommendation' },
+  { name: 'nav.login', href: '/login' },
 ]
 
 export default function Header() {
