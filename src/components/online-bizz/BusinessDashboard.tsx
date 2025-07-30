@@ -6,7 +6,8 @@ import Image from "next/image"
 import {
   TrendingUp, Users, ShoppingCart, DollarSign, 
   CheckCircle2, Clock, AlertCircle, BarChart3, 
-  Truck, Plus, ArrowRight, Zap, Globe, X, Loader2
+  Truck, Plus, ArrowRight, Zap, Globe, X, Loader2,
+  Calendar
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion" // Import framer-motion
 import { Platform, ConnectedAccount, TimeRange, timeRangeLabels } from '@/lib/types/online-bizz-types';
@@ -350,24 +351,80 @@ export default function BusinessDashboard({
                     )}
 
                     {account.status === "in_progress" && (
-                      <motion.div 
-                        className="p-4 bg-yellow-50 rounded-lg border border-yellow-200"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div className="flex items-center space-x-2">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-                          >
-                            <Clock className="h-5 w-5 text-yellow-500" />
-                          </motion.div>
-                          <p className="text-sm text-yellow-700 font-medium">Account verification in progress</p>
-                        </div>
-                        <p className="text-xs text-yellow-600 mt-1">Expected completion: 1-2 business days</p>
-                      </motion.div>
-                    )}
+  <motion.div 
+    className="p-4 bg-yellow-50 rounded-lg border border-yellow-200"
+    initial={{ opacity: 0, height: 0 }}
+    animate={{ opacity: 1, height: "auto" }}
+    transition={{ duration: 0.3 }}
+  >
+    <div className="flex items-center space-x-2 mb-3">
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+      >
+        <Clock className="h-5 w-5 text-yellow-500" />
+      </motion.div>
+      <p className="text-sm text-yellow-700 font-medium">Account verification in progress</p>
+    </div>
+    
+    <div className="mt-4 space-y-2">
+  {/* Two-column grid layout */}
+  <div className="grid grid-cols-2 gap-4">
+    {/* Left column */}
+    <div className="bg-yellow-100/50 p-3 rounded-lg border border-yellow-200">
+      <h4 className="font-medium text-yellow-800 text-sm mb-1">Platform Approval Process</h4>
+      <ul className="text-xs text-yellow-700 space-y-1">
+        <li className="flex items-center">
+          <span className="mr-1">•</span> Account details under review
+        </li>
+        <li className="flex items-center">
+          <span className="mr-1">•</span> Business verification pending
+        </li>
+        <li className="flex items-center">
+          <span className="mr-1">•</span> Compliance check in progress
+        </li>
+      </ul>
+    </div>
+    
+    {/* Right column */}
+<motion.div 
+    className="border border-dashed border-yellow-300 rounded-lg p-3"
+    animate={{ backgroundColor: ["rgba(254, 240, 138, 0.1)", "rgba(254, 240, 138, 0.3)", "rgba(254, 240, 138, 0.1)"] }}
+    transition={{ duration: 2, repeat: Infinity }}
+  >
+    <div className="flex justify-between items-center">
+      <p className="text-xs font-medium text-yellow-800">Current Status:</p>
+      <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-100">Pending</Badge>
+    </div>
+    <div className="mt-2 w-full bg-yellow-200/30 rounded-full h-1.5">
+      <motion.div 
+        className="bg-yellow-500 h-1.5 rounded-full" 
+        initial={{ width: "0%" }}
+        animate={{ width: "40%" }}
+        transition={{ duration: 1 }}
+      />
+    </div>
+    <p className="text-xs text-yellow-600 mt-1">40% complete</p>
+  </motion.div>
+  </div>
+  
+
+  
+  
+  {/* Optional: Add an estimated completion section to increase height further */}
+  <div className="flex space-x-4 text-xs text-yellow-700 p-2">
+    <div className="flex-1 flex items-center">
+      <Clock className="h-3 w-3 mr-1 text-yellow-500" />
+      <span>Started: 20/07/2025</span>
+    </div>
+    <div className="flex-1 flex items-center justify-end">
+      <Calendar className="h-3 w-3 mr-1 text-yellow-500" />
+      <span>Est. Completion: 22/07/2025</span>
+    </div>
+  </div>
+</div>
+                    </motion.div>
+                  )}
                   </Card>
                 </motion.div>
               )
