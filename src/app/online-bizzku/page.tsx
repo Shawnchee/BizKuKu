@@ -617,7 +617,7 @@ export default function OnlineBizzkuPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {helpResources.map((resource) => (
               <Card
                 key={resource.id}
@@ -643,7 +643,7 @@ export default function OnlineBizzkuPage() {
             <p className="text-gray-600">Simple guides to help you get started with your online business</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {quickStartGuides.map((guide) => (
               <Card
                 key={guide.id}
@@ -686,14 +686,14 @@ export default function OnlineBizzkuPage() {
         <h3 className="text-2xl font-bold text-gray-900 mb-4">
           {isConnecting ? "Registering Your Application" : "Account Verification Complete"}
         </h3>
-        <p className="text-gray-600 mb-6 text-lg">
+        <p className="text-gray-600 mb-4">
           {isConnecting
             ? `We're setting up your ${connectingPlatform} account registration. This may take a moment...`
             : `Your ${connectingPlatform} account verification is complete. We're now awaiting platform approval.`}
         </p>
-        <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-          <p className="text-base text-blue-700">
-            <strong className="text-lg">{isConnecting ? "What's happening:" : "Status update:"}</strong>
+        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+          <p className="text-sm text-blue-700">
+            <strong>{isConnecting ? "What's happening:" : "Status update:"}</strong>
             {isConnecting ? (
               <>
                 <br />• Creating your application
