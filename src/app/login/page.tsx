@@ -12,7 +12,7 @@ let drawingUtils: any = null
 
 // Liveness test variables
 let livenessTestActive: boolean = false
-let currentTestType: 'blink' | 'head_turn' = 'blink'
+let currentTestType: 'blink' | 'head_turn' | 'nod' = 'blink'
 let testStatus: 'waiting' | 'in_progress' | 'passed' | 'failed' = 'waiting'
 
 // Blink detection variables
@@ -30,6 +30,15 @@ let hasMovedLeft = false
 let hasMovedRight = false
 let centerYaw = 0
 let headTurnThreshold = 15 // degrees
+
+// Nod detection variables
+let nodCount = 0
+let requiredNods = 2
+let lastNodTime = 0
+let isCurrentlyNodding = false
+let verticalPositionHistory: {pitch: number, timestamp: number}[] = []
+let centerPitch = 0
+let nodThreshold = 10 // degrees for up/down movement
 
 const videoWidth = 480
 
@@ -247,9 +256,9 @@ export default function FaceLandmarkDemo() {
       return
     }
 
-    // Randomly select blink or head turn test
-    const tests = ['blink', 'head_turn']
-    const randomTest = tests[Math.floor(Math.random() * tests.length)] as 'blink' | 'head_turn'
+    // Randomly select blink, head turn, or nod test
+    const tests = ['blink', 'head_turn', 'nod']
+    const randomTest = tests[Math.floor(Math.random() * tests.length)] as 'blink' | 'head_turn' | 'nod'
     
     livenessTestActive = true
     currentTestType = randomTest
@@ -258,9 +267,12 @@ export default function FaceLandmarkDemo() {
     if (randomTest === 'blink') {
       resetBlinkVariables()
       console.log('Random test selected: Blink twice')
-    } else {
+    } else if (randomTest === 'head_turn') {
       resetHeadTurnVariables()
       console.log('Random test selected: Head turn left and right')
+    } else if (randomTest === 'nod') {
+      resetNodVariables()
+      console.log('Random test selected: Nod twice')
     }
     
     updateLivenessUI()
@@ -282,6 +294,15 @@ export default function FaceLandmarkDemo() {
     resetHeadTurnVariables()
     updateLivenessUI()
     console.log('Head turn test started - turn left then right')
+  }
+
+  function startNodTest() {
+    livenessTestActive = true
+    currentTestType = 'nod'
+    testStatus = 'waiting'
+    resetNodVariables()
+    updateLivenessUI()
+    console.log('Nod test started - nod up and down twice')
   }
 
   function stopLivenessTest() {
@@ -306,6 +327,14 @@ export default function FaceLandmarkDemo() {
     centerYaw = 0
   }
 
+  function resetNodVariables() {
+    nodCount = 0
+    lastNodTime = 0
+    isCurrentlyNodding = false
+    verticalPositionHistory = []
+    centerPitch = 0
+  }
+
   function detectLiveness(blendShapes: any[], landmarks: any[]) {
     if (!livenessTestActive || !blendShapes || !blendShapes.length || !landmarks || !landmarks.length) {
       return
@@ -315,6 +344,8 @@ export default function FaceLandmarkDemo() {
       detectBlinkTwice(blendShapes)
     } else if (currentTestType === 'head_turn') {
       detectHeadTurn(landmarks[0]) // Use first face landmarks
+    } else if (currentTestType === 'nod') {
+      detectNodTwice(landmarks[0]) // Use first face landmarks
     }
   }
 
@@ -438,6 +469,77 @@ export default function FaceLandmarkDemo() {
     }
   }
 
+  function detectNodTwice(landmarks: any[]) {
+    if (!landmarks || landmarks.length === 0) return
+
+    const currentTime = performance.now()
+    
+    // Get key facial landmarks for pitch calculation
+    const noseTip = landmarks[1] // Nose tip
+    const foreheadCenter = landmarks[9] // Forehead center
+    const chinBottom = landmarks[175] // Chin bottom
+    
+    // Calculate pitch (vertical angle) using nose relative to forehead-chin line
+    const faceHeight = Math.abs(foreheadCenter.y - chinBottom.y)
+    const noseVerticalPosition = (noseTip.y - foreheadCenter.y) / faceHeight
+    
+    // Convert to degrees (simplified pitch calculation)
+    const pitch = noseVerticalPosition * 45 // Scale to reasonable degree range
+    
+    // Initialize center pitch on first few frames
+    verticalPositionHistory.push({ pitch, timestamp: currentTime })
+    
+    // Keep only recent history (last 1 second)
+    verticalPositionHistory = verticalPositionHistory.filter(
+      entry => currentTime - entry.timestamp < 1000
+    )
+    
+    // Set center pitch from early readings
+    if (verticalPositionHistory.length === 5) {
+      centerPitch = verticalPositionHistory.slice(0, 5).reduce((sum, entry) => sum + entry.pitch, 0) / 5
+      console.log(`Center pitch established: ${centerPitch.toFixed(1)}°`)
+    }
+    
+    if (verticalPositionHistory.length < 5) return // Wait for center to be established
+    
+    const relativePitch = pitch - centerPitch
+    
+    // Detect nodding motion (down then up movement)
+    const isNodding = Math.abs(relativePitch) > nodThreshold
+    
+    // Count nods with cooldown period
+    if (isNodding && !isCurrentlyNodding && (currentTime - lastNodTime) > 800) {
+      isCurrentlyNodding = true
+      nodCount++
+      lastNodTime = currentTime
+      testStatus = 'in_progress'
+      console.log(`Nod detected! Count: ${nodCount}/${requiredNods}, Pitch: ${relativePitch.toFixed(1)}°`)
+      updateLivenessUI()
+    }
+    
+    // Reset nod state when head returns to center
+    if (!isNodding && isCurrentlyNodding) {
+      isCurrentlyNodding = false
+    }
+    
+    // Check if completed
+    if (nodCount >= requiredNods && testStatus !== 'passed') {
+      testStatus = 'passed'
+      updateLivenessUI()
+      
+      // Auto stop test after 5 seconds and show login success
+      setTimeout(() => {
+        console.log('🎉 Login verification successful via nod test!')
+        stopLivenessTest()
+      }, 5000)
+    }
+    
+    // Log current values for debugging (only when active and waiting)
+    if (testStatus === 'waiting' && livenessTestActive) {
+      console.log(`Head pitch: ${relativePitch.toFixed(1)}° (Nods: ${nodCount}/${requiredNods})`)
+    }
+  }
+
   function updateLivenessUI() {
     if (!testInstructionRef.current || !testStatusRef.current) {
       return
@@ -447,6 +549,8 @@ export default function FaceLandmarkDemo() {
       updateBlinkUI()
     } else if (currentTestType === 'head_turn') {
       updateHeadTurnUI()
+    } else if (currentTestType === 'nod') {
+      updateNodUI()
     }
   }
 
@@ -502,6 +606,33 @@ export default function FaceLandmarkDemo() {
       case 'passed':
         testInstructionRef.current.innerHTML = '<b>🎉 Verification Successful!</b>'
         testStatusRef.current.innerHTML = '<span class="text-green-600">✅ LOGIN APPROVED - HEAD TURN TEST PASSED</span>'
+        break
+    }
+  }
+
+  function updateNodUI() {
+    if (!testInstructionRef.current || !testStatusRef.current) {
+      return
+    }
+
+    switch (testStatus) {
+      case 'waiting':
+        testInstructionRef.current.innerHTML = livenessTestActive ? 
+          '<b>Please NOD your head up and down TWICE</b>' : 
+          'Click "Start Verification" to begin the liveness test'
+        testStatusRef.current.innerHTML = livenessTestActive ? 
+          '<span class="text-yellow-600">🔄 Waiting for nods... (0/2)</span>' : 
+          '<span class="text-gray-600">🔄 Ready for verification</span>'
+        break
+      
+      case 'in_progress':
+        testInstructionRef.current.innerHTML = `<b>Great! Keep nodding (${nodCount}/${requiredNods})</b>`
+        testStatusRef.current.innerHTML = `<span class="text-blue-600">🔄 Progress: ${nodCount}/2 nods</span>`
+        break
+      
+      case 'passed':
+        testInstructionRef.current.innerHTML = '<b>🎉 Verification Successful!</b>'
+        testStatusRef.current.innerHTML = '<span class="text-green-600">✅ LOGIN APPROVED - NOD TEST PASSED</span>'
         break
     }
   }
