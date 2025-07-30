@@ -35,6 +35,10 @@ const translations = {
     ms: 'Status Permohonan',
     en: 'Application Status'
   },
+  'nav.mini-services': {
+    ms: 'Perkhidmatan Mini',
+    en: 'Mini Services'
+  },
   
   // Hero Section
   'hero.badge': {

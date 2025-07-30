@@ -83,7 +83,7 @@ export default function Home() {
       borderColor: 'border-teal-200',
       summary: 'Available services: QR payment setup, business registration assistance, tax filing support, and digital marketing tools.',
       summaryMs: 'Perkhidmatan tersedia: Setup pembayaran QR, bantuan pendaftaran perniagaan, sokongan pemfailan cukai, dan alat pemasaran digital.',
-      linkTo: null
+      linkTo: '/mini-services'
     }
   ]
 
