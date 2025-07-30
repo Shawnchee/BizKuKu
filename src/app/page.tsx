@@ -27,7 +27,7 @@ export default function Home() {
   const actionButtons = [
     {
       id: 'online-business',
-      title: 'Online Business',
+      title: 'Online Bizzku',
       titleMs: 'Perniagaan Dalam Talian',
       icon: TrendingUp,
       color: 'from-emerald-400 to-emerald-600',
@@ -35,7 +35,7 @@ export default function Home() {
       borderColor: 'border-emerald-200',
       summary: 'Your business is performing well with steady growth in online sales. Monthly revenue shows a 15% increase compared to last month.',
       summaryMs: 'Perniagaan anda berprestasi baik dengan pertumbuhan stabil dalam jualan dalam talian. Hasil bulanan menunjukkan peningkatan 15% berbanding bulan lepas.',
-      linkTo: null
+      linkTo: '/online-bizzku'
     },
     {
       id: 'application-progress',

@@ -17,8 +17,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BizzKuku",
+  title: "BizKuKu",
   description: "Track sales, customers, and money easily. Perfect for small shops and stalls.",
+  icons: {
+    icon: "/logo.svg"
+  }
 };
 
 export default function RootLayout({
