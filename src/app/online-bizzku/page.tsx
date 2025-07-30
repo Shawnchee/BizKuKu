@@ -543,7 +543,6 @@ export default function OnlineBizzkuPage() {
               <p className="text-sm text-gray-600 mb-4">{platform.description}</p>
 
               <div className="flex items-center justify-between mb-4">
-                {getDifficultyBadge(platform.difficulty)}
                 <span className="text-xs text-gray-500 flex items-center">
                   <Clock className="h-3 w-3 mr-1" />
                   {platform.setupTime}
