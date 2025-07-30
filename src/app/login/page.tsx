@@ -1,6 +1,8 @@
 'use client'
 
 import { useRef, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Iridescence from '@/components/backgrounds/Iridescence'
 
 // Global variables (like in the original JS)
 let faceLandmarker: any
@@ -45,6 +47,8 @@ const videoWidth = 480
 export default function FaceLandmarkDemo() {
   // React state to track webcam status for UI updates
   const [isWebcamRunning, setIsWebcamRunning] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const router = useRouter()
   
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -388,11 +392,12 @@ export default function FaceLandmarkDemo() {
       testStatus = 'passed'
       updateLivenessUI()
       
-      // Auto stop test after 5 seconds and show login success
+      // Auto stop test after 3 seconds and show success modal
       setTimeout(() => {
         console.log('🎉 Login verification successful via blink test!')
         stopLivenessTest()
-      }, 5000)
+        showLoginSuccessModal()
+      }, 3000)
     }
 
     // Log current values for debugging (only when active)
@@ -456,11 +461,12 @@ export default function FaceLandmarkDemo() {
       testStatus = 'passed'
       updateLivenessUI()
       
-      // Auto stop test after 5 seconds and show login success
+      // Auto stop test after 3 seconds and show success modal
       setTimeout(() => {
         console.log('🎉 Login verification successful via head turn test!')
         stopLivenessTest()
-      }, 5000)
+        showLoginSuccessModal()
+      }, 3000)
     }
     
     // Log current values for debugging (only when active and waiting)
@@ -527,11 +533,12 @@ export default function FaceLandmarkDemo() {
       testStatus = 'passed'
       updateLivenessUI()
       
-      // Auto stop test after 5 seconds and show login success
+      // Auto stop test after 3 seconds and show success modal
       setTimeout(() => {
         console.log('🎉 Login verification successful via nod test!')
         stopLivenessTest()
-      }, 5000)
+        showLoginSuccessModal()
+      }, 3000)
     }
     
     // Log current values for debugging (only when active and waiting)
@@ -637,8 +644,27 @@ export default function FaceLandmarkDemo() {
     }
   }
 
+  // Function to show success modal and redirect
+  const showLoginSuccessModal = () => {
+    setShowSuccessModal(true)
+    
+    // Redirect after 3 seconds of showing the modal
+    setTimeout(() => {
+      router.push('/home')
+    }, 3000)
+  }
+
   return (
-    <div className="font-sans mx-8 my-8 text-gray-800">
+    <div className="relative min-h-screen overflow-hidden">
+      <Iridescence
+        color={[1, 1, 1]}
+        mouseReact={false}
+        amplitude={0.1}
+        speed={1.0}
+        className="absolute inset-0"
+      />
+      
+      <div className="relative z-10 font-sans mx-8 my-8">
       <style jsx>{`
         .invisible {
           opacity: 0.2;
@@ -664,18 +690,20 @@ export default function FaceLandmarkDemo() {
 
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-blue-600 mb-2">
-            🔐 Secure Login
+          <h1 className="text-4xl font-bold text-black mb-2">
+            <span className="bg-gradient-to-r from-black via-purple-800 to-blue-800 bg-clip-text text-transparent">
+              🔐 Secure Login
+            </span>
           </h1>
-          <p className="text-gray-600">
+          <p className="text-black/80">
             Complete face liveness verification to access your account
           </p>
         </div>
 
       <section ref={demosSectionRef} className="invisible">
           {/* Camera Section */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
-            <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-b">
+          <div className="bg-white/90 backdrop-blur-lg rounded-xl shadow-xl border border-white/30 overflow-hidden mb-8">
+            <div className="p-6 bg-white/80 backdrop-blur-sm border-b border-white/20">
               <h2 className="text-xl font-semibold text-gray-800 mb-2">Face Verification</h2>
               <p className="text-gray-600">Position your face in front of the camera</p>
             </div>
@@ -719,7 +747,7 @@ export default function FaceLandmarkDemo() {
 
 
           {/* Liveness Test Section */}
-          <div ref={livenessTestSectionRef} className="bg-white rounded-xl shadow-lg p-6">
+          <div ref={livenessTestSectionRef} className="bg-white/90 backdrop-blur-lg rounded-xl shadow-xl border border-white/30 p-6">
             <div className="text-center mb-6">
               <div ref={testStatusRef} className="text-2xl font-bold mb-4">
                 <span className="text-gray-600">🔄 Ready for verification</span>
@@ -757,6 +785,47 @@ export default function FaceLandmarkDemo() {
           </div>
         </section>
       </div>
+      </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          
+          {/* Modal */}
+          <div className="relative bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-8 mx-4 max-w-md w-full border border-white/30">
+            <div className="text-center">
+              {/* Loading Spinner */}
+              <div className="mb-6">
+                <div className="w-16 h-16 mx-auto border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin" />
+              </div>
+              
+              {/* Success Message */}
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                  ✅ Verification Successful!
+                </span>
+              </h2>
+              
+              <p className="text-lg text-gray-700 mb-2">
+                Logging in with SSM Passport
+              </p>
+              
+              <p className="text-sm text-gray-500">
+                Please wait while we authenticate your account...
+              </p>
+              
+              {/* Progress dots */}
+              <div className="flex justify-center space-x-1 mt-6">
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}} />
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}} />
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
