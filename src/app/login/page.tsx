@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
 // Global variables (like in the original JS)
 let faceLandmarker: any
@@ -34,6 +34,9 @@ let headTurnThreshold = 15 // degrees
 const videoWidth = 480
 
 export default function FaceLandmarkDemo() {
+  // React state to track webcam status for UI updates
+  const [isWebcamRunning, setIsWebcamRunning] = useState(false)
+  
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const imageBlendShapesRef = useRef<HTMLUListElement>(null)
@@ -45,8 +48,6 @@ export default function FaceLandmarkDemo() {
   const livenessTestSectionRef = useRef<HTMLDivElement>(null)
   const testStatusRef = useRef<HTMLDivElement>(null)
   const testInstructionRef = useRef<HTMLParagraphElement>(null)
-  const startBlinkTestButtonRef = useRef<HTMLButtonElement>(null)
-  const startHeadTurnTestButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     createFaceLandmarker()
@@ -85,59 +86,9 @@ export default function FaceLandmarkDemo() {
     }
   }
 
-  // When an image is clicked, let's detect it and display results!
-  async function handleImageClick(event: React.MouseEvent<HTMLImageElement>) {
-    if (!faceLandmarker) {
-      console.log("Wait for faceLandmarker to load before clicking!")
-      return
-    }
-
-    if (runningMode === "VIDEO") {
-      runningMode = "IMAGE"
-      await faceLandmarker.setOptions({ runningMode })
-    }
-
-    const img = event.target as HTMLImageElement
-    const container = img.parentNode as HTMLElement
-    
-    // Remove all landmarks drawn before
-    const allCanvas = container.getElementsByClassName("canvas")
-    for (let i = allCanvas.length - 1; i >= 0; i--) {
-      const n = allCanvas[i]
-      n.parentNode?.removeChild(n)
-    }
-
-    const faceLandmarkerResult = faceLandmarker.detect(img)
-    const canvas = document.createElement("canvas") as HTMLCanvasElement
-    canvas.setAttribute("class", "canvas")
-    canvas.setAttribute("width", img.naturalWidth + "px")
-    canvas.setAttribute("height", img.naturalHeight + "px")
-    canvas.style.left = "0px"
-    canvas.style.top = "0px"
-    canvas.style.width = `${img.width}px`
-    canvas.style.height = `${img.height}px`
-
-    container.appendChild(canvas)
-    const ctx = canvas.getContext("2d")!
-    
-    const vision = await import('@mediapipe/tasks-vision')
-    const { DrawingUtils, FaceLandmarker } = vision
-    const drawingUtils = new DrawingUtils(ctx)
-    
-    for (const landmarks of faceLandmarkerResult.faceLandmarks) {
-      drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_TESSELATION, { color: "#C0C0C070", lineWidth: 1 })
-      drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_EYE, { color: "#FF3030" })
-      drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_EYEBROW, { color: "#FF3030" })
-      drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_EYE, { color: "#30FF30" })
-      drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_EYEBROW, { color: "#30FF30" })
-      drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_FACE_OVAL, { color: "#E0E0E0" })
-      drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LIPS, { color: "#E0E0E0" })
-      drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_IRIS, { color: "#FF3030" })
-      drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_IRIS, { color: "#30FF30" })
-    }
-    
-    drawBlendShapes(imageBlendShapesRef.current, faceLandmarkerResult.faceBlendshapes)
-  }
+  // Image detection removed for cleaner login interface
+  // Commented out for cleaner login interface
+  // ... image detection code removed ...
 
   // Enable the live webcam view and start detection
   function enableCam() {
@@ -147,29 +98,51 @@ export default function FaceLandmarkDemo() {
     }
 
     if (webcamRunning === true) {
+      // Disable webcam
       webcamRunning = false
+      setIsWebcamRunning(false)
       if (enableWebcamButtonRef.current) {
-        enableWebcamButtonRef.current.innerText = "ENABLE PREDICTIONS"
+        enableWebcamButtonRef.current.innerText = "ENABLE CAMERA"
+      }
+      
+      // Stop the webcam stream if it exists
+      if (videoRef.current && videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream
+        const tracks = stream.getTracks()
+        tracks.forEach(track => track.stop())
+        videoRef.current.srcObject = null
       }
     } else {
-      webcamRunning = true
+      // Enable webcam
       if (enableWebcamButtonRef.current) {
-        enableWebcamButtonRef.current.innerText = "DISABLE PREDICTIONS"
+        enableWebcamButtonRef.current.innerText = "DISABLE CAMERA"
       }
-    }
 
-    // getUserMedia parameters
-    const constraints = {
-      video: true
-    }
-
-    // Activate the webcam stream
-    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream
-        videoRef.current.addEventListener("loadeddata", predictWebcam)
+      // getUserMedia parameters
+      const constraints = {
+        video: true
       }
-    })
+
+      // Activate the webcam stream
+      navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream
+          videoRef.current.addEventListener("loadeddata", () => {
+            // Set both global and React state when video is ready
+            webcamRunning = true
+            setIsWebcamRunning(true)
+            predictWebcam()
+          })
+        }
+      }).catch((error) => {
+        console.error("Error accessing webcam:", error)
+        webcamRunning = false
+        setIsWebcamRunning(false)
+        if (enableWebcamButtonRef.current) {
+          enableWebcamButtonRef.current.innerText = "ENABLE CAMERA"
+        }
+      })
+    }
   }
 
   async function predictWebcam() {
@@ -233,7 +206,8 @@ export default function FaceLandmarkDemo() {
       }
     }
     
-    drawBlendShapes(videoBlendShapesRef.current, results.faceBlendshapes)
+    // Hidden blend shapes display for cleaner login UI
+    // drawBlendShapes(videoBlendShapesRef.current, results.faceBlendshapes)
 
     // Run liveness detection if active
     if (results.faceBlendshapes && results.faceLandmarks) {
@@ -267,6 +241,31 @@ export default function FaceLandmarkDemo() {
   }
 
   // Liveness detection functions
+  function startRandomTest() {
+    if (livenessTestActive) {
+      stopLivenessTest()
+      return
+    }
+
+    // Randomly select blink or head turn test
+    const tests = ['blink', 'head_turn']
+    const randomTest = tests[Math.floor(Math.random() * tests.length)] as 'blink' | 'head_turn'
+    
+    livenessTestActive = true
+    currentTestType = randomTest
+    testStatus = 'waiting'
+    
+    if (randomTest === 'blink') {
+      resetBlinkVariables()
+      console.log('Random test selected: Blink twice')
+    } else {
+      resetHeadTurnVariables()
+      console.log('Random test selected: Head turn left and right')
+    }
+    
+    updateLivenessUI()
+  }
+
   function startBlinkTest() {
     livenessTestActive = true
     currentTestType = 'blink'
@@ -358,10 +357,11 @@ export default function FaceLandmarkDemo() {
       testStatus = 'passed'
       updateLivenessUI()
       
-      // Auto stop test after 3 seconds
+      // Auto stop test after 5 seconds and show login success
       setTimeout(() => {
+        console.log('🎉 Login verification successful via blink test!')
         stopLivenessTest()
-      }, 3000)
+      }, 5000)
     }
 
     // Log current values for debugging (only when active)
@@ -425,10 +425,11 @@ export default function FaceLandmarkDemo() {
       testStatus = 'passed'
       updateLivenessUI()
       
-      // Auto stop test after 3 seconds
+      // Auto stop test after 5 seconds and show login success
       setTimeout(() => {
+        console.log('🎉 Login verification successful via head turn test!')
         stopLivenessTest()
-      }, 3000)
+      }, 5000)
     }
     
     // Log current values for debugging (only when active and waiting)
@@ -450,7 +451,7 @@ export default function FaceLandmarkDemo() {
   }
 
   function updateBlinkUI() {
-    if (!testInstructionRef.current || !testStatusRef.current || !startBlinkTestButtonRef.current) {
+    if (!testInstructionRef.current || !testStatusRef.current) {
       return
     }
 
@@ -458,27 +459,26 @@ export default function FaceLandmarkDemo() {
       case 'waiting':
         testInstructionRef.current.innerHTML = livenessTestActive ? 
           '<b>Please blink your eyes TWICE</b>' : 
-          'Click "Start Blink Test" and then blink twice when prompted'
+          'Click "Start Verification" to begin the liveness test'
         testStatusRef.current.innerHTML = livenessTestActive ? 
           '<span class="text-yellow-600">👁️ Waiting for blinks... (0/2)</span>' : 
-          '<span class="text-gray-600">🔄 Ready to test</span>'
-        startBlinkTestButtonRef.current.innerHTML = livenessTestActive ? 'Stop Blink Test' : 'Start Blink Test'
+          '<span class="text-gray-600">🔄 Ready for verification</span>'
         break
       
       case 'in_progress':
-        testInstructionRef.current.innerHTML = `<b>Blink detected! (${blinkCount}/${requiredBlinks})</b>`
+        testInstructionRef.current.innerHTML = `<b>Great! Keep blinking (${blinkCount}/${requiredBlinks})</b>`
         testStatusRef.current.innerHTML = `<span class="text-blue-600">👁️ Progress: ${blinkCount}/2 blinks</span>`
         break
       
       case 'passed':
-        testInstructionRef.current.innerHTML = '<b>Excellent! All blinks detected!</b>'
-        testStatusRef.current.innerHTML = '<span class="text-green-600">✅ BLINK TEST PASSED</span>'
+        testInstructionRef.current.innerHTML = '<b>🎉 Verification Successful!</b>'
+        testStatusRef.current.innerHTML = '<span class="text-green-600">✅ LOGIN APPROVED - BLINK TEST PASSED</span>'
         break
     }
   }
 
   function updateHeadTurnUI() {
-    if (!testInstructionRef.current || !testStatusRef.current || !startHeadTurnTestButtonRef.current) {
+    if (!testInstructionRef.current || !testStatusRef.current) {
       return
     }
 
@@ -486,23 +486,22 @@ export default function FaceLandmarkDemo() {
       case 'waiting':
         testInstructionRef.current.innerHTML = livenessTestActive ? 
           '<b>Turn your head LEFT, then RIGHT</b>' : 
-          'Click "Start Head Turn Test" and then turn your head left and right'
+          'Click "Start Verification" to begin the liveness test'
         testStatusRef.current.innerHTML = livenessTestActive ? 
           '<span class="text-yellow-600">🔄 Waiting for head movement...</span>' : 
-          '<span class="text-gray-600">🔄 Ready to test</span>'
-        startHeadTurnTestButtonRef.current.innerHTML = livenessTestActive ? 'Stop Head Turn Test' : 'Start Head Turn Test'
+          '<span class="text-gray-600">🔄 Ready for verification</span>'
         break
       
       case 'in_progress':
         const leftStatus = hasMovedLeft ? '✅' : '⏳'
         const rightStatus = hasMovedRight ? '✅' : '⏳'
-        testInstructionRef.current.innerHTML = `<b>Keep turning!</b>`
+        testInstructionRef.current.innerHTML = `<b>Keep turning your head!</b>`
         testStatusRef.current.innerHTML = `<span class="text-blue-600">🔄 Left: ${leftStatus} Right: ${rightStatus}</span>`
         break
       
       case 'passed':
-        testInstructionRef.current.innerHTML = '<b>Perfect! Head movement detected!</b>'
-        testStatusRef.current.innerHTML = '<span class="text-green-600">✅ HEAD TURN TEST PASSED</span>'
+        testInstructionRef.current.innerHTML = '<b>🎉 Verification Successful!</b>'
+        testStatusRef.current.innerHTML = '<span class="text-green-600">✅ LOGIN APPROVED - HEAD TURN TEST PASSED</span>'
         break
     }
   }
@@ -532,109 +531,101 @@ export default function FaceLandmarkDemo() {
         }
       `}</style>
 
-      <h1 className="text-3xl font-bold text-teal-600 italic">
-        Face landmark detection using the MediaPipe FaceLandmarker task
-      </h1>
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-blue-600 mb-2">
+            🔐 Secure Login
+          </h1>
+          <p className="text-gray-600">
+            Complete face liveness verification to access your account
+          </p>
+        </div>
 
       <section ref={demosSectionRef} className="invisible">
-        <h2 className="text-xl font-semibold clear-both">Demo: Detecting Images</h2>
-        <p><b>Click on an image below</b> to see the key landmarks of the face.</p>
-
-        <div className="relative float-left w-[48%] mx-[1%] my-[2%] cursor-pointer">
-          <img 
-            src="https://storage.googleapis.com/mediapipe-assets/portrait.jpg" 
-            width="100%" 
-            crossOrigin="anonymous" 
-            title="Click to get detection!" 
-            onClick={handleImageClick}
-          />
-        </div>
-        <div className="float-left w-[48%] mx-[1%] my-[2%]">
-          <ul ref={imageBlendShapesRef} className="list-none p-0"></ul>
-        </div>
-
-        <h2 className="text-xl font-semibold clear-both">Demo: Webcam continuous face landmarks detection</h2>
-        <p>Hold your face in front of your webcam to get real-time face landmarker detection.<br/>Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
-
-        <div className="relative float-left w-[48%] mx-[1%] my-[2%]">
-          <button 
-            ref={enableWebcamButtonRef}
-            onClick={enableCam}
-            className="bg-teal-600 text-white px-4 py-2 rounded shadow hover:bg-teal-700 transition-colors mb-4"
-          >
-            ENABLE WEBCAM
-          </button>
-          <div className="relative">
-            <video
-              ref={videoRef}
-              autoPlay
-              playsInline
-              muted
-              className="absolute"
-            />
-            <canvas
-              ref={canvasRef}
-              className="output_canvas absolute left-0 top-0"
-            />
-          </div>
-        </div>
-        <div className="float-left w-[48%] mx-[1%] my-[2%]">
-          <ul ref={videoBlendShapesRef} className="list-none p-0"></ul>
-        </div>
-
-        <h2 className="text-xl font-semibold clear-both mb-2">Demo: Liveness Detection Tests</h2>
-        <p className="mb-4">
-          Test real-time liveness detection with two different challenges: blink twice detection and head turning.
-        </p>
-
-        <div ref={livenessTestSectionRef} className="clear-both bg-gray-50 border-2 border-gray-200 rounded-lg p-6 mb-4">
-          <div className="text-center mb-6">
-            <div ref={testStatusRef} className="text-2xl font-bold mb-2">
-              <span className="text-gray-600">🔄 Ready to test</span>
+          {/* Camera Section */}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+            <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-b">
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">Face Verification</h2>
+              <p className="text-gray-600">Position your face in front of the camera</p>
             </div>
             
-            <p ref={testInstructionRef} className="text-lg mb-6">
-              Choose a test below and follow the instructions
-            </p>
-            
-            <div className="flex gap-4 justify-center mb-4">
-              <button 
-                ref={startBlinkTestButtonRef}
-                onClick={() => {
-                  if (livenessTestActive && currentTestType === 'blink') {
-                    stopLivenessTest()
-                  } else {
-                    startBlinkTest()
-                  }
-                }}
-                className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow hover:bg-purple-700 transition-colors font-semibold"
-              >
-                Start Blink Test
-              </button>
+            <div className="p-6">
+              <div className="flex justify-center mb-6">
+                <button 
+                  ref={enableWebcamButtonRef}
+                  onClick={enableCam}
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition-colors font-semibold"
+                >
+                  {isWebcamRunning ? 'DISABLE CAMERA' : 'ENABLE CAMERA'}
+                </button>
+              </div>
+              
+              <div className="flex justify-center">
+                <div className="relative bg-gray-900 rounded-xl overflow-hidden" style={{maxWidth: '480px', width: '100%'}}>
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-64 object-cover"
+                  />
+                  <canvas
+                    ref={canvasRef}
+                    className="output_canvas absolute left-0 top-0 w-full h-64"
+                  />
+                  
+                  {/* Live indicator */}
+                  {isWebcamRunning && (
+                    <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      🔴 LIVE
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          {/* Liveness Test Section */}
+          <div ref={livenessTestSectionRef} className="bg-white rounded-xl shadow-lg p-6">
+            <div className="text-center mb-6">
+              <div ref={testStatusRef} className="text-2xl font-bold mb-4">
+                <span className="text-gray-600">🔄 Ready for verification</span>
+              </div>
+              
+              <p ref={testInstructionRef} className="text-lg mb-6 text-gray-700">
+                Click "Start Verification" to begin the liveness test
+              </p>
               
               <button 
-                ref={startHeadTurnTestButtonRef}
-                onClick={() => {
-                  if (livenessTestActive && currentTestType === 'head_turn') {
-                    stopLivenessTest()
-                  } else {
-                    startHeadTurnTest()
-                  }
-                }}
-                className="bg-indigo-600 text-white px-6 py-3 rounded-lg shadow hover:bg-indigo-700 transition-colors font-semibold"
+                onClick={() => startRandomTest()}
+                disabled={!isWebcamRunning}
+                className={`px-8 py-4 rounded-lg shadow font-semibold text-lg transition-colors ${
+                  !isWebcamRunning 
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                    : livenessTestActive
+                    ? 'bg-red-600 text-white hover:bg-red-700'
+                    : 'bg-gradient-to-r from-green-500 to-blue-600 text-white hover:from-green-600 hover:to-blue-700'
+                }`}
               >
-                Start Head Turn Test
+                {!isWebcamRunning 
+                  ? 'Enable Camera First' 
+                  : livenessTestActive 
+                  ? 'Cancel Test' 
+                  : 'Start Verification'
+                }
               </button>
+              
+              {!isWebcamRunning && (
+                <p className="text-sm text-gray-500 mt-2">
+                  Please enable your camera before starting verification
+                </p>
+              )}
             </div>
           </div>
-          
-          <div className="text-sm text-gray-600 text-center space-y-1">
-            <p><strong>Note:</strong> Make sure the webcam is enabled and your face is visible</p>
-            <p><strong>Blink Test:</strong> Blink both eyes twice (threshold: {blinkThreshold})</p>
-            <p><strong>Head Turn Test:</strong> Turn head left then right (threshold: {headTurnThreshold}°)</p>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   )
 }
