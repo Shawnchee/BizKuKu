@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Iridescence from '@/components/backgrounds/Iridescence'
+import { useUser } from '@/contexts/UserContext'
 
 // Global variables (like in the original JS)
 let faceLandmarker: any
@@ -49,6 +50,7 @@ export default function FaceLandmarkDemo() {
   const [isWebcamRunning, setIsWebcamRunning] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const router = useRouter()
+  const { login, loginWithUser } = useUser()
   
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -644,14 +646,153 @@ export default function FaceLandmarkDemo() {
     }
   }
 
-  // Function to show success modal and redirect
+  // Login form state (fallback)
+  const [showLoginForm, setShowLoginForm] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loginLoading, setLoginLoading] = useState(false)
+  const [loginError, setLoginError] = useState('')
+
+  // Face Recognition states
+  const [showFaceRecognitionModal, setShowFaceRecognitionModal] = useState(false)
+  const [faceRecognitionStatus, setFaceRecognitionStatus] = useState('')
+  const [faceRecognitionError, setFaceRecognitionError] = useState('')
+
+  // Function to start face recognition after liveness success
   const showLoginSuccessModal = () => {
     setShowSuccessModal(true)
     
-    // Redirect after 3 seconds of showing the modal
+    // Start face recognition after 2 seconds
     setTimeout(() => {
-      router.push('/avatar-onboarding')
-    }, 3000)
+      setShowSuccessModal(false)
+      startFaceRecognition()
+    }, 2000)
+  }
+
+  // Compress image to under 100KB
+  const compressImage = (canvas: HTMLCanvasElement, maxSizeKB: number = 100): string => {
+    let quality = 0.9
+    let compressedDataUrl = canvas.toDataURL('image/jpeg', quality)
+    
+    // Reduce quality until under maxSizeKB
+    while (compressedDataUrl.length > (maxSizeKB * 1024 * 4/3) && quality > 0.1) {
+      quality -= 0.1
+      compressedDataUrl = canvas.toDataURL('image/jpeg', quality)
+    }
+    
+    console.log(`📸 Image compressed to ${(compressedDataUrl.length / 1024 / 4 * 3).toFixed(1)}KB at ${(quality * 100).toFixed()}% quality`)
+    return compressedDataUrl
+  }
+
+  // Capture and process photo for face recognition
+  const startFaceRecognition = async () => {
+    console.log('🚀 Starting face recognition process...')
+    setShowFaceRecognitionModal(true)
+    setFaceRecognitionStatus('Capturing your photo...')
+    setFaceRecognitionError('')
+
+    try {
+      // Capture photo from video
+      if (!videoRef.current || !canvasRef.current) {
+        throw new Error('Camera not available')
+      }
+
+      const video = videoRef.current
+      const canvas = canvasRef.current
+      const ctx = canvas.getContext('2d')
+
+      if (!ctx) {
+        throw new Error('Canvas context not available')
+      }
+
+      // Set canvas size to match video
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+
+      // Draw current video frame to canvas
+      ctx.drawImage(video, 0, 0)
+
+      // Compress image
+      const compressedImageData = compressImage(canvas, 100)
+      
+      setFaceRecognitionStatus('Fetching your SSM Passport...')
+
+      // Call face recognition API
+      console.log('📡 Calling face recognition API...')
+      const response = await fetch('/api/face-recognition', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageData: compressedImageData
+        })
+      })
+
+      const result = await response.json()
+      console.log('📋 Face recognition result:', result)
+
+      if (result.success && result.user) {
+        setFaceRecognitionStatus(`Welcome back, ${result.user.profile.full_name}!`)
+        
+        // Auto-login with the recognized user profile
+        const loginResult = await loginWithUser(result.user.profile)
+        
+        if (loginResult.success) {
+          console.log('✅ Auto-login successful')
+          setTimeout(() => {
+            setShowFaceRecognitionModal(false)
+            router.push('/home')
+          }, 1500)
+        } else {
+          throw new Error('Auto-login failed after face recognition')
+        }
+      } else {
+        // Face recognition failed - show error and fallback to manual login
+        setFaceRecognitionError(result.error || 'Face recognition failed')
+        setFaceRecognitionStatus('Face not recognized')
+        
+        console.log('❌ Face recognition failed:', result.error)
+        console.log('🔧 Debug info:', result.debugInfo)
+        
+        setTimeout(() => {
+          setShowFaceRecognitionModal(false)
+          setShowLoginForm(true) // Fallback to manual login
+        }, 3000)
+      }
+
+    } catch (error: any) {
+      console.error('💥 Face recognition error:', error)
+      setFaceRecognitionError(error.message || 'Face recognition service unavailable')
+      setFaceRecognitionStatus('Service error')
+      
+      setTimeout(() => {
+        setShowFaceRecognitionModal(false)
+        setShowLoginForm(true) // Fallback to manual login
+      }, 3000)
+    }
+  }
+
+  // Handle login form submission
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoginLoading(true)
+    setLoginError('')
+
+    try {
+      const result = await login(email, password)
+      
+      if (result.success) {
+        // Success - redirect to home
+        router.push('/avatar-onboarding')
+      } else {
+        setLoginError(result.error || 'Login failed. Please try again.')
+      }
+    } catch (error) {
+      setLoginError('Login failed. Please try again.')
+    } finally {
+      setLoginLoading(false)
+    }
   }
 
   return (
@@ -809,11 +950,11 @@ export default function FaceLandmarkDemo() {
               </h2>
               
               <p className="text-lg text-gray-700 mb-2">
-                Logging in with SSM Passport
+                Face Liveness Verified
               </p>
               
               <p className="text-sm text-gray-500">
-                Please wait while we authenticate your account...
+                Preparing login form...
               </p>
               
               {/* Progress dots */}
@@ -823,6 +964,171 @@ export default function FaceLandmarkDemo() {
                 <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}} />
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Face Recognition Loading Modal */}
+      {showFaceRecognitionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          
+          {/* Modal */}
+          <div className="relative bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-8 mx-4 max-w-md w-full border border-white/30">
+            <div className="text-center">
+              {/* Face Recognition Icon/Spinner */}
+              <div className="mb-6">
+                {faceRecognitionError ? (
+                  <div className="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center">
+                    <div className="text-red-500 text-2xl">⚠️</div>
+                  </div>
+                ) : faceRecognitionStatus.includes('Welcome') ? (
+                  <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+                    <div className="text-green-500 text-2xl">✅</div>
+                  </div>
+                ) : (
+                  <div className="w-16 h-16 mx-auto border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+                )}
+              </div>
+              
+              {/* Status Message */}
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                {faceRecognitionError ? (
+                  <span className="text-red-600">Recognition Failed</span>
+                ) : faceRecognitionStatus.includes('Welcome') ? (
+                  <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                    🎉 Welcome Back!
+                  </span>
+                ) : (
+                  <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                    🔍 Face Recognition
+                  </span>
+                )}
+              </h2>
+              
+              <p className="text-lg text-gray-700 mb-2">
+                {faceRecognitionStatus || 'Processing...'}
+              </p>
+              
+              {faceRecognitionError && (
+                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-700 text-sm">{faceRecognitionError}</p>
+                  <p className="text-red-600 text-xs mt-1">Redirecting to manual login...</p>
+                </div>
+              )}
+              
+              {faceRecognitionStatus.includes('Welcome') && (
+                <p className="text-sm text-gray-500 mt-2">
+                  Logging you in automatically...
+                </p>
+              )}
+              
+              {/* Progress dots */}
+              {!faceRecognitionError && !faceRecognitionStatus.includes('Welcome') && (
+                <div className="flex justify-center space-x-1 mt-6">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}} />
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}} />
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}} />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Login Form Modal */}
+      {showLoginForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          
+          {/* Modal */}
+          <div className="relative bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-8 mx-4 max-w-md w-full border border-white/30">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                  🔐 Login to BizKuKu
+                </span>
+              </h2>
+              <p className="text-gray-600">
+                Enter your credentials to access your account
+              </p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              {/* Email Field */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white/80 backdrop-blur-sm"
+                  required
+                  disabled={loginLoading}
+                />
+              </div>
+
+              {/* Password Field */}
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white/80 backdrop-blur-sm"
+                  required
+                  disabled={loginLoading}
+                />
+              </div>
+
+              {/* Error Message */}
+              {loginError && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                  <p className="text-red-700 text-sm">{loginError}</p>
+                </div>
+              )}
+
+              {/* Login Button */}
+              <button
+                type="submit"
+                disabled={loginLoading}
+                className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-colors ${
+                  loginLoading
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700'
+                }`}
+              >
+                {loginLoading ? (
+                  <div className="flex items-center justify-center">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                    Logging in...
+                  </div>
+                ) : (
+                  'Login to BizKuKu'
+                )}
+              </button>
+
+              {/* Demo Credentials */}
+              <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-xs text-blue-800 font-medium mb-2">Demo Credentials:</p>
+                <div className="text-xs text-blue-700 space-y-1">
+                  <div>📧 ahmad.restaurant@bizkuku.com</div>
+                  <div>📧 siti.retail@bizkuku.com</div>
+                  <div>📧 raj.tech@bizkuku.com</div>
+                  <div className="mt-1 font-medium">🔑 Password: password123</div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       )}

@@ -2,7 +2,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 // Supabase configuration
 const supabaseUrl = 'https://kevxrrzclaimiirpbamz.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtldnhycnpjbGFpbWlpcnBiYW16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2NzI4MzUsImV4cCI6MjA1NDI0ODgzNX0.fCN_HYpZVMv2lPJfXYjIdNTb2f4tV8qSayWNmF8v63Y'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtldnhycnpjbGFpbWlpcnBiYW16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4ODMyOTcsImV4cCI6MjA2OTQ1OTI5N30.dGmUSLXizgRbhn8YsQY1zEEMKucVCxPpk4YsnxTjytc'
 
 // Create Supabase client
 export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
@@ -175,6 +175,16 @@ export const userProfiles = {
       .update(updates)
       .eq('id', id)
       .select()
+      .single()
+    return { data, error }
+  },
+
+  // Get user profile by rekognition ID (for AWS Face Recognition)
+  async getByRekognitionId(rekognitionId: string) {
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('rekognition_id', rekognitionId)
       .single()
     return { data, error }
   }
@@ -372,7 +382,9 @@ export const faceVerifications = {
         acc[type] = { passed: 0, failed: 0, total: 0 }
       }
       
-      acc[type][status]++
+      if (status === 'passed' || status === 'failed') {
+        acc[type][status]++
+      }
       acc[type].total++
       
       return acc

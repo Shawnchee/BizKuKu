@@ -110,6 +110,8 @@ const PageHeader = ({ audioEnabled, onToggleAudio, showBalance, onToggleBalance 
 
 const GreetingSection = () => {
     const { language } = useLanguage();
+    const { getUserGreeting, user, isAuthenticated } = useUser();
+    
     return (
         <section className="text-center">
         <motion.h2
@@ -118,7 +120,7 @@ const GreetingSection = () => {
           transition={{ duration: 0.5 }}
           className="text-4xl md:text-5xl font-extrabold text-gray-900 bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent"
         >
-          {language === 'ms' ? 'Selamat Datang, Kak Siti!' : 'Welcome, Kak Siti!'}
+          {isAuthenticated ? getUserGreeting() : (language === 'ms' ? 'Selamat Datang!' : 'Welcome!')}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -126,9 +128,15 @@ const GreetingSection = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-2 text-lg text-gray-600"
         >
-          {language === 'ms'
-            ? 'Ini cerita kewangan anda untuk hari ini.'
-            : "Here's your financial story for today."}
+          {isAuthenticated && user ? (
+            language === 'ms'
+              ? `Ini cerita kewangan ${user.company_name || 'perniagaan anda'} untuk hari ini.`
+              : `Here's your ${user.company_name || 'business'} financial story for today.`
+          ) : (
+            language === 'ms'
+              ? 'Ini cerita kewangan anda untuk hari ini.'
+              : "Here's your financial story for today."
+          )}
         </motion.p>
       </section>
     )

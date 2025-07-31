@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { UserProvider } from '@/contexts/UserContext'
 import ConditionalLayout from '@/components/layout/ConditionalLayout'
 
 const geistSans = Geist({
@@ -32,11 +33,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <LanguageProvider>
-          <ConditionalLayout>
-            {children}
-          </ConditionalLayout>
-        </LanguageProvider>
+        <UserProvider>
+          <LanguageProvider>
+            <ConditionalLayout>
+              {children}
+            </ConditionalLayout>
+          </LanguageProvider>
+        </UserProvider>
       </body>
     </html>
   );
