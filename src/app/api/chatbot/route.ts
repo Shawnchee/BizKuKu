@@ -22,10 +22,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Forward the request to the FastAPI backend
     const backendUrl = process.env.NODE_ENV === 'development' 
-      ? 'http://localhost:8000/api/chat'
-      : '/api/chat'
+      ? 'http://127.0.0.1:8000/api/chat'
+      : (process.env.FASTAPI_BACKEND_URL || 'http://127.0.0.1:8000/api/chat')
 
     const response = await fetch(backendUrl, {
       method: 'POST',

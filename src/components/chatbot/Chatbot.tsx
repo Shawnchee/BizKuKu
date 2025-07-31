@@ -5,7 +5,7 @@ import { X, MessageCircle, Send, SquarePen, Maximize2, Minimize2 } from 'lucide-
 import ReactMarkdown from 'react-markdown';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/chat' : '/api/chat';
+const API_URL = '/api/chatbot';
 
 const Chatbot: React.FC = () => {
   const { t, language } = useLanguage();

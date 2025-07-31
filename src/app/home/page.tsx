@@ -539,9 +539,11 @@ export default function AuthenticatedHome() {
                 >
                   <Mic className="w-5 h-5" />
                 </button>
-                
                 <button
-                  onClick={handleSendMessage}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}
                   disabled={(!inputMessage.trim() && selectedFiles.length === 0) || isLoading}
                   className="p-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105"
                   title="Send message"
