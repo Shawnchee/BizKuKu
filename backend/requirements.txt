@@ -1,3 +1,4 @@
 fastapi
 python-dotenv==1.0.1
 google-genai==1.13.0
+uvicorn==0.35.0

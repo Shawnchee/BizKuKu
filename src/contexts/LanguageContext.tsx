@@ -20,24 +20,28 @@ const translations = {
     en: 'Home'
   },
   'nav.dashboard': {
-    ms: 'Analysis',
-    en: 'Dashboard'
+    ms: 'Dashboard Kewangan',
+    en: 'Financial Dashboard'
   },
   'nav.story': {
     ms: 'Cerita',
     en: 'Story'
   },
-  'nav.recommendation': {
-    ms: 'Cadangan',
-    en: 'Recommendation'
-  },
   'nav.application-status': {
     ms: 'Status Permohonan',
     en: 'Application Status'
   },
+  'nav.online-bizzku': {
+    ms: 'Perniagaan Dalam Talian',
+    en: 'Online Business'
+  },
   'nav.mini-services': {
-    ms: 'Perkhidmatan Mini',
-    en: 'Mini Services'
+    ms: 'Alat Perniagaan',
+    en: 'Business Toolkit'
+  },
+  'nav.recommendation': {
+    ms: 'Cadangan Pinjaman',
+    en: 'Funding Recommendation'
   },
   'nav.login': {
     ms: 'Log Masuk',
@@ -1278,8 +1282,8 @@ const translations = {
     en: 'Hi! 👋 How can I help you with your business support today?'
   },
   'chatbot.placeholder': {
-    ms: 'Taip mesej anda...',
-    en: 'Type your message...'
+    ms: 'Tanya BizMate...',
+    en: 'Ask BizMate...'
   },
   'chatbot.error': {
     ms: 'Maaf, ada masalah. Sila cuba lagi.',
