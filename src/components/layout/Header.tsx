@@ -4,10 +4,11 @@ import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, UserCircle } from 'lucide-react'
+import { Menu, X, UserCircle, User, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { NavItem } from '@/lib/types'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useUser } from '@/contexts/UserContext'
 import LanguageToggle from '@/components/ui/LanguageToggle'
 
 const navigation: NavItem[] = [
@@ -25,6 +26,7 @@ export default function Header() {
   const profileRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const { t } = useLanguage()
+  const { user, isAuthenticated, logout, getUserDisplayName } = useUser()
   const router = useRouter()
 
   const isActive = (href: string) => pathname.startsWith(href)
@@ -77,25 +79,71 @@ export default function Header() {
                 <LanguageToggle />
               </div>
               <div className="relative" ref={profileRef}>
-                <button
-                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  className="rounded-full p-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <UserCircle className="h-7 w-7 text-gray-700" />
-                </button>
-
-                {profileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                {isAuthenticated ? (
+                  <>
                     <button
-                      onClick={() => {
-                        setProfileMenuOpen(false)
-                        router.push('/') // Redirect to login
-                      }}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                      className="flex items-center space-x-2 rounded-full p-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                      Sign out
+                      {user?.avatar_url ? (
+                        <img 
+                          src={user.avatar_url} 
+                          alt={getUserDisplayName()} 
+                          className="h-8 w-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
+                          <span className="text-white text-sm font-semibold">
+                            {getUserDisplayName().charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                      <span className="hidden md:block text-sm font-medium text-gray-700 max-w-24 truncate">
+                        {getUserDisplayName()}
+                      </span>
                     </button>
-                  </div>
+
+                    {profileMenuOpen && (
+                      <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                        <div className="px-4 py-3 border-b border-gray-100">
+                          <p className="text-sm font-medium text-gray-900 truncate">{getUserDisplayName()}</p>
+                          <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                          {user?.company_name && (
+                            <p className="text-xs text-blue-600 truncate">{user.company_name}</p>
+                          )}
+                        </div>
+                        <button
+                          onClick={() => {
+                            setProfileMenuOpen(false)
+                            // TODO: Navigate to profile page when created
+                            console.log('Navigate to profile page')
+                          }}
+                          className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <User className="h-4 w-4 mr-2" />
+                          Profile Settings
+                        </button>
+                        <button
+                          onClick={() => {
+                            setProfileMenuOpen(false)
+                            logout()
+                            router.push('/') // Redirect to login
+                          }}
+                          className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <LogOut className="h-4 w-4 mr-2" />
+                          Sign out
+                        </button>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <button
+                    onClick={() => router.push('/login')}
+                    className="rounded-full p-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <UserCircle className="h-7 w-7 text-gray-700" />
+                  </button>
                 )}
               </div>
             </div>

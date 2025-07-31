@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Iridescence from '@/components/backgrounds/Iridescence'
+import { useUser } from '@/contexts/UserContext'
 
 // Global variables (like in the original JS)
 let faceLandmarker: any
@@ -49,6 +50,7 @@ export default function FaceLandmarkDemo() {
   const [isWebcamRunning, setIsWebcamRunning] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const router = useRouter()
+  const { login } = useUser()
   
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -644,14 +646,44 @@ export default function FaceLandmarkDemo() {
     }
   }
 
-  // Function to show success modal and redirect
+  // Login form state
+  const [showLoginForm, setShowLoginForm] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loginLoading, setLoginLoading] = useState(false)
+  const [loginError, setLoginError] = useState('')
+
+  // Function to show login form after face liveness success
   const showLoginSuccessModal = () => {
     setShowSuccessModal(true)
     
-    // Redirect after 3 seconds of showing the modal
+    // Show login form after 2 seconds instead of redirecting
     setTimeout(() => {
-      router.push('/home')
-    }, 3000)
+      setShowSuccessModal(false)
+      setShowLoginForm(true)
+    }, 2000)
+  }
+
+  // Handle login form submission
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoginLoading(true)
+    setLoginError('')
+
+    try {
+      const result = await login(email, password)
+      
+      if (result.success) {
+        // Success - redirect to home
+        router.push('/home')
+      } else {
+        setLoginError(result.error || 'Login failed. Please try again.')
+      }
+    } catch (error) {
+      setLoginError('Login failed. Please try again.')
+    } finally {
+      setLoginLoading(false)
+    }
   }
 
   return (
@@ -809,11 +841,11 @@ export default function FaceLandmarkDemo() {
               </h2>
               
               <p className="text-lg text-gray-700 mb-2">
-                Logging in with SSM Passport
+                Face Liveness Verified
               </p>
               
               <p className="text-sm text-gray-500">
-                Please wait while we authenticate your account...
+                Preparing login form...
               </p>
               
               {/* Progress dots */}
@@ -823,6 +855,102 @@ export default function FaceLandmarkDemo() {
                 <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}} />
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Login Form Modal */}
+      {showLoginForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          
+          {/* Modal */}
+          <div className="relative bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-8 mx-4 max-w-md w-full border border-white/30">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                  🔐 Login to BizKuKu
+                </span>
+              </h2>
+              <p className="text-gray-600">
+                Enter your credentials to access your account
+              </p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              {/* Email Field */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white/80 backdrop-blur-sm"
+                  required
+                  disabled={loginLoading}
+                />
+              </div>
+
+              {/* Password Field */}
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white/80 backdrop-blur-sm"
+                  required
+                  disabled={loginLoading}
+                />
+              </div>
+
+              {/* Error Message */}
+              {loginError && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                  <p className="text-red-700 text-sm">{loginError}</p>
+                </div>
+              )}
+
+              {/* Login Button */}
+              <button
+                type="submit"
+                disabled={loginLoading}
+                className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-colors ${
+                  loginLoading
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700'
+                }`}
+              >
+                {loginLoading ? (
+                  <div className="flex items-center justify-center">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                    Logging in...
+                  </div>
+                ) : (
+                  'Login to BizKuKu'
+                )}
+              </button>
+
+              {/* Demo Credentials */}
+              <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-xs text-blue-800 font-medium mb-2">Demo Credentials:</p>
+                <div className="text-xs text-blue-700 space-y-1">
+                  <div>📧 ahmad.restaurant@bizkuku.com</div>
+                  <div>📧 siti.retail@bizkuku.com</div>
+                  <div>📧 raj.tech@bizkuku.com</div>
+                  <div className="mt-1 font-medium">🔑 Password: password123</div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       )}
