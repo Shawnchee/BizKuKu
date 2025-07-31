@@ -24,33 +24,6 @@ interface ChatOption {
   action?: () => void
 }
 
-interface FormField {
-  id: string
-  label: string
-  type: 'text' | 'select' | 'textarea'
-  value: string
-  options?: string[]
-  required?: boolean
-}
-
-interface ChecklistItem {
-  id: string
-  title: string
-  description: string
-  buttonText: string
-  completed: boolean
-  action?: () => void
-}
-
-interface PaymentOption {
-  id: string
-  name: string
-  description: string
-  icon: React.ReactNode
-  buttonText: string
-  action?: () => void
-}
-
 export default function AvatarOnboarding() {
   const { t, language } = useLanguage()
   const router = useRouter()
@@ -58,9 +31,7 @@ export default function AvatarOnboarding() {
   const [inputMessage, setInputMessage] = useState('')
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [currentStep, setCurrentStep] = useState(0)
   const [userData, setUserData] = useState<any>({})
-  const [isInitialized, setIsInitialized] = useState(false)
   const [completedSteps, setCompletedSteps] = useState<Set<string>>(new Set())
   const [showConsentModal, setShowConsentModal] = useState(false)
   const [pendingPayment, setPendingPayment] = useState<string>('')
@@ -76,17 +47,19 @@ export default function AvatarOnboarding() {
   }, [messages])
 
   useEffect(() => {
-    // Initialize with welcome message only once
-    if (!isInitialized) {
-      setIsInitialized(true)
-      setTimeout(() => {
-        addBotMessage("Hi there! I'm **BizMate**, your personal MSME onboarding assistant.\n\nLet's get your business up and running in just a few steps.")
+    const timer = setTimeout(() => {
+      if (messages.length === 0) {
+        addBotMessage("Hi there! I'm **BizMate**, your personal MSME onboarding assistant.\n\nLet's get your business up and running in just a few steps.");
         setTimeout(() => {
-          showBusinessJourneyOptions()
-        }, 2000)
-      }, 1000)
+          showBusinessJourneyOptions();
+        }, 2000);
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
     }
-  }, [isInitialized])
+  }, []); 
 
   const addBotMessage = (text: string, options?: ChatOption[], type?: 'text' | 'options' | 'form' | 'checklist' | 'payment-setup' | 'completion') => {
     const newMessage: Message = {
@@ -713,6 +686,15 @@ export default function AvatarOnboarding() {
   return (
     <div className="relative min-h-screen overflow-hidden flex flex-col">
       <GradientBackground />
+
+      <div className="absolute top-6 right-6 z-20">
+        <button
+          onClick={() => router.push('/home')}
+          className="bg-white/30 backdrop-blur-md text-gray-600 text-sm font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-white/50 transition-colors"
+        >
+          Skip Onboarding
+        </button>
+      </div>
       
       {/* Chat Messages Area */}
       <div className="flex-1 overflow-y-auto px-4 py-6 relative z-10 pb-32">

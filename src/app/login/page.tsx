@@ -742,7 +742,7 @@ export default function FaceLandmarkDemo() {
           console.log('✅ Auto-login successful')
           setTimeout(() => {
             setShowFaceRecognitionModal(false)
-            router.push('/home')
+            router.push('/avatar-onboarding')
           }, 1500)
         } else {
           throw new Error('Auto-login failed after face recognition')
