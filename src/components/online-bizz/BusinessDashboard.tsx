@@ -12,6 +12,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion" // Import framer-motion
 import { Platform, ConnectedAccount, TimeRange, timeRangeLabels } from '@/lib/types/online-bizz-types';
 import { getStatusIcon, getStatusBadge } from '@/components/online-bizz/StatusIndicators';
+import Iridescence from "../backgrounds/Iridescence"
 
 interface BusinessDashboardProps {
   platforms: Platform[];
@@ -78,6 +79,7 @@ export default function BusinessDashboard({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
+
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-gray-900">📊 Business Overview</h2>
           <div className="flex space-x-2">
@@ -87,7 +89,7 @@ export default function BusinessDashboard({
                 variant={overviewTimeRange === key ? "primary" : "outline"}
                 size="sm"
                 onClick={() => setOverviewTimeRange(key as TimeRange)}
-                className="text-xs cursor-pointer"
+                className="text-xs cursor-pointer border-black"
               >
                 {label}
               </Button>
@@ -279,7 +281,7 @@ export default function BusinessDashboard({
                                 onClick={() =>
                                   setAccountTimeRanges((prev) => ({ ...prev, [account.id]: key as TimeRange }))
                                 }
-                                className="text-xs px-2 py-1 cursor-pointer"
+                                className="text-xs px-2 py-1 cursor-pointer border-black"
                               >
                                 {label}
                               </Button>
@@ -456,7 +458,7 @@ export default function BusinessDashboard({
                 variant={selectedCategory === category ? "primary" : "outline"}
                 size="sm"
                 onClick={() => setSelectedCategory(category)}
-                className="capitalize cursor-pointer"
+                className="capitalize cursor-pointer border-black"
               >
                 {category === "all" ? "All Platforms" : category}
               </Button>
@@ -596,7 +598,7 @@ export default function BusinessDashboard({
       <AnimatePresence>
         {showConnectModal && (
           <motion.div 
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
