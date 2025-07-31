@@ -30,65 +30,70 @@ export default function AuthenticatedHome() {
 
   const actionButtons = [
     {
-      id: 'online-business',
-      title: 'Online Bizzku',
-      titleMs: 'Perniagaan Dalam Talian',
-      icon: TrendingUp,
-      color: 'from-emerald-400 to-emerald-600',
-      bgColor: 'bg-emerald-50',
-      borderColor: 'border-emerald-200',
-      summary: 'Your business is performing well with steady growth in online sales. Monthly revenue shows a 15% increase compared to last month.',
-      summaryMs: 'Perniagaan anda berprestasi baik dengan pertumbuhan stabil dalam jualan dalam talian. Hasil bulanan menunjukkan peningkatan 15% berbanding bulan lepas.',
-      linkTo: '/online-bizzku'
-    },
-    {
       id: 'application-progress',
-      title: 'Application Progress',
-      titleMs: 'Kemajuan Permohonan',
+      title: 'Check Application Status',
+      titleMs: 'Semak Status Permohonan',
       icon: FileText,
       color: 'from-blue-400 to-blue-600',
       bgColor: 'bg-blue-50',
       borderColor: 'border-blue-200',
       summary: 'Your SSM registration is approved and QR merchant setup is in progress. Expected completion in 2-3 working days.',
       summaryMs: 'Pendaftaran SSM anda telah diluluskan dan setup QR pedagang sedang dalam proses. Dijangka siap dalam 2-3 hari bekerja.',
-      linkTo: '/application-status'
+      linkTo: '/application-status',
+      tab: 'Application Status'
     },
     {
-      id: 'grants-loans',
-      title: 'Grant/Subsidy/Loan',
-      titleMs: 'Geran/Subsidi/Pinjaman',
-      icon: CreditCard,
-      color: 'from-purple-400 to-purple-600',
-      bgColor: 'bg-purple-50',
-      borderColor: 'border-purple-200',
-      summary: 'You have 2 pending grant applications and 1 loan pre-approval. Total potential funding: RM 150,000.',
-      summaryMs: 'Anda mempunyai 2 permohonan geran yang belum selesai dan 1 pra-kelulusan pinjaman. Jumlah pembiayaan berpotensi: RM 150,000.',
-      linkTo: '/recommendation'
+      id: 'online-business',
+      title: 'Start Online Business Platform',
+      titleMs: 'Mulakan Perniagaan Dalam Talian',
+      icon: TrendingUp,
+      color: 'from-emerald-400 to-emerald-600',
+      bgColor: 'bg-emerald-50',
+      borderColor: 'border-emerald-200',
+      summary: 'Your business is performing well with steady growth in online sales. Monthly revenue shows a 15% increase compared to last month.',
+      summaryMs: 'Perniagaan anda berprestasi baik dengan pertumbuhan stabil dalam jualan dalam talian. Hasil bulanan menunjukkan peningkatan 15% berbanding bulan lepas.',
+      linkTo: '/online-bizzku',
+      tab: 'Online Bizzku'
     },
     {
       id: 'mini-services',
-      title: 'Mini Services',
-      titleMs: 'Perkhidmatan Mini',
+      title: 'Access Digital Business Toolkit',
+      titleMs: 'Akses Alat Perniagaan Digital',
       icon: Settings,
       color: 'from-orange-400 to-orange-600',
       bgColor: 'bg-orange-50',
       borderColor: 'border-orange-200',
       summary: 'Access quick business tools: QR generator, invoice maker, tax calculator, and more utility services.',
       summaryMs: 'Akses alat perniagaan pantas: penjana QR, pembuat invois, kalkulator cukai, dan lebih banyak perkhidmatan utiliti.',
-      linkTo: '/mini-services'
+      linkTo: '/mini-services',
+      tab: 'Digital Business Toolkit'
     },
     {
       id: 'business-insights',
-      title: 'Business Insights',
-      titleMs: 'Wawasan Perniagaan',
+      title: 'View Financial Insights',
+      titleMs: 'Lihat Analisis Kewangan',
       icon: Sparkles,
       color: 'from-pink-400 to-pink-600',
       bgColor: 'bg-pink-50',
       borderColor: 'border-pink-200',
       summary: 'Your customer retention rate is 85%. Best selling product: Traditional snacks. Peak hours: 2-4 PM.',
       summaryMs: 'Kadar pengekalan pelanggan anda adalah 85%. Produk terlaris: Kudapan tradisional. Waktu puncak: 2-4 petang.',
-      linkTo: null
-    }
+      linkTo: '/dashboard',
+      tab: 'Financial Dashboard'
+    },
+    {
+      id: 'grants-loans',
+      title: 'Apply for Loan, Grant or Subsidy',
+      titleMs: 'Memohon Pinjaman, Geran atau Subsidi',
+      icon: CreditCard,
+      color: 'from-purple-400 to-purple-600',
+      bgColor: 'bg-purple-50',
+      borderColor: 'border-purple-200',
+      summary: 'You have 2 pending grant applications and 1 loan pre-approval. Total potential funding: RM 150,000.',
+      summaryMs: 'Anda mempunyai 2 permohonan geran yang belum selesai dan 1 pra-kelulusan pinjaman. Jumlah pembiayaan berpotensi: RM 150,000.',
+      linkTo: '/recommendation',
+      tab: 'Funding Recommendation'
+    },
   ]
 
   const scrollToBottom = () => {
@@ -242,14 +247,14 @@ export default function AuthenticatedHome() {
 
         {/* Action Buttons - Only show if user hasn't sent a message */}
         {!hasUserSentMessage && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"> 
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto"> 
             {actionButtons.map((action, index) => {
               const Icon = action.icon
               return (
                 <div
                   key={action.id}
                   onClick={() => handleActionClick(action)}
-                  className="bg-white/90 backdrop-blur-lg border-2 border-white/30 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/95 group"
+                  className="bg-white/90 backdrop-blur-lg border-2 border-white/30 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/95 group max-w-sm mx-auto w-full"
                 >
                   <div className="flex items-center gap-4 mb-4">
                     <div className={`w-12 h-12 bg-gradient-to-r ${action.color} rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300`}>
@@ -267,7 +272,7 @@ export default function AuthenticatedHome() {
                       </p>
                       {action.linkTo && (
                         <div className="mt-2 text-xs text-blue-700 font-medium">
-                          Redirecting to {action.linkTo}...
+                          Redirecting to {action.tab}...
                         </div>
                       )}
                     </div>
