@@ -353,21 +353,67 @@ export default function AvatarOnboarding() {
   const handleSendMessage = async () => {
     if (!inputMessage.trim() && selectedFiles.length === 0) return
 
-    addUserMessage(inputMessage, selectedFiles.length > 0 ? [...selectedFiles] : undefined)
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      text: inputMessage,
+      sender: 'user',
+      files: selectedFiles.length > 0 ? [...selectedFiles] : undefined
+    }
+
+    setMessages(prev => [...prev, userMessage])
     
-    // Check if user uploaded files after MyKad request
+    // Check if user uploaded files after MyKad request - maintain existing onboarding flow
     if (selectedFiles.length > 0 && userData.journey === 'just-starting') {
+      setInputMessage('')
+      setSelectedFiles([])
       showBasicInfoForm()
+      return
     }
     
     setInputMessage('')
     setSelectedFiles([])
     setIsLoading(true)
 
-    // Simulate bot response
-    setTimeout(() => {
+    try {
+      // Replace with your actual API endpoint
+      const API_URL = 'http://localhost:8000/api/onboarding-chat'
+      
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          query: userMessage.text,
+          message_history: messages.map(msg => ({
+            role: msg.sender === 'user' ? 'user' : 'model',
+            content: msg.text
+          })),
+        }),
+      });
+
+      const data = await res.json();
+
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: data.response || `I received your message: "${userMessage.text}"${selectedFiles.length > 0 ? ` and ${selectedFiles.length} file(s)` : ''}. This is a demo response.`,
+        sender: 'bot'
+      }
+
+      setMessages(prev => [...prev, botMessage])
+    } catch (err) {
+      console.error(err);
+      
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: `I received your message: "${userMessage.text}"${selectedFiles.length > 0 ? ` and ${selectedFiles.length} file(s)` : ''}. This is a demo response.`,
+        sender: 'bot'
+      }
+      
+      setMessages(prev => [...prev, botMessage])
+    } finally {
       setIsLoading(false)
-    }, 1000)
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
