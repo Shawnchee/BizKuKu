@@ -1278,8 +1278,8 @@ const translations = {
     en: 'Hi! 👋 How can I help you with your business support today?'
   },
   'chatbot.placeholder': {
-    ms: 'Taip mesej anda...',
-    en: 'Type your message...'
+    ms: 'Tanya BizMate...',
+    en: 'Ask BizMate...'
   },
   'chatbot.error': {
     ms: 'Maaf, ada masalah. Sila cuba lagi.',
