@@ -79,6 +79,7 @@ interface UserContextType {
   
   // Actions
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>
+  loginWithUser: (user: UserProfile) => Promise<{ success: boolean; error?: string }>
   logout: () => void
   updateProfile: (updates: Partial<UserProfile>) => Promise<{ success: boolean; error?: string }>
   updatePreferences: (updates: Partial<UserPreferences>) => Promise<{ success: boolean; error?: string }>
@@ -236,7 +237,7 @@ export function UserProvider({ children }: UserProviderProps) {
     }
   }
 
-  // Login function
+  // Login function (email/password)
   const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
     setLoading(true)
     
@@ -261,6 +262,51 @@ export function UserProvider({ children }: UserProviderProps) {
       return { success: true }
     } catch (error) {
       console.error('Login error:', error)
+      return { success: false, error: 'Login failed. Please try again.' }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Login function (direct user object from face recognition)
+  const loginWithUser = async (user: UserProfile): Promise<{ success: boolean; error?: string }> => {
+    setLoading(true)
+    
+    try {
+      // Set user data directly
+      setUser(user)
+      
+      // Set preferences if available
+      if (user.email && mockPreferences[user.email]) {
+        setPreferences(mockPreferences[user.email])
+      } else {
+        // Create default preferences for the user
+        const defaultPrefs: UserPreferences = {
+          id: `pref-${user.id}`,
+          user_id: user.id,
+          preferred_language: 'en',
+          theme: 'light',
+          dashboard_layout: 'default',
+          currency_display: 'MYR',
+          show_recommendations: true,
+          show_financial_insights: true,
+          show_platform_suggestions: true,
+          preferred_communication: 'email',
+          focus_areas: [],
+          email_notifications: true,
+          sms_notifications: false,
+          push_notifications: true,
+          marketing_emails: false
+        }
+        setPreferences(defaultPrefs)
+      }
+      
+      // TODO: Set businesses data when needed
+      setBusinesses([])
+      
+      return { success: true }
+    } catch (error) {
+      console.error('Login with user error:', error)
       return { success: false, error: 'Login failed. Please try again.' }
     } finally {
       setLoading(false)
@@ -356,6 +402,7 @@ export function UserProvider({ children }: UserProviderProps) {
     
     // Actions
     login,
+    loginWithUser,
     logout,
     updateProfile,
     updatePreferences,

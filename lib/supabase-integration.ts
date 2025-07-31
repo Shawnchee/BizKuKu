@@ -177,6 +177,16 @@ export const userProfiles = {
       .select()
       .single()
     return { data, error }
+  },
+
+  // Get user profile by rekognition ID (for AWS Face Recognition)
+  async getByRekognitionId(rekognitionId: string) {
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('rekognition_id', rekognitionId)
+      .single()
+    return { data, error }
   }
 }
 
@@ -372,7 +382,9 @@ export const faceVerifications = {
         acc[type] = { passed: 0, failed: 0, total: 0 }
       }
       
-      acc[type][status]++
+      if (status === 'passed' || status === 'failed') {
+        acc[type][status]++
+      }
       acc[type].total++
       
       return acc
