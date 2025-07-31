@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowLeft, X, CheckCircle, Clock, FileText, CreditCard, Building, Settings, Download, Upload } from 'lucide-react'
 import { Button } from '@/components/ui'
 import { OnboardingStep1, OnboardingStep2, OnboardingStep3, OnboardingStep4 } from '@/components/onboarding'
@@ -65,6 +65,7 @@ export interface OnboardingData {
 
 export default function OnboardingPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { t } = useLanguage()
   const [currentStep, setCurrentStep] = useState(1)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
@@ -130,14 +131,37 @@ export default function OnboardingPage() {
   // Load saved progress on component mount
   useEffect(() => {
     const savedProgress = OnboardingStorage.load()
+
+    // Check if there's a step parameter in the URL
+    const stepParam = searchParams.get('step')
+    const targetStep = stepParam ? parseInt(stepParam) : null
+
     if (savedProgress) {
       console.log('Loading saved progress:', savedProgress)
       setOnboardingData(savedProgress.data)
-      setCurrentStep(savedProgress.currentStep)
+
+      // If there's a valid step parameter, use it; otherwise use saved step
+      if (targetStep && targetStep >= 1 && targetStep <= 4) {
+        setCurrentStep(targetStep)
+        // Update saved progress to reflect the new current step
+        const updatedProgress = {
+          ...savedProgress,
+          currentStep: targetStep
+        }
+        OnboardingStorage.save(updatedProgress)
+      } else {
+        setCurrentStep(savedProgress.currentStep)
+      }
+
       setCompletedSteps(savedProgress.completedSteps)
+    } else {
+      // If no saved progress but there's a step parameter, use it
+      if (targetStep && targetStep >= 1 && targetStep <= 4) {
+        setCurrentStep(targetStep)
+      }
     }
     setIsDataLoaded(true)
-  }, [])
+  }, [searchParams])
 
   // Save progress whenever data changes (but only after initial load)
   useEffect(() => {

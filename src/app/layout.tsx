@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Chatbot from '@/components/chatbot/Chatbot'
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { UserProvider } from '@/contexts/UserContext'
+import ConditionalLayout from '@/components/layout/ConditionalLayout'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BizzKuku",
+  title: "BizKuKu",
   description: "Track sales, customers, and money easily. Perfect for small shops and stalls.",
+  icons: {
+    icon: "/logo.svg"
+  }
 };
 
 export default function RootLayout({
@@ -31,14 +33,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <LanguageProvider>
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Chatbot />
-          <Footer />
-        </LanguageProvider>
+        <UserProvider>
+          <LanguageProvider>
+            <ConditionalLayout>
+              {children}
+            </ConditionalLayout>
+          </LanguageProvider>
+        </UserProvider>
       </body>
     </html>
   );
