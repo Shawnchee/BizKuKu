@@ -650,7 +650,7 @@ export default function FaceLandmarkDemo() {
     
     // Redirect after 3 seconds of showing the modal
     setTimeout(() => {
-      router.push('/home')
+      router.push('/avatar-onboarding')
     }, 3000)
   }
 
