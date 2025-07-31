@@ -52,3 +52,6 @@ AGENT.md
 CLAUDE.md
 .mcp.json
 backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/.env

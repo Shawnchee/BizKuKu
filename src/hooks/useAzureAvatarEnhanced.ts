@@ -251,6 +251,26 @@ export const useAzureAvatarEnhanced = ({
     }
   }, [])
 
+  // Start listening manually
+  const startListening = useCallback(async () => {
+    try {
+      // Try to get avatar from global scope if not available
+      if (!avatarRef.current && typeof window !== 'undefined') {
+        avatarRef.current = (window as any).azureAvatar
+      }
+
+      if (avatarRef.current?.startListening && !isListening && avatarReady) {
+        await avatarRef.current.startListening()
+        console.log('🎙️ Started listening manually')
+      } else {
+        console.warn('Avatar not available, not ready, or already listening')
+      }
+    } catch (error) {
+      console.error('❌ Error starting listening:', error)
+      setError(`Failed to start listening: ${error}`)
+    }
+  }, [isListening, avatarReady])
+
   // Stop listening
   const stopListening = useCallback(async () => {
     try {
@@ -311,6 +331,7 @@ export const useAzureAvatarEnhanced = ({
     // Actions
     speakText,
     processTextInput,
+    startListening,
     stopSpeaking,
     stopListening,
     clearError,

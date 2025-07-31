@@ -1,11 +1,14 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { Send, Upload, Paperclip, X, Bot, Sparkles, TrendingUp, FileText, CreditCard, Settings } from 'lucide-react'
+import { Send, Upload, Paperclip, X, Bot, Sparkles, TrendingUp, FileText, CreditCard, Settings, Mic } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import Iridescence from '@/components/backgrounds/Iridescence'
 import { motion, AnimatePresence } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
+import AzureAvatar from '@/components/avatar/AzureAvatar'
+import AvatarTestPanel from '@/components/avatar/AvatarTestPanel'
+import { useAzureAvatarEnhanced } from '@/hooks/useAzureAvatarEnhanced'
 
 interface Message {
   id: string
@@ -27,6 +30,41 @@ export default function AuthenticatedHome() {
   const [hasUserSentMessage, setHasUserSentMessage] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Enhanced Azure Avatar integration
+  const {
+    isListening,
+    isSpeaking,
+    avatarReady,
+    error: avatarError,
+    isProcessing,
+    speakText,
+    processTextInput,
+    startListening,
+    stopSpeaking,
+    stopListening,
+    clearError,
+    handleSpeechRecognized,
+    handleSpeechStart,
+    handleSpeechEnd,
+    handleAvatarReady,
+    handleAvatarError
+  } = useAzureAvatarEnhanced({
+    onSpeechRecognized: (text) => {
+      // Ensure text is a string and has content
+      const speechText = typeof text === 'string' ? text.trim() : ''
+      if (speechText) {
+        setInputMessage(speechText)
+        // Auto-process speech with context
+        handleSendMessage(speechText, true)
+      }
+    },
+    onError: (error) => {
+      console.error('Avatar error:', error)
+    },
+    autoProcessSpeech: true,
+    chatEndpoint: '/api/chatbot'
+  })
 
   const actionButtons = [
     {
@@ -114,19 +152,24 @@ export default function AuthenticatedHome() {
     }
   }
 
-  const handleSendMessage = async () => {
-    if (!inputMessage.trim() && selectedFiles.length === 0) return
+  const handleSendMessage = async (messageText?: string, autoSubmit = false) => {
+    // Ensure we always work with strings
+    const textToSend = String(messageText || inputMessage || '').trim()
+    if (!textToSend && selectedFiles.length === 0) return
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: inputMessage,
+      text: textToSend,
       sender: 'user',
       timestamp: new Date(),
       files: selectedFiles.length > 0 ? [...selectedFiles] : undefined
     }
 
     setMessages(prev => [...prev, userMessage])
-    setInputMessage('')
+    // Clear input if it's not from speech recognition (autoSubmit = false)
+    if (!autoSubmit) {
+      setInputMessage('') 
+    }
     setSelectedFiles([])
     setIsLoading(true)
     setHasUserSentMessage(true)
@@ -148,7 +191,18 @@ export default function AuthenticatedHome() {
         sender: 'bot',
         timestamp: new Date()
       }
+      
       setMessages(prev => [...prev, botMessage])
+      
+      // Use Azure Avatar to speak the response if available
+      if (avatarReady && botMessage.text) {
+        try {
+          await speakText(botMessage.text)
+        } catch (error) {
+          console.error('Error speaking response:', error)
+        }
+      }
+      
     } catch (err) {
       console.error(err);
       const botMessage: Message = {
@@ -158,6 +212,15 @@ export default function AuthenticatedHome() {
         timestamp: new Date()
       }
       setMessages(prev => [...prev, botMessage])
+      
+      // Speak error response if avatar is available
+      if (avatarReady) {
+        try {
+          await speakText(botMessage.text)
+        } catch (error) {
+          console.error('Error speaking error response:', error)
+        }
+      }
     } finally {
       setIsLoading(false)
     }
@@ -200,15 +263,44 @@ export default function AuthenticatedHome() {
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
-          {/* 3D Avatar Mockup */}
+          {/* Azure Avatar */}
           <div className="flex justify-center mb-8">
             <div className="relative">
-              <div className="w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center shadow-2xl animate-avatar-pulse">
-                <Bot className="w-16 h-16 text-white" />
-              </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
+              <AzureAvatar
+                onSpeechRecognized={handleSpeechRecognized}
+                onSpeechStart={handleSpeechStart}
+                onSpeechEnd={handleSpeechEnd}
+                onAvatarReady={handleAvatarReady}
+                onError={handleAvatarError}
+                fallbackToRobot={true}
+                className="mx-auto"
+              />
+              
+              {/* Avatar Status Indicator */}
+              <div className={`absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                avatarReady 
+                  ? 'bg-green-400 animate-pulse' 
+                  : isProcessing || isLoading
+                  ? 'bg-yellow-400 animate-spin'
+                  : 'bg-gray-400'
+              }`}>
                 <div className="w-3 h-3 bg-white rounded-full"></div>
               </div>
+              
+              {/* Minimal Error Display */}
+              {avatarError && (
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 p-3 bg-red-50 border border-red-200 rounded-lg max-w-sm backdrop-blur-sm bg-opacity-90">
+                  <p className="text-xs text-red-600 text-center">
+                    {avatarError}
+                  </p>
+                  <button
+                    onClick={clearError}
+                    className="block mx-auto mt-2 text-xs text-red-500 hover:text-red-700 underline"
+                  >
+                    {language === 'ms' ? 'Tutup' : 'Dismiss'}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -421,6 +513,33 @@ export default function AuthenticatedHome() {
                   <Upload className="w-5 h-5" />
                 </button>
                 
+                {/* Voice Button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (avatarReady && !isListening && !isSpeaking && !isLoading && !isProcessing) {
+                      startListening();
+                    }
+                  }}
+                  disabled={!avatarReady || isListening || isSpeaking || isLoading || isProcessing}
+                  className={`p-3 rounded-full transition-all duration-200 transform hover:scale-105 ${
+                    isListening
+                      ? 'bg-red-500 text-white animate-pulse'
+                      : avatarReady
+                      ? 'text-gray-600 hover:text-green-600 hover:bg-green-50'
+                      : 'text-gray-300 cursor-not-allowed'
+                  }`}
+                  title={
+                    !avatarReady
+                      ? (language === 'ms' ? 'Avatar tidak siap' : 'Avatar not ready')
+                      : isListening
+                      ? (language === 'ms' ? 'Mendengar...' : 'Listening...')
+                      : (language === 'ms' ? 'Mesej suara' : 'Voice message')
+                  }
+                >
+                  <Mic className="w-5 h-5" />
+                </button>
+                
                 <button
                   onClick={handleSendMessage}
                   disabled={(!inputMessage.trim() && selectedFiles.length === 0) || isLoading}
@@ -460,6 +579,28 @@ export default function AuthenticatedHome() {
           </div>
         </div>
       </div>
+
+      {/* Enhanced Avatar Test Panel (Development) */}
+      {process.env.NODE_ENV === 'development' && (
+        <AvatarTestPanel
+          onSpeakText={speakText}
+          onStartListening={startListening}
+          onStopSpeaking={stopSpeaking}
+          onStopSession={() => {
+            // Trigger session stop if available
+            if (typeof window !== 'undefined' && (window as any).azureAvatar?.stopSession) {
+              (window as any).azureAvatar.stopSession()
+            }
+          }}
+          avatarReady={avatarReady}
+          isListening={isListening}
+          isSpeaking={isSpeaking}
+          isReconnecting={typeof window !== 'undefined' ? (window as any).azureAvatar?.isReconnecting || false : false}
+          sessionActive={typeof window !== 'undefined' ? (window as any).azureAvatar?.isReady || false : false}
+          currentAvatarConfig={typeof window !== 'undefined' ? (window as any).azureAvatar?.currentConfig : null}
+          spokenTextQueue={[]}
+        />
+      )}
     </div>
   )
 }
