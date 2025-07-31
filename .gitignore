@@ -45,3 +45,13 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+docs/
+requirements/
+AGENT.md
+CLAUDE.md
+.mcp.json
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/.env
