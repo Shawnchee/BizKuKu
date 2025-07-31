@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { Send, Upload, Paperclip, X, Bot, Sparkles, TrendingUp, FileText, CreditCard, Settings, Mic } from 'lucide-react'
+import { Send, Upload, Paperclip, X, Bot, Sparkles, TrendingUp, FileText, CreditCard, Settings, Mic, BookOpen } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
-import Iridescence from '@/components/backgrounds/Iridescence'
+// import Iridescence from '@/components/backgrounds/Iridescence'
+import GradientBackground from "@/components/backgrounds/GradientBackground"
 import { motion, AnimatePresence } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import AzureAvatar from '@/components/avatar/AzureAvatar'
@@ -30,6 +31,7 @@ export default function AuthenticatedHome() {
   const [hasUserSentMessage, setHasUserSentMessage] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
 
   // Enhanced Azure Avatar integration
   const {
@@ -71,9 +73,9 @@ export default function AuthenticatedHome() {
       id: 'application-progress',
       title: 'Check Application Status',
       titleMs: 'Semak Status Permohonan',
-      icon: FileText,
-      color: 'from-blue-400 to-blue-600',
-      bgColor: 'bg-blue-50',
+      icon: FileText, // Document icon for checking status
+      color: 'from-blue-400 to-blue-600', // Soft blue gradient
+      bgColor: 'bg-blue-50', // Lighter blue background
       borderColor: 'border-blue-200',
       summary: 'Your SSM registration is approved and QR merchant setup is in progress. Expected completion in 2-3 working days.',
       summaryMs: 'Pendaftaran SSM anda telah diluluskan dan setup QR pedagang sedang dalam proses. Dijangka siap dalam 2-3 hari bekerja.',
@@ -84,10 +86,10 @@ export default function AuthenticatedHome() {
       id: 'online-business',
       title: 'Start Online Business Platform',
       titleMs: 'Mulakan Perniagaan Dalam Talian',
-      icon: TrendingUp,
-      color: 'from-emerald-400 to-emerald-600',
-      bgColor: 'bg-emerald-50',
-      borderColor: 'border-emerald-200',
+      icon: TrendingUp, // Icon for growth or progress
+      color: 'from-green-400 to-green-600', // Green gradient for business growth
+      bgColor: 'bg-green-50', // Light green background
+      borderColor: 'border-green-200',
       summary: 'Your business is performing well with steady growth in online sales. Monthly revenue shows a 15% increase compared to last month.',
       summaryMs: 'Perniagaan anda berprestasi baik dengan pertumbuhan stabil dalam jualan dalam talian. Hasil bulanan menunjukkan peningkatan 15% berbanding bulan lepas.',
       linkTo: '/online-bizzku',
@@ -97,9 +99,9 @@ export default function AuthenticatedHome() {
       id: 'mini-services',
       title: 'Access Digital Business Toolkit',
       titleMs: 'Akses Alat Perniagaan Digital',
-      icon: Settings,
-      color: 'from-orange-400 to-orange-600',
-      bgColor: 'bg-orange-50',
+      icon: Settings, // Settings icon for tools and services
+      color: 'from-orange-400 to-orange-600', // Orange gradient for tools
+      bgColor: 'bg-orange-50', // Light orange background
       borderColor: 'border-orange-200',
       summary: 'Access quick business tools: QR generator, invoice maker, tax calculator, and more utility services.',
       summaryMs: 'Akses alat perniagaan pantas: penjana QR, pembuat invois, kalkulator cukai, dan lebih banyak perkhidmatan utiliti.',
@@ -110,9 +112,9 @@ export default function AuthenticatedHome() {
       id: 'business-insights',
       title: 'View Financial Insights',
       titleMs: 'Lihat Analisis Kewangan',
-      icon: Sparkles,
-      color: 'from-pink-400 to-pink-600',
-      bgColor: 'bg-pink-50',
+      icon: Sparkles, // Sparkles icon for financial insights
+      color: 'from-pink-400 to-pink-600', // Pink gradient for insights
+      bgColor: 'bg-pink-50', // Light pink background
       borderColor: 'border-pink-200',
       summary: 'Your customer retention rate is 85%. Best selling product: Traditional snacks. Peak hours: 2-4 PM.',
       summaryMs: 'Kadar pengekalan pelanggan anda adalah 85%. Produk terlaris: Kudapan tradisional. Waktu puncak: 2-4 petang.',
@@ -123,16 +125,30 @@ export default function AuthenticatedHome() {
       id: 'grants-loans',
       title: 'Apply for Loan, Grant or Subsidy',
       titleMs: 'Memohon Pinjaman, Geran atau Subsidi',
-      icon: CreditCard,
-      color: 'from-purple-400 to-purple-600',
-      bgColor: 'bg-purple-50',
+      icon: CreditCard, // Credit card icon for funding applications
+      color: 'from-purple-400 to-purple-600', // Purple gradient for loans/grants
+      bgColor: 'bg-purple-50', // Light purple background
       borderColor: 'border-purple-200',
       summary: 'You have 2 pending grant applications and 1 loan pre-approval. Total potential funding: RM 150,000.',
       summaryMs: 'Anda mempunyai 2 permohonan geran yang belum selesai dan 1 pra-kelulusan pinjaman. Jumlah pembiayaan berpotensi: RM 150,000.',
       linkTo: '/recommendation',
       tab: 'Funding Recommendation'
     },
-  ]
+    {
+      id: 'upskill',
+      title: 'Upskill Yourself - Start Learning',
+      titleMs: 'Tingkatkan Kemahiran Anda - Mulakan Pembelajaran',
+      icon: BookOpen, // Book icon for learning and courses
+      color: 'from-teal-400 to-teal-600', // Teal gradient for learning/upskilling
+      bgColor: 'bg-teal-50', // Light teal background
+      borderColor: 'border-teal-200',
+      summary: 'Explore a variety of courses to help you level up your skills and grow your business.',
+      summaryMs: 'Jelajahi pelbagai kursus untuk membantu anda meningkatkan kemahiran dan mengembangkan perniagaan anda.',
+      linkTo: '/courses',
+      tab: 'Courses'
+    },
+  ];
+  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -252,14 +268,14 @@ export default function AuthenticatedHome() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <Iridescence
+      {/* <Iridescence
         color={[1, 1, 1]}
         mouseReact={false}
         amplitude={0.1}
         speed={1.0}
         className="absolute inset-0"
-      />
-      
+      /> */}
+      <GradientBackground />
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -339,41 +355,43 @@ export default function AuthenticatedHome() {
 
         {/* Action Buttons - Only show if user hasn't sent a message */}
         {!hasUserSentMessage && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto"> 
-            {actionButtons.map((action, index) => {
-              const Icon = action.icon
-              return (
-                <div
-                  key={action.id}
-                  onClick={() => handleActionClick(action)}
-                  className="bg-white/90 backdrop-blur-lg border-2 border-white/30 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/95 group max-w-sm mx-auto w-full"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className={`w-12 h-12 bg-gradient-to-r ${action.color} rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300`}>
-                      <Icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-800">
-                      {language === 'ms' ? action.titleMs : action.title}
-                    </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12 max-w-5xl mx-auto">
+          {actionButtons.map((action, index) => {
+            const Icon = action.icon;
+            return (
+              <div
+                key={action.id}
+                onClick={() => handleActionClick(action)}
+                className="bg-white/90 backdrop-blur-lg border-2 border-white/30 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/95 group max-w-sm mx-auto w-full"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  {/* Icon container with consistent width and height */}
+                  <div className={`w-16 h-16 bg-gradient-to-r ${action.color} rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300`}>
+                  {/* Icon size adjusted to fit consistently */}
+                  <Icon className="w-8 h-8 text-white" />
                   </div>
-                  
-                  {selectedAction === action.id && (
-                    <div className="mt-4 p-4 bg-black/10 backdrop-blur-sm rounded-lg border border-black/20 animate-fadeIn">
-                      <p className="text-sm text-gray-800">
-                        {language === 'ms' ? action.summaryMs : action.summary}
-                      </p>
-                      {action.linkTo && (
-                        <div className="mt-2 text-xs text-blue-700 font-medium">
-                          Redirecting to {action.tab}...
-                        </div>
-                      )}
-                    </div>
-                  )}
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    {language === 'ms' ? action.titleMs : action.title}
+                  </h3>
                 </div>
-              )
-            })}
-          </div>
-        )}
+
+                {selectedAction === action.id && (
+                  <div className="mt-4 p-4 bg-black/10 backdrop-blur-sm rounded-lg border border-black/20 animate-fadeIn">
+                    <p className="text-sm text-gray-800">
+                      {language === 'ms' ? action.summaryMs : action.summary}
+                    </p>
+                    {action.linkTo && (
+                      <div className="mt-2 text-xs text-blue-700 font-medium">
+                        Redirecting to {action.tab}...
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
 
         {/* Chat Interface */}
         <div className="max-w-4xl mx-auto">

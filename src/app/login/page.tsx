@@ -784,7 +784,7 @@ export default function FaceLandmarkDemo() {
       
       if (result.success) {
         // Success - redirect to home
-        router.push('/home')
+        router.push('/avatar-onboarding')
       } else {
         setLoginError(result.error || 'Login failed. Please try again.')
       }
