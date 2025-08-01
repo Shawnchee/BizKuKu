@@ -9,6 +9,7 @@ import ReactMarkdown from 'react-markdown'
 import AzureAvatar from '@/components/avatar/AzureAvatar'
 import AvatarTestPanel from '@/components/avatar/AvatarTestPanel'
 import { useAzureAvatarEnhanced } from '@/hooks/useAzureAvatarEnhanced'
+import FinancialSnapshot from '@/components/chatbot/FinancialSnapshot'
 
 interface Message {
   id: string
@@ -16,6 +17,7 @@ interface Message {
   sender: 'user' | 'bot'
   timestamp: Date
   files?: File[]
+  customComponent?: React.ReactNode
 }
 
 const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/chat' : '/api/chat';
@@ -194,6 +196,31 @@ export default function AuthenticatedHome() {
     setHasUserSentMessage(true)
 
     try {
+      // Check if user sent "testing" to show financial snapshot
+      if (textToSend.toLowerCase() === 'testing') {
+        setIsLoading(false);
+        
+        const botMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: '',
+          sender: 'bot',
+          timestamp: new Date(),
+          customComponent: <FinancialSnapshot onExploreGrants={handleExploreGrants} />
+        }
+        
+        setMessages(prev => [...prev, botMessage])
+        
+        // Use Azure Avatar to speak the response if available
+        if (avatarReady && botMessage.text) {
+          try {
+            await speakText(botMessage.text)
+          } catch (error) {
+            console.error('Error speaking response:', error)
+          }
+        }
+        return;
+      }
+
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -270,6 +297,11 @@ export default function AuthenticatedHome() {
     const sizes = ['Bytes', 'KB', 'MB', 'GB']
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+  }
+
+  const handleExploreGrants = () => {
+    // Navigate to grants page or show grants modal
+    window.location.href = '/recommendation'
   }
 
   const canInteract = !isLoading && !isAvatarSpeaking && !isProcessing
@@ -383,7 +415,14 @@ export default function AuthenticatedHome() {
                     >
                       <div className="text-sm leading-relaxed">
                         {message.sender === 'bot' ? (
-                          <ReactMarkdown>{message.text}</ReactMarkdown>
+                          <>
+                            <ReactMarkdown>{message.text}</ReactMarkdown>
+                            {message.customComponent && (
+                              <div className="mt-4">
+                                {message.customComponent}
+                              </div>
+                            )}
+                          </>
                         ) : (
                           message.text
                         )}
@@ -481,7 +520,7 @@ export default function AuthenticatedHome() {
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder={t('chatbot.placeholder') || 'Ask BizMate anything...'}
+                  placeholder={t('chatbot.placeholder') || 'Ask anything...'}
                   className="w-full resize-none border border-gray-300 rounded-2xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   rows={1}
                   style={{ minHeight: '48px', maxHeight: '120px' }}
