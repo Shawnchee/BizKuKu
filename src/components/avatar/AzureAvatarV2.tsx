@@ -70,6 +70,21 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
     return AvatarErrorHandler.formatUserFriendlyMessage(enhancedError, language)
   }, [enhancedError, language])
 
+  // Create an enhanced stopSpeaking handler that ensures state is updated immediately
+  const handleStopSpeaking = React.useCallback(async () => {
+    try {
+      // Call the original stopSpeaking function
+      await stopSpeaking()
+      
+      // Force update any parent components that might be listening to speaking state
+      if (callbacks.onSpeechEnd) {
+        callbacks.onSpeechEnd()
+      }
+    } catch (error) {
+      console.error('Error in handleStopSpeaking:', error)
+    }
+  }, [stopSpeaking, callbacks])
+
   // Get configuration info for debugging
   const configInfo = React.useMemo(() => {
     if (process.env.NODE_ENV === 'development') {
@@ -179,8 +194,8 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
         {!isLoading && avatarReady && (
           <video
             ref={videoRef}
-            className={`w-80 h-80 object-cover shadow-xl transform transition-all duration-300 ${
-              isSpeaking ? 'scale-105 shadow-blue-500/50' : 'scale-100'
+            className={`w-160 h-120 ml-4 object-cover rounded-xl shadow-xl transform transition-all duration-300 ${
+              isSpeaking ? 'scale-103 shadow-blue-400/40' : 'scale-100'
             }`}
             muted={true}
             autoPlay
@@ -416,6 +431,66 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
           )} */}
         {/* </div>
       )} */}
+
+      {/* Control Buttons */}
+      {showControls && avatarReady && sessionActive && (
+        <div className="flex gap-3 mb-4 mt-6">
+          {/* Voice Control Button
+          <button
+            onClick={isListening ? stopListening : startListening}
+            disabled={isSpeaking && !isAudioBlocked}
+            className={`p-4 rounded-full transition-all duration-300 ${
+              isAudioBlocked
+                ? 'bg-yellow-500 hover:bg-yellow-600 animate-pulse'
+                : isListening
+                ? 'bg-red-500 hover:bg-red-600 animate-pulse'
+                : 'bg-green-500 hover:bg-green-600'
+            } text-white shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed`}
+            title={
+              isAudioBlocked
+                ? (language === 'ms' ? 'Aktifkan audio' : 'Enable audio')
+                : isListening
+                ? (language === 'ms' ? 'Hentikan mendengar' : 'Stop listening')
+                : (language === 'ms' ? 'Tekan untuk bercakap' : 'Press to speak')
+            }
+          >
+            {isListening ? (
+              <MicOff className="w-6 h-6" />
+            ) : (
+              <Mic className="w-6 h-6" />
+            )}
+          </button> */}
+
+          {/* Stop Speaking Button */}
+          {/* {isSpeaking && (
+            <button
+              onClick={handleStopSpeaking}
+              className="p-4 rounded-full bg-orange-500 hover:bg-orange-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              title={language === 'ms' ? 'Hentikan bercakap' : 'Stop speaking'}
+            >
+              <VolumeX className="w-6 h-6" />
+            </button>
+          )} */}
+
+          {/* Continuous Conversation Toggle
+          <button
+            onClick={toggleContinuousConversation}
+            className={`p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+              continuousConversation 
+                ? 'bg-purple-500 hover:bg-purple-600 text-white' 
+                : 'bg-gray-300 hover:bg-gray-400 text-gray-700'
+            }`}
+            title={
+              continuousConversation
+                ? (language === 'ms' ? 'Matikan mod berterusan' : 'Disable continuous mode')
+                : (language === 'ms' ? 'Aktifkan mod berterusan' : 'Enable continuous mode')
+            }
+          >
+            <Settings className="w-5 h-5" />
+          </button> */}
+        </div>
+      )}
+
     </div>
   )
 })
