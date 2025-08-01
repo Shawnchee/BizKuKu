@@ -53,15 +53,15 @@ export default function MiniServices() {
       id: 'e-invoicing',
       title: 'E-Invoicing System',
       titleMs: 'Sistem E-Invois',
-      description: 'Generate MyInvois compliant digital invoices • PDF & XML output',
-      descriptionMs: 'Jana invois digital yang mematuhi MyInvois • Output PDF & XML',
+      description: 'Generate MyInvois compliant digital invoices • PDF output',
+      descriptionMs: 'Jana invois digital yang mematuhi MyInvois • Output PDF',
       icon: FileText,
       category: 'financial',
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
       priority: 'high',
       isPopular: true,
-      outputs: ['PDF Invoice', 'XML File', 'Email Delivery'],
+      outputs: ['PDF Invoice', 'Email Delivery'],
       previews: [
         {
           type: 'text',
@@ -77,7 +77,7 @@ export default function MiniServices() {
         {
           type: 'file',
           label: 'Export Formats',
-          content: 'invoice_001.pdf, invoice_001.xml'
+          content: 'invoice_001.pdf'
         }
       ],
       onboardingSteps: [
