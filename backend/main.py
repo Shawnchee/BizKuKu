@@ -18,8 +18,9 @@ app.add_middleware(
 
 # Include all routers
 app.include_router(chat.router, prefix="/api", tags=["chat"])
+app.include_router(chat.router, prefix="/api", tags=["onboarding-chat"])
 
 
 @app.get("/") 
 def read_root(): 
-    return {"message": "Hello from FastAPI backend!"} 
+    return {"message": "Hello from FastAPI backend!"}
