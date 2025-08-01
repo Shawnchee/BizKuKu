@@ -56,7 +56,7 @@ export class AzureAvatarConfigManager {
       speechRegion: '',
       
       // Avatar settings
-      defaultAvatarIndex: 2, // Anna Casual
+      defaultAvatarIndex: 0,
       enableCustomVoice: false,
       usePrivateEndpoint: false,
       

@@ -88,6 +88,7 @@ const AVATAR_SUPPORTED_REGIONS = [
 const AVATAR_FALLBACK_REGION = 'eastus'
   // Avatar configuration constants - improved with latest available options
   const AVATAR_CONFIGS = [
+    { character: 'meg', style: 'business', voice: 'en-US-AvaMultilingualNeural', name: 'Meg Business', background: '#F5F5F5' },
     { character: 'lisa', style: 'casual-sitting', voice: 'en-US-AvaMultilingualNeural', name: 'Lisa Casual', background: '#F8FAFC' },
     { character: 'lisa', style: 'graceful-sitting', voice: 'en-US-AvaMultilingualNeural', name: 'Lisa Graceful', background: '#F0F8FF' },
     { character: 'lisa', style: 'technical-sitting', voice: 'en-US-AriaNeural', name: 'Lisa Technical', background: '#F5F5F5' },
