@@ -36,8 +36,8 @@ const translations = {
     en: 'Online Business'
   },
   'nav.mini-services': {
-    ms: 'Alat Perniagaan',
-    en: 'Business Toolkit'
+    ms: 'Perkhidmatan Sampingan',
+    en: 'Mini Services'
   },
   'nav.recommendation': {
     ms: 'Cadangan Pinjaman',
