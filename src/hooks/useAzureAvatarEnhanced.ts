@@ -49,15 +49,21 @@ export const useAzureAvatarEnhanced = ({
         setIsSpeaking(true)
         setError(null)
         
-        // Set timeout for speaking
+        // Calculate estimated speaking duration
+        const wordCount = text.split(' ').length
+        const estimatedDuration = Math.max(2000, Math.min(15000, (wordCount / 150) * 60 * 1000))
+        
+        // Set timeout for speaking based on text length
         const speakingTimeout = setTimeout(() => {
           setIsSpeaking(false)
           console.warn('Speaking timeout - force stopping')
-        }, 30000) // 30 second timeout
+        }, estimatedDuration + 5000) // Add 5 seconds buffer
         
         const success = await avatarRef.current.speakText(text)
         clearTimeout(speakingTimeout)
-        setIsSpeaking(false)
+        
+        // Don't immediately stop speaking - let the avatar hook manage the duration
+        // The avatar hook will handle stopping the speaking state after the estimated duration
         
         return success
       } else {
@@ -68,10 +74,18 @@ export const useAzureAvatarEnhanced = ({
     } catch (error) {
       console.error('Error speaking text:', error)
       setIsSpeaking(false)
-      const errorMessage = `Failed to speak: ${error}`
-      setError(errorMessage)
-      onError?.(errorMessage)
-      return false
+      
+      // Try fallback speech synthesis
+      try {
+        console.log('🔄 Trying fallback speech synthesis...')
+        return await fallbackSpeak(text)
+      } catch (fallbackError) {
+        console.error('Fallback speech synthesis also failed:', fallbackError)
+        const errorMessage = `Failed to speak: ${error}`
+        setError(errorMessage)
+        onError?.(errorMessage)
+        return false
+      }
     }
   }, [onError])
 

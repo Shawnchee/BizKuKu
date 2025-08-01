@@ -361,15 +361,9 @@ export default function AuthenticatedHome() {
           )}
 
           {/* Chat Interface */}
-          <div className="flex-1 bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-white/30 p-6 flex flex-col overflow-hidden">
-            <div className="mb-4 border-b border-gray-200 pb-4">
-            <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-              <MessageCircle className="w-5 h-5 text-purple-400" />
-              Chat with BizMate
-            </h2>
-          </div>
+          <div className={`${messages.length > 0 ? 'flex-1' : 'h-auto'} bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-white/30 p-6 flex flex-col overflow-hidden`}>
             {/* Chat Messages */}
-            <div className="flex-1 overflow-y-auto mb-4 space-y-4 min-h-0">
+            <div className={`overflow-y-auto space-y-4 ${messages.length > 0 ? 'flex-1 min-h-0' : 'h-auto'}`}>
               <AnimatePresence>
                 {messages.map((message) => (
                   <motion.div

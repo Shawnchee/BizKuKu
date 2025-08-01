@@ -197,7 +197,7 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
             className={`w-160 h-120 ml-4 object-cover rounded-xl shadow-xl transform transition-all duration-300 ${
               isSpeaking ? 'scale-103 shadow-blue-400/40' : 'scale-100'
             }`}
-            muted={true}
+            muted={false}
             autoPlay
             playsInline
             onLoadStart={() => {
@@ -311,8 +311,15 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
           </div>
         )} */}
 
-        {/* Hidden audio element */}
-        <audio ref={audioRef} style={{ display: 'none' }} />
+        {/* Audio element for speech output */}
+        <audio 
+          ref={audioRef} 
+          style={{ display: 'none' }} 
+          autoPlay
+          controls={false}
+          preload="auto"
+          muted={false}
+        />
       </div>
 
       {/* Error Display */}
