@@ -320,7 +320,7 @@ export default function AuthenticatedHome() {
             </div>
           </div>
 
-          {/* BizMate Title - Only show if user hasn't sent a message */}
+          {/* BizMate Title - Only show if user hasn't sent a message
           {!hasUserSentMessage && (
             <div className="space-y-3">
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -332,7 +332,7 @@ export default function AuthenticatedHome() {
                 Your MSME Digital Co-Pilot
               </p>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* CSS for avatar animation */}

@@ -28,7 +28,7 @@ const translations = {
     en: 'Story'
   },
   'nav.application-status': {
-    ms: 'Status Permohonan',
+    ms: 'Permohonan',
     en: 'Application Status'
   },
   'nav.online-bizzku': {
@@ -37,10 +37,10 @@ const translations = {
   },
   'nav.mini-services': {
     ms: 'Perkhidmatan Sampingan',
-    en: 'Mini Services'
+    en: 'Business Toolkit'
   },
   'nav.recommendation': {
-    ms: 'Cadangan Pinjaman',
+    ms: 'Pinjaman',
     en: 'Funding Recommendation'
   },
   'nav.login': {
