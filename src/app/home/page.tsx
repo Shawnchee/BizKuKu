@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Send, Upload, Paperclip, X, Bot, Sparkles, TrendingUp, FileText, CreditCard, Settings, Mic, BookOpen, MessageCircle} from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useUser } from '@/contexts/UserContext'
 import GradientBackground from "@/components/backgrounds/GradientBackground"
 import { motion, AnimatePresence } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
@@ -24,6 +25,7 @@ const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/
 
 export default function AuthenticatedHome() {
   const { t, language } = useLanguage()
+  const { user } = useUser()
   const [selectedAction, setSelectedAction] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [inputMessage, setInputMessage] = useState('')
@@ -72,6 +74,23 @@ export default function AuthenticatedHome() {
   useEffect(() => {
     setIsAvatarSpeaking(isSpeaking)
   }, [isSpeaking])
+
+  // Auto-show financial snapshot for XinJie
+  useEffect(() => {
+    if (user?.full_name === 'XinJie' && !hasUserSentMessage) {
+      // Automatically show financial snapshot
+      const botMessage: Message = {
+        id: Date.now().toString(),
+        text: '',
+        sender: 'bot',
+        timestamp: new Date(),
+        customComponent: <FinancialSnapshot onExploreGrants={handleExploreGrants} />
+      }
+      
+      setMessages([botMessage])
+      setHasUserSentMessage(true)
+    }
+  }, [user?.full_name, hasUserSentMessage])
 
   // Add this function to handle stopping the avatar from speaking
   const handleStopSpeaking = async () => {
@@ -196,30 +215,6 @@ export default function AuthenticatedHome() {
     setHasUserSentMessage(true)
 
     try {
-      // Check if user sent "testing" to show financial snapshot
-      if (textToSend.toLowerCase() === 'testing') {
-        setIsLoading(false);
-        
-        const botMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          text: '',
-          sender: 'bot',
-          timestamp: new Date(),
-          customComponent: <FinancialSnapshot onExploreGrants={handleExploreGrants} />
-        }
-        
-        setMessages(prev => [...prev, botMessage])
-        
-        // Use Azure Avatar to speak the response if available
-        if (avatarReady && botMessage.text) {
-          try {
-            await speakText(botMessage.text)
-          } catch (error) {
-            console.error('Error speaking response:', error)
-          }
-        }
-        return;
-      }
 
       const res = await fetch(API_URL, {
         method: 'POST',

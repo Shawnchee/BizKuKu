@@ -87,9 +87,9 @@ export default function AvatarOnboarding() {
     const initializeAudio = async () => {
       setMicrophonePermission('pending');
       try {
-        console.log('🎤 Requesting microphone permission...');
+        console.log('Requesting microphone permission...');
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        console.log('✅ Microphone permission granted');
+        console.log('Microphone permission granted');
         setMicrophonePermission('granted');
         
         // Test audio playback
@@ -102,7 +102,7 @@ export default function AvatarOnboarding() {
         
         stream.getTracks().forEach(track => track.stop()); // Stop the stream after getting permission
       } catch (error) {
-        console.error('❌ Microphone permission denied:', error);
+        console.error('Microphone permission denied:', error);
         setMicrophonePermission('denied');
       }
     };
@@ -115,15 +115,15 @@ export default function AvatarOnboarding() {
   // Add this function to handle stopping the avatar from speaking
   const handleStopSpeaking = async () => {
     try {
-      console.log('🛑 Stopping avatar speech...');
+      console.log('Stopping avatar speech...');
       await stopSpeaking();
       setIsAvatarSpeaking(false);
       
       // Clear any pending speech and allow user interaction
       setInputMessage(''); // Clear any pending input
-      console.log('✅ Avatar speech stopped - user can now interact');
+      console.log('Avatar speech stopped - user can now interact');
     } catch (error) {
-      console.error('❌ Error stopping speech:', error);
+      console.error('Error stopping speech:', error);
       setIsAvatarSpeaking(false);
     }
   }
@@ -187,7 +187,7 @@ export default function AvatarOnboarding() {
       );
       
       if (unspokenMessages.length > 0) {
-        console.log(`🗣️ Avatar finished speaking, found ${unspokenMessages.length} unspoken messages`);
+        console.log(`Avatar finished speaking, found ${unspokenMessages.length} unspoken messages`);
         // The main useEffect will handle speaking the next message
       }
     }
@@ -196,7 +196,7 @@ export default function AvatarOnboarding() {
   // Effect to trigger initial welcome when avatar becomes ready
   useEffect(() => {
     if (avatarReady && messages.length === 0 && !welcomeShown && !welcomeTriggered && !welcomeTriggeredRef.current) {
-      console.log('🎭 Avatar ready and no messages - triggering welcome');
+      console.log('Avatar ready and no messages - triggering welcome');
       setWelcomeTriggered(true);
       welcomeTriggeredRef.current = true;
       
@@ -209,7 +209,7 @@ export default function AvatarOnboarding() {
           );
           
           if (existingWelcome) {
-            console.log('⚠️ Welcome message already exists, skipping');
+            console.log('Welcome message already exists, skipping');
             setWelcomeShown(true);
             return;
           }
@@ -231,7 +231,7 @@ export default function AvatarOnboarding() {
           // Speak the welcome message with a longer delay to ensure avatar is ready
           setTimeout(() => {
             if (avatarReady && !isAvatarSpeaking) {
-              console.log('🗣️ Speaking welcome message...');
+              console.log('Speaking welcome message...');
               const cleanText = welcomeMessage.replace(/\*\*/g, '').replace(/\n/g, ' ');
               speakText(cleanText);
               
@@ -271,7 +271,7 @@ export default function AvatarOnboarding() {
         msg.text.includes("Hi there! I'm your **personal MSME onboarding assistant**")
       );
       if (welcomeExists) {
-        console.log('⚠️ Welcome message already exists, skipping duplicate');
+        console.log('Welcome message already exists, skipping duplicate');
         return;
       }
     }
@@ -284,7 +284,7 @@ export default function AvatarOnboarding() {
       type: type || (options ? 'options' : 'text')
     }
     
-    console.log('📝 Adding new bot message:', {
+    console.log('Adding new bot message:', {
       type: newMessage.type,
       text: text.substring(0, 50) + '...',
       id: newMessage.id
@@ -348,7 +348,7 @@ export default function AvatarOnboarding() {
     
     if (journey === 'just-starting') {
       setTimeout(() => {
-        const firstStepMessage = "**Great! You're taking your first step.** 🎉\n\nPlease upload your **MyKad** for registration.";
+        const firstStepMessage = "**Great! You're taking your first step.**\n\nPlease upload your **MyKad** for registration.";
         addBotMessage(firstStepMessage);
       }, 500)
     }
@@ -356,20 +356,20 @@ export default function AvatarOnboarding() {
 
   const showBasicInfoForm = () => {
     setTimeout(() => {
-      const formMessage = "**✅ MyKad uploaded successfully!**\n\n**Please complete your personal and business information:**";
+      const formMessage = "**MyKad uploaded successfully!**\n\n**Please complete your personal and business information:**";
       addBotMessage(formMessage, [], 'form');
     }, 500)
   }
 
   const showOnboardingChecklist = () => {
-    console.log('📋 Showing onboarding checklist, completed steps:', completedSteps.size);
+    console.log('Showing onboarding checklist, completed steps:', completedSteps.size);
     setTimeout(() => {
       const hasCompletedSteps = completedSteps.size > 0
       const message = hasCompletedSteps 
         ? "Let us proceed with the onboarding checklist:"
         : "Awesome! Now, let me guide you through each step to get your business fully set up. \n\n**Here's your onboarding checklist:**"
       
-      console.log('📋 Adding checklist message:', message.substring(0, 50) + '...');
+      console.log('Adding checklist message:', message.substring(0, 50) + '...');
       addBotMessage(message, [], 'checklist');
     }, 200) // Reduced from 500ms to 200ms for faster response
   }
@@ -401,34 +401,34 @@ export default function AvatarOnboarding() {
       addUserMessage("✔️ Confirmed")
   
       setTimeout(() => {
-        const progressMessage = "**SSM Registration in Progress** 📋\n\nWe're submitting your application now. You'll receive updates on the status.";
+        const progressMessage = "**SSM Registration in Progress** \n\nWe're submitting your application now. You'll receive updates on the status.";
         addBotMessage(progressMessage);
       }, 1000)
   
       setTimeout(() => {
-        const submittedMessage = "**✅ Application Submitted!**\n\nYou will get your **Business Registration Number** after approval (within 2–3 days).\n\nWe'll notify you once it's done.";
+        const submittedMessage = "**Application Submitted!**\n\nYou will get your **Business Registration Number** after approval (within 2–3 days).\n\nWe'll notify you once it's done.";
         addBotMessage(submittedMessage);
         
         // Mark SSM step as completed immediately
         setCompletedSteps(prev => {
           const newSet = new Set([...prev, 'ssm-registration'])
-          console.log('✅ SSM step marked as completed, total completed steps:', newSet.size)
+          console.log('SSM step marked as completed, total completed steps:', newSet.size)
           return newSet
         })
         
         // Show checklist immediately after submission message
         setTimeout(() => {
-          console.log('🔄 Showing checklist after SSM submission');
+          console.log('Showing checklist after SSM submission');
           const hasCompletedSteps = true // We just completed SSM
           const message = "Let us proceed with the onboarding checklist:"
-          console.log('📋 Adding checklist message:', message)
+          console.log('Adding checklist message:', message)
           addBotMessage(message, [], 'checklist')
         }, 1000) // Short delay to ensure submission message is processed
         
       }, 2000)
     } else {
       // Step 3: If user cancels, return a message and do not proceed
-      addUserMessage("❌ Application Canceled")
+      addUserMessage("Application Canceled")
       setTimeout(() => {
         const cancelMessage = "No worries! Let me know if you'd like to apply later.";
         addBotMessage(cancelMessage);
@@ -475,7 +475,7 @@ export default function AvatarOnboarding() {
     addUserMessage("Set up digital payment")
     
     setTimeout(() => {
-      const paymentMessage = "**Let's activate your payment channels!** 💳\n\nChoose one or more payment methods to accept customer payments:";
+      const paymentMessage = "**Let's activate your payment channels!** \n\nChoose one or more payment methods to accept customer payments:";
       addBotMessage(paymentMessage, [], 'payment-setup');
     }, 1000)
   }
@@ -499,14 +499,14 @@ export default function AvatarOnboarding() {
 
   const handleConsentAgreed = () => {
     setTimeout(() => {
-      const completeMessage = "**✅ Setup Complete!**\n\nYour **DuitNow QR is processing** and will be ready in **3–5 days**.\n\nYou'll receive a notification when it's activated.";
+      const completeMessage = "**Setup Complete!**\n\nYour **DuitNow QR is processing** and will be ready in **3–5 days**.\n\nYou'll receive a notification when it's activated.";
       addBotMessage(completeMessage);
       
       // Mark payment step as completed immediately after complete message
       setCompletedSteps(prev => new Set([...prev, 'payments']))
       
       setTimeout(() => {
-        console.log('🔄 Showing onboarding completion after payment setup');
+        console.log('Showing onboarding completion after payment setup');
         showOnboardingCompletion()
       }, 3000) // Wait 3 seconds after complete message
     }, 1000)
@@ -523,26 +523,26 @@ export default function AvatarOnboarding() {
       }, 1000)
       
       setTimeout(() => {
-        const setupMessage = "**✅ Bank Account Setup Complete!**\n\nYour business bank account application has been submitted successfully.";
+        const setupMessage = "**Bank Account Setup Complete!**\n\nYour business bank account application has been submitted successfully.";
         addBotMessage(setupMessage);
         
         // Mark bank account step as completed immediately
         setCompletedSteps(prev => {
           const newSet = new Set([...prev, 'bank-account'])
-          console.log('✅ Bank account step marked as completed, total completed steps:', newSet.size)
+          console.log('Bank account step marked as completed, total completed steps:', newSet.size)
           return newSet
         })
         
         // Show checklist immediately after setup message with backup
         setTimeout(() => {
-          console.log('🔄 Showing checklist after bank account setup');
+          console.log('Showing checklist after bank account setup');
           const message = "Let us proceed with the onboarding checklist:"
-          console.log('📋 Adding checklist message:', message)
+          console.log('Adding checklist message:', message)
           addBotMessage(message, [], 'checklist')
           
           // Backup timer to ensure checklist appears
           setTimeout(() => {
-            console.log('🔄 Backup: Checking if checklist appeared after bank setup');
+            console.log('Backup: Checking if checklist appeared after bank setup');
             const hasChecklistMessage = messages.some(msg => 
               msg.sender === 'bot' && 
               msg.text && 
@@ -550,7 +550,7 @@ export default function AvatarOnboarding() {
             );
             
             if (!hasChecklistMessage) {
-              console.log('🔄 Backup: Checklist not found after bank setup, showing it now');
+              console.log('Backup: Checklist not found after bank setup, showing it now');
               addBotMessage("Let us proceed with the onboarding checklist:", [], 'checklist')
             }
           }, 2000) // Backup after 2 seconds
@@ -559,16 +559,16 @@ export default function AvatarOnboarding() {
     } else {
       // Payment setup flow
       setTimeout(() => {
-        const consentMessage = "**Consent Required** 📋\n\nWe need your consent to share your SSM details with **" + bank + "** for merchant QR setup.\n\nThis will enable you to accept QR payments from customers.";
+        const consentMessage = "**Consent Required** \n\nWe need your consent to share your SSM details with **" + bank + "** for merchant QR setup.\n\nThis will enable you to accept QR payments from customers.";
         addBotMessage(consentMessage);
       }, 1000)
       
       setTimeout(() => {
-        const completeMessage = "**✅ Setup Complete!**\n\nYour **DuitNow QR is processing** and will be ready in **3–5 days**.\n\nYou'll receive a notification when it's activated.";
+        const completeMessage = "**Setup Complete!**\n\nYour **DuitNow QR is processing** and will be ready in **3–5 days**.\n\nYou'll receive a notification when it's activated.";
         addBotMessage(completeMessage);
         
         setTimeout(() => {
-          console.log('🔄 Showing onboarding completion after bank payment setup');
+          console.log('Showing onboarding completion after bank payment setup');
           showOnboardingCompletion()
         }, 3000) // Wait 3 seconds after complete message
       }, 3000) // Increased delay to ensure proper sequencing
@@ -577,7 +577,7 @@ export default function AvatarOnboarding() {
 
   const showOnboardingCompletion = () => {
     setTimeout(() => {
-      const successMessage = "**🎉 Onboarding Successful!**\n\n**Congratulations!** Your business setup is now complete.\n\nYou can now:\n\n• Access your business dashboard\n\n• Track sales and customers\n\n• Apply for funding\n\n• Use digital payment tools\n\n\n\n**Ready to start your business journey?**";
+      const successMessage = "**Onboarding Successful!**\n\n**Congratulations!** Your business setup is now complete.\n\nYou can now:\n\n• Access your business dashboard\n\n• Track sales and customers\n\n• Apply for funding\n\n• Use digital payment tools\n\n\n\n**Ready to start your business journey?**";
       addBotMessage(successMessage);
     }, 1000)
     

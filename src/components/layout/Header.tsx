@@ -85,7 +85,8 @@ export default function Header() {
                       onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                       className="flex items-center space-x-2 rounded-full p-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                      {user?.avatar_url ? (
+                      <UserCircle className="h-6 w-6 text-gray-500" />
+                      {/* {user?.avatar_url ? (
                         <img 
                           src={user.avatar_url} 
                           alt={getUserDisplayName()} 
@@ -97,7 +98,7 @@ export default function Header() {
                             {getUserDisplayName().charAt(0).toUpperCase()}
                           </span>
                         </div>
-                      )}
+                      )} */}
                       <span className="hidden md:block text-sm font-medium text-gray-700 max-w-24 truncate">
                         {getUserDisplayName()}
                       </span>
