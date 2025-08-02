@@ -7,6 +7,7 @@ import GradientBackground from "@/components/backgrounds/GradientBackground"
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
+import TypewriterText from '@/components/animation/TypewriterText'
 import AzureAvatar from '@/components/avatar/AzureAvatar'
 import { useAzureAvatarEnhanced } from '@/hooks/useAzureAvatarEnhanced'
 
@@ -700,7 +701,13 @@ export default function AvatarOnboarding() {
           <div>
             {message.text && (
               <div className="text-sm leading-relaxed mb-3 [&>ul]:space-y-1 [&>ul>li]:block">
-                <ReactMarkdown>{message.text}</ReactMarkdown>
+                <TypewriterText 
+                  text={message.text}
+                  speed={40}
+                  delay={300}
+                  renderAsMarkdown={true}
+                  cursor={true}
+                />
               </div>
             )}
             <div className="space-y-2">
@@ -723,7 +730,13 @@ export default function AvatarOnboarding() {
           <div className="mt-3">
             {message.text && (
                 <div className="text-sm leading-relaxed mb-4 ml-2">
-                    <ReactMarkdown>{message.text}</ReactMarkdown>
+                    <TypewriterText 
+                      text={message.text}
+                      speed={40}
+                      delay={300}
+                      renderAsMarkdown={true}
+                      cursor={true}
+                    />
                 </div>
             )}
             <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 p-4">
@@ -858,7 +871,13 @@ export default function AvatarOnboarding() {
               <div>
                 {message.text && (
                   <div className="text-sm leading-relaxed mb-4">
-                    <ReactMarkdown>{message.text}</ReactMarkdown>
+                    <TypewriterText 
+                      text={message.text}
+                      speed={40}
+                      delay={300}
+                      renderAsMarkdown={true}
+                      cursor={true}
+                    />
                   </div>
                 )}
                 <div className="space-y-4 mt-3 w-full">
@@ -920,7 +939,13 @@ export default function AvatarOnboarding() {
           <div>
             {message.text && (
               <div className="text-sm leading-relaxed mb-4">
-                <ReactMarkdown>{message.text}</ReactMarkdown>
+                <TypewriterText 
+                  text={message.text}
+                  speed={40}
+                  delay={300}
+                  renderAsMarkdown={true}
+                  cursor={true}
+                />
               </div>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
@@ -980,7 +1005,13 @@ export default function AvatarOnboarding() {
         return (
           <div>
             <div className="text-sm leading-relaxed">
-              <ReactMarkdown>{message.text}</ReactMarkdown>
+              <TypewriterText 
+                text={message.text}
+                speed={40}
+                delay={300}
+                renderAsMarkdown={true}
+                cursor={true}
+              />
             </div>
             
             {/* File attachments */}
