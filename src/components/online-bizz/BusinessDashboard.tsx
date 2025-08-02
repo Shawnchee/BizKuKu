@@ -4,14 +4,15 @@ import { Button } from "@/components/ui/Button"
 import { Badge } from "@/components/ui/Badge"
 import Image from "next/image"
 import {
-  TrendingUp, Users, ShoppingCart, DollarSign, 
-  CheckCircle2, Clock, AlertCircle, BarChart3, 
+  TrendingUp, Users, ShoppingCart, DollarSign,
+  CheckCircle2, Clock, AlertCircle, BarChart3,
   Truck, Plus, ArrowRight, Zap, Globe, X, Loader2,
   Calendar
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion" // Import framer-motion
 import { Platform, ConnectedAccount, TimeRange, timeRangeLabels } from '@/lib/types/online-bizz-types';
 import { getStatusIcon, getStatusBadge } from '@/components/online-bizz/StatusIndicators';
+import { useLanguage } from '@/contexts/LanguageContext';
 import Iridescence from "../backgrounds/Iridescence"
 
 interface BusinessDashboardProps {
@@ -36,11 +37,12 @@ const itemVariants = {
   show: { opacity: 1, y: 0 }
 };
 
-export default function BusinessDashboard({ 
-  platforms, 
-  connectedAccounts, 
-  consolidatedStats 
+export default function BusinessDashboard({
+  platforms,
+  connectedAccounts,
+  consolidatedStats
 }: BusinessDashboardProps) {
+  const { t } = useLanguage()
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const [isConnecting, setIsConnecting] = useState<string | null>(null)
   const [showConnectModal, setShowConnectModal] = useState(false)
@@ -51,7 +53,19 @@ export default function BusinessDashboard({
     lazada_001: "alltime",
   })
 
-  const categories = ["all", "E-commerce Marketplace", "Social Commerce", "Food Delivery"]
+  const categories = [
+    { key: "all", label: "online_business.platforms.all" },
+    { key: "E-commerce Marketplace", label: "online_business.category.ecommerce" },
+    { key: "Social Commerce", label: "online_business.category.social" },
+    { key: "Food Delivery", label: "online_business.category.food" }
+  ]
+
+  const timeRangeLabelsTranslated = {
+    today: t('online_business.time.today'),
+    last7days: t('online_business.time.last7days'),
+    last1month: t('online_business.time.last1month'),
+    alltime: t('online_business.time.alltime'),
+  }
 
   const filteredPlatforms =
     selectedCategory === "all" ? platforms : platforms.filter((p) => p.category === selectedCategory)
@@ -81,9 +95,9 @@ export default function BusinessDashboard({
       >
 
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-gray-900">📊 Business Overview</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{t('online_business.overview.title')}</h2>
           <div className="flex space-x-2">
-            {Object.entries(timeRangeLabels).map(([key, label]) => (
+            {Object.entries(timeRangeLabelsTranslated).map(([key, label]) => (
               <Button
                 key={key}
                 variant={overviewTimeRange === key ? "primary" : "outline"}
@@ -109,8 +123,8 @@ export default function BusinessDashboard({
           <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100 border-green-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-green-700">Total Revenue</p>
-                <motion.p 
+                <p className="text-sm font-medium text-green-700">{t('online_business.overview.total_revenue')}</p>
+                <motion.p
                   className="text-2xl font-bold text-green-800"
                   key={currentStats.totalRevenue}
                   initial={{ opacity: 0.5, scale: 0.8 }}
@@ -120,7 +134,7 @@ export default function BusinessDashboard({
                   RM {currentStats.totalRevenue.toLocaleString()}
                 </motion.p>
               </div>
-              <motion.div 
+              <motion.div
                 className="p-3 bg-green-500 rounded-full"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -128,7 +142,7 @@ export default function BusinessDashboard({
                 <DollarSign className="h-6 w-6 text-white" />
               </motion.div>
             </div>
-            <p className="text-xs text-green-600 mt-2">From all connected platforms</p>
+            <p className="text-xs text-green-600 mt-2">{t('online_business.overview.from_all_platforms')}</p>
           </Card>
         </motion.div>
 
@@ -136,8 +150,8 @@ export default function BusinessDashboard({
           <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-blue-700">Total Orders</p>
-                <motion.p 
+                <p className="text-sm font-medium text-blue-700">{t('online_business.overview.total_orders')}</p>
+                <motion.p
                   className="text-2xl font-bold text-blue-800"
                   key={currentStats.totalOrders}
                   initial={{ opacity: 0.5, scale: 0.8 }}
@@ -147,7 +161,7 @@ export default function BusinessDashboard({
                   {currentStats.totalOrders.toLocaleString()}
                 </motion.p>
               </div>
-              <motion.div 
+              <motion.div
                 className="p-3 bg-blue-500 rounded-full"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -155,7 +169,7 @@ export default function BusinessDashboard({
                 <ShoppingCart className="h-6 w-6 text-white" />
               </motion.div>
             </div>
-            <p className="text-xs text-blue-600 mt-2">Across all platforms</p>
+            <p className="text-xs text-blue-600 mt-2">{t('online_business.overview.across_all_platforms')}</p>
           </Card>
         </motion.div>
 
@@ -163,8 +177,8 @@ export default function BusinessDashboard({
           <Card className="p-6 bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-purple-700">Active Platforms</p>
-                <motion.p 
+                <p className="text-sm font-medium text-purple-700">{t('online_business.overview.active_platforms')}</p>
+                <motion.p
                   className="text-2xl font-bold text-purple-800"
                   initial={{ opacity: 0.5, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -173,7 +187,7 @@ export default function BusinessDashboard({
                   {consolidatedStats.activePlatforms}
                 </motion.p>
               </div>
-              <motion.div 
+              <motion.div
                 className="p-3 bg-purple-500 rounded-full"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -181,7 +195,7 @@ export default function BusinessDashboard({
                 <Globe className="h-6 w-6 text-white" />
               </motion.div>
             </div>
-            <p className="text-xs text-purple-600 mt-2">{consolidatedStats.pendingPlatforms} pending connection</p>
+            <p className="text-xs text-purple-600 mt-2">{consolidatedStats.pendingPlatforms} {t('online_business.overview.pending_connection')}</p>
           </Card>
         </motion.div>
 
@@ -189,8 +203,8 @@ export default function BusinessDashboard({
           <Card className="p-6 bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-orange-700">Total Customers</p>
-                <motion.p 
+                <p className="text-sm font-medium text-orange-700">{t('online_business.overview.total_customers')}</p>
+                <motion.p
                   className="text-2xl font-bold text-orange-800"
                   key={currentStats.totalCustomers}
                   initial={{ opacity: 0.5, scale: 0.8 }}
@@ -200,7 +214,7 @@ export default function BusinessDashboard({
                   {currentStats.totalCustomers.toLocaleString()}
                 </motion.p>
               </div>
-              <motion.div 
+              <motion.div
                 className="p-3 bg-orange-500 rounded-full"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -208,7 +222,7 @@ export default function BusinessDashboard({
                 <Users className="h-6 w-6 text-white" />
               </motion.div>
             </div>
-            <p className="text-xs text-orange-600 mt-2">Unique customers reached</p>
+            <p className="text-xs text-orange-600 mt-2">{t('online_business.overview.unique_customers')}</p>
           </Card>
         </motion.div>
       </motion.div>
@@ -221,7 +235,7 @@ export default function BusinessDashboard({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">🔗 Your Connected Accounts</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('online_business.connected.title')}</h2>
 
           <motion.div 
             className="grid grid-cols-1 lg:grid-cols-2 gap-6"
@@ -273,7 +287,7 @@ export default function BusinessDashboard({
                         >
                           {/* Time Range Selector */}
                           <div className="flex space-x-1 mb-4">
-                            {Object.entries(timeRangeLabels).map(([key, label]) => (
+                            {Object.entries(timeRangeLabelsTranslated).map(([key, label]) => (
                               <Button
                                 key={key}
                                 variant={accountTimeRanges[account.id] === key ? "primary" : "outline"}
@@ -306,10 +320,10 @@ export default function BusinessDashboard({
                               >
                                 RM {currentAccountStats.revenue.toLocaleString()}
                               </motion.p>
-                              <p className="text-xs text-green-600">Revenue</p>
+                              <p className="text-xs text-green-600">{t('online_business.connected.revenue')}</p>
                             </div>
                             <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
-                              <motion.p 
+                              <motion.p
                                 className="text-lg font-bold text-blue-600"
                                 key={currentAccountStats.orders}
                                 initial={{ opacity: 0, y: -10 }}
@@ -318,10 +332,10 @@ export default function BusinessDashboard({
                               >
                                 {currentAccountStats.orders}
                               </motion.p>
-                              <p className="text-xs text-blue-600">Orders</p>
+                              <p className="text-xs text-blue-600">{t('online_business.connected.orders')}</p>
                             </div>
                             <div className="text-center p-3 bg-purple-50 rounded-lg border border-purple-200">
-                              <motion.p 
+                              <motion.p
                                 className="text-lg font-bold text-purple-600"
                                 key={currentAccountStats.customers}
                                 initial={{ opacity: 0, y: -10 }}
@@ -330,7 +344,7 @@ export default function BusinessDashboard({
                               >
                                 {currentAccountStats.customers}
                               </motion.p>
-                              <p className="text-xs text-purple-600">Customers</p>
+                              <p className="text-xs text-purple-600">{t('online_business.connected.customers')}</p>
                             </div>
                           </motion.div>
 
@@ -344,7 +358,7 @@ export default function BusinessDashboard({
                               onClick={() => (window.location.href = "/financial-report")}
                             >
                               <BarChart3 className="h-4 w-4 mr-2" />
-                              View Detailed Analysis
+                              {t('online_business.connected.view_analysis')}
                               <ArrowRight className="h-4 w-4 ml-2" />
                             </Button>
                           </motion.div>
@@ -366,7 +380,7 @@ export default function BusinessDashboard({
       >
         <Clock className="h-5 w-5 text-yellow-500" />
       </motion.div>
-      <p className="text-sm text-yellow-700 font-medium">Account verification in progress</p>
+      <p className="text-sm text-yellow-700 font-medium">{t('online_business.verification.in_progress')}</p>
     </div>
     
     <div className="mt-4 space-y-2">
@@ -374,16 +388,16 @@ export default function BusinessDashboard({
   <div className="grid grid-cols-2 gap-4">
     {/* Left column */}
     <div className="bg-yellow-100/50 p-3 rounded-lg border border-yellow-200">
-      <h4 className="font-medium text-yellow-800 text-sm mb-1">Platform Approval Process</h4>
+      <h4 className="font-medium text-yellow-800 text-sm mb-1">{t('online_business.verification.approval_process')}</h4>
       <ul className="text-xs text-yellow-700 space-y-1">
         <li className="flex items-center">
-          <span className="mr-1">•</span> Account details under review
+          <span className="mr-1">•</span> {t('online_business.verification.account_review')}
         </li>
         <li className="flex items-center">
-          <span className="mr-1">•</span> Business verification pending
+          <span className="mr-1">•</span> {t('online_business.verification.business_pending')}
         </li>
         <li className="flex items-center">
-          <span className="mr-1">•</span> Compliance check in progress
+          <span className="mr-1">•</span> {t('online_business.verification.compliance_check')}
         </li>
       </ul>
     </div>
@@ -395,8 +409,8 @@ export default function BusinessDashboard({
     transition={{ duration: 2, repeat: Infinity }}
   >
     <div className="flex justify-between items-center">
-      <p className="text-xs font-medium text-yellow-800">Current Status:</p>
-      <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-100">Pending</Badge>
+      <p className="text-xs font-medium text-yellow-800">{t('online_business.verification.current_status')}:</p>
+      <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-100">{t('online_business.verification.pending')}</Badge>
     </div>
     <div className="mt-2 w-full bg-yellow-200/30 rounded-full h-1.5">
       <motion.div 
@@ -406,7 +420,7 @@ export default function BusinessDashboard({
         transition={{ duration: 1 }}
       />
     </div>
-    <p className="text-xs text-yellow-600 mt-1">40% complete</p>
+    <p className="text-xs text-yellow-600 mt-1">{t('online_business.verification.percent_complete')}</p>
   </motion.div>
   </div>
   
@@ -417,11 +431,11 @@ export default function BusinessDashboard({
   <div className="flex space-x-4 text-xs text-yellow-700 p-2">
     <div className="flex-1 flex items-center">
       <Clock className="h-3 w-3 mr-1 text-yellow-500" />
-      <span>Started: 20/07/2025</span>
+      <span>{t('online_business.verification.started')}: 20/07/2025</span>
     </div>
     <div className="flex-1 flex items-center justify-end">
       <Calendar className="h-3 w-3 mr-1 text-yellow-500" />
-      <span>Est. Completion: 22/07/2025</span>
+      <span>{t('online_business.verification.est_completion')}: 22/07/2025</span>
     </div>
   </div>
 </div>
@@ -443,24 +457,24 @@ export default function BusinessDashboard({
         transition={{ duration: 0.5, delay: 0.3 }}
       >
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">🛍️ Available Platforms</h2>
-          <p className="text-gray-600">Choose the platforms that work best for your business</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('online_business.platforms.title')}</h2>
+          <p className="text-gray-600">{t('online_business.platforms.subtitle')}</p>
         </div>
         <motion.div className="flex justify-center space-x-2 flex-wrap gap-2">
           {categories.map((category, index) => (
             <motion.div
-              key={category}
+              key={category.key}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
             >
               <Button
-                variant={selectedCategory === category ? "primary" : "outline"}
+                variant={selectedCategory === category.key ? "primary" : "outline"}
                 size="sm"
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => setSelectedCategory(category.key)}
                 className="capitalize cursor-pointer border-black"
               >
-                {category === "all" ? "All Platforms" : category}
+                {t(category.label)}
               </Button>
             </motion.div>
           ))}
@@ -495,7 +509,7 @@ export default function BusinessDashboard({
                   </motion.div>
                   <div>
                     <h3 className="font-bold text-gray-900">{platform.name}</h3>
-                    <p className="text-sm text-gray-600">{platform.category}</p>
+                    <p className="text-sm text-gray-600">{t(`online_business.category.${platform.category.toLowerCase().replace(/[^a-z]/g, '')}`) || platform.category}</p>
                   </div>
                 </div>
                 <motion.div whileHover={{ scale: 1.2 }}>
@@ -503,17 +517,17 @@ export default function BusinessDashboard({
                 </motion.div>
               </div>
 
-              <p className="text-sm text-gray-600 mb-4">{platform.description}</p>
+              <p className="text-sm text-gray-600 mb-4">{t(`online_business.platform.${platform.id}.description`) || platform.description}</p>
 
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs text-gray-500 flex items-center">
                   <Clock className="h-3 w-3 mr-1" />
-                  {platform.setupTime}
+                  {t(`online_business.setup_time.${platform.setupTime.replace(/[^a-z0-9]/g, '_')}`) || platform.setupTime}
                 </span>
               </div>
 
               <div className="mb-4">
-                <p className="text-xs font-medium text-gray-700 mb-2">Key Features:</p>
+                <p className="text-xs font-medium text-gray-700 mb-2">{t('online_business.features.key_features')}</p>
                 <div className="flex flex-wrap gap-1">
                   {platform.features.slice(0, 3).map((feature, index) => (
                     <motion.div
@@ -523,7 +537,7 @@ export default function BusinessDashboard({
                       transition={{ delay: index * 0.1 }}
                     >
                       <Badge variant="secondary" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-                        {feature}
+                        {t(`online_business.features.${feature.toLowerCase().replace(/[^a-z]/g, '_')}`) || feature}
                       </Badge>
                     </motion.div>
                   ))}
@@ -534,7 +548,7 @@ export default function BusinessDashboard({
                       transition={{ delay: 0.3 }}
                     >
                       <Badge variant="secondary" className="text-xs bg-gray-50 text-gray-600">
-                        +{platform.features.length - 3} more
+                        +{platform.features.length - 3} {t('online_business.features.more')}
                       </Badge>
                     </motion.div>
                   )}
@@ -556,7 +570,7 @@ export default function BusinessDashboard({
                       className="flex items-center space-x-2 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 cursor-pointer"
                     >
                       <Zap className="h-4 w-4" />
-                      <span>Connect Now</span>
+                      <span>{t('online_business.action.connect_now')}</span>
                     </Button>
                   </motion.div>
                 )}
@@ -572,7 +586,7 @@ export default function BusinessDashboard({
                       className="flex items-center space-x-2 bg-transparent border-green-300 text-green-600 hover:bg-green-50 cursor-pointer"
                     >
                       <BarChart3 className="h-4 w-4" />
-                      <span>View Analytics</span>
+                      <span>{t('online_business.action.view_analytics')}</span>
                     </Button>
                   </motion.div>
                 )}
@@ -585,7 +599,7 @@ export default function BusinessDashboard({
                     className="flex items-center space-x-2 bg-transparent border-yellow-300 text-yellow-600"
                   >
                     <Clock className="h-4 w-4" />
-                    <span>Pending</span>
+                    <span>{t('online_business.action.pending')}</span>
                   </Button>
                 )}
               </div>

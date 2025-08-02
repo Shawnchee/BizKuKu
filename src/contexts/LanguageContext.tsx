@@ -2518,6 +2518,571 @@ const translations = {
     en: 'Delivery integration preview'
   },
 
+  // Online Business Page
+  'online_business.title': {
+    ms: 'Perniagaan Dalam Talian BizzKu',
+    en: 'Online BizzKu'
+  },
+  'online_business.subtitle': {
+    ms: 'Sambung dan urus semua platform perniagaan dalam talian anda di satu tempat',
+    en: 'Connect and manage all your online business platforms in one place'
+  },
+
+  // Business Overview Section
+  'online_business.overview.title': {
+    ms: '📊 Gambaran Keseluruhan Perniagaan',
+    en: '📊 Business Overview'
+  },
+  'online_business.overview.total_revenue': {
+    ms: 'Jumlah Hasil',
+    en: 'Total Revenue'
+  },
+  'online_business.overview.total_orders': {
+    ms: 'Jumlah Pesanan',
+    en: 'Total Orders'
+  },
+  'online_business.overview.active_platforms': {
+    ms: 'Platform Aktif',
+    en: 'Active Platforms'
+  },
+  'online_business.overview.total_customers': {
+    ms: 'Jumlah Pelanggan',
+    en: 'Total Customers'
+  },
+  'online_business.overview.from_all_platforms': {
+    ms: 'Dari semua platform yang disambung',
+    en: 'From all connected platforms'
+  },
+  'online_business.overview.across_all_platforms': {
+    ms: 'Merentas semua platform',
+    en: 'Across all platforms'
+  },
+  'online_business.overview.pending_connection': {
+    ms: 'sambungan tertunda',
+    en: 'pending connection'
+  },
+  'online_business.overview.unique_customers': {
+    ms: 'Pelanggan unik yang dicapai',
+    en: 'Unique customers reached'
+  },
+
+  // Time Range Labels
+  'online_business.time.today': {
+    ms: 'Hari Ini',
+    en: 'Today'
+  },
+  'online_business.time.last7days': {
+    ms: '7 Hari Lepas',
+    en: 'Last 7 Days'
+  },
+  'online_business.time.last1month': {
+    ms: 'Bulan Lepas',
+    en: 'Last Month'
+  },
+  'online_business.time.alltime': {
+    ms: 'Sepanjang Masa',
+    en: 'All Time'
+  },
+
+  // Connected Accounts Section
+  'online_business.connected.title': {
+    ms: '🔗 Akaun Yang Disambung',
+    en: '🔗 Your Connected Accounts'
+  },
+  'online_business.connected.revenue': {
+    ms: 'Hasil',
+    en: 'Revenue'
+  },
+  'online_business.connected.orders': {
+    ms: 'Pesanan',
+    en: 'Orders'
+  },
+  'online_business.connected.customers': {
+    ms: 'Pelanggan',
+    en: 'Customers'
+  },
+  'online_business.connected.view_analysis': {
+    ms: 'Lihat Analisis Terperinci',
+    en: 'View Detailed Analysis'
+  },
+
+  // Account Status
+  'online_business.status.verification_progress': {
+    ms: 'Pengesahan akaun sedang dijalankan',
+    en: 'Account verification in progress'
+  },
+  'online_business.status.platform_approval': {
+    ms: 'Proses Kelulusan Platform',
+    en: 'Platform Approval Process'
+  },
+  'online_business.status.account_review': {
+    ms: 'Butiran akaun sedang disemak',
+    en: 'Account details under review'
+  },
+  'online_business.status.business_verification': {
+    ms: 'Pengesahan perniagaan tertunda',
+    en: 'Business verification pending'
+  },
+  'online_business.status.compliance_check': {
+    ms: 'Pemeriksaan pematuhan sedang dijalankan',
+    en: 'Compliance check in progress'
+  },
+  'online_business.status.current_status': {
+    ms: 'Status Semasa:',
+    en: 'Current Status:'
+  },
+  'online_business.status.pending': {
+    ms: 'Tertunda',
+    en: 'Pending'
+  },
+  'online_business.status.complete': {
+    ms: 'selesai',
+    en: 'complete'
+  },
+  'online_business.status.started': {
+    ms: 'Dimulakan:',
+    en: 'Started:'
+  },
+  'online_business.status.estimated_completion': {
+    ms: 'Anggaran Selesai:',
+    en: 'Est. Completion:'
+  },
+
+  // Available Platforms Section
+  'online_business.platforms.title': {
+    ms: '🛍️ Platform Yang Tersedia',
+    en: '🛍️ Available Platforms'
+  },
+  'online_business.platforms.subtitle': {
+    ms: 'Pilih platform yang paling sesuai untuk perniagaan anda',
+    en: 'Choose the platforms that work best for your business'
+  },
+  'online_business.platforms.all': {
+    ms: 'Semua Platform',
+    en: 'All Platforms'
+  },
+
+  // Platform Categories
+  'online_business.category.ecommerce': {
+    ms: 'Pasaran E-dagang',
+    en: 'E-commerce Marketplace'
+  },
+  'online_business.category.ecommercemarketplace': {
+    ms: 'Pasaran E-dagang',
+    en: 'E-commerce Marketplace'
+  },
+  'online_business.category.social': {
+    ms: 'Perdagangan Sosial',
+    en: 'Social Commerce'
+  },
+  'online_business.category.socialcommerce': {
+    ms: 'Perdagangan Sosial',
+    en: 'Social Commerce'
+  },
+  'online_business.category.food': {
+    ms: 'Penghantaran Makanan',
+    en: 'Food Delivery'
+  },
+  'online_business.category.fooddelivery': {
+    ms: 'Penghantaran Makanan',
+    en: 'Food Delivery'
+  },
+
+  // Platform Actions
+  'online_business.action.connect_now': {
+    ms: 'Sambung Sekarang',
+    en: 'Connect Now'
+  },
+  'online_business.action.view_analytics': {
+    ms: 'Lihat Analitik',
+    en: 'View Analytics'
+  },
+  'online_business.action.pending': {
+    ms: 'Tertunda',
+    en: 'Pending'
+  },
+
+  // Platform Features
+  'online_business.features.key_features': {
+    ms: 'Ciri Utama:',
+    en: 'Key Features:'
+  },
+  'online_business.features.more': {
+    ms: 'lagi',
+    en: 'more'
+  },
+
+  // Connection Modal
+  'online_business.modal.registering': {
+    ms: 'Mendaftarkan Permohonan Anda',
+    en: 'Registering Your Application'
+  },
+  'online_business.modal.verification_complete': {
+    ms: 'Pengesahan Akaun Selesai',
+    en: 'Account Verification Complete'
+  },
+  'online_business.modal.setting_up': {
+    ms: 'Kami sedang menyediakan pendaftaran akaun {platform} anda. Ini mungkin mengambil sedikit masa...',
+    en: 'We\'re setting up your {platform} account registration. This may take a moment...'
+  },
+  'online_business.modal.verification_done': {
+    ms: 'Pengesahan akaun {platform} anda telah selesai. Kami kini menunggu kelulusan platform.',
+    en: 'Your {platform} account verification is complete. We\'re now awaiting platform approval.'
+  },
+  'online_business.modal.whats_happening': {
+    ms: 'Apa yang sedang berlaku:',
+    en: 'What\'s happening:'
+  },
+  'online_business.modal.status_update': {
+    ms: 'Kemas kini status:',
+    en: 'Status update:'
+  },
+  'online_business.modal.creating_application': {
+    ms: 'Mencipta permohonan anda',
+    en: 'Creating your application'
+  },
+  'online_business.modal.preparing_documents': {
+    ms: 'Menyediakan dokumen yang diperlukan',
+    en: 'Preparing required documents'
+  },
+  'online_business.modal.setting_profile': {
+    ms: 'Menyediakan profil akaun anda',
+    en: 'Setting up your account profile'
+  },
+  'online_business.modal.verification_complete_check': {
+    ms: 'Pengesahan akaun selesai ✅',
+    en: 'Account verification complete ✅'
+  },
+  'online_business.modal.awaiting_approval': {
+    ms: 'Menunggu kelulusan platform (1-2 hari bekerja) ⏳',
+    en: 'Awaiting platform approval (1-2 business days) ⏳'
+  },
+  'online_business.modal.notification_when_approved': {
+    ms: 'Anda akan menerima notifikasi apabila diluluskan 🔔',
+    en: 'You\'ll receive a notification when approved 🔔'
+  },
+  'online_business.modal.close': {
+    ms: 'Tutup',
+    en: 'Close'
+  },
+
+  // Help Resources Section
+  'online_business.help.title': {
+    ms: '🤝 Kami Di Sini Untuk Membantu Anda Berjaya!',
+    en: '🤝 We\'re Here to Help You Succeed!'
+  },
+  'online_business.help.subtitle': {
+    ms: 'Jangan risau jika teknologi terasa menakutkan. Kami memudahkannya untuk semua orang.',
+    en: 'Don\'t worry if technology feels overwhelming. We make it simple for everyone.'
+  },
+
+  // Help Resources Items
+  'online_business.help.video_tutorials.title': {
+    ms: 'Tutorial Video (Bahasa Malaysia)',
+    en: 'Video Tutorials (Bahasa Malaysia)'
+  },
+  'online_business.help.video_tutorials.description': {
+    ms: 'Panduan video langkah demi langkah dalam bahasa pilihan anda',
+    en: 'Step-by-step video guides in your preferred language'
+  },
+  'online_business.help.video_tutorials.action': {
+    ms: 'Tonton Sekarang',
+    en: 'Watch Now'
+  },
+
+  'online_business.help.whatsapp_support.title': {
+    ms: 'Sokongan WhatsApp',
+    en: 'WhatsApp Support'
+  },
+  'online_business.help.whatsapp_support.description': {
+    ms: 'Dapatkan bantuan segera melalui WhatsApp dari pasukan mesra kami',
+    en: 'Get instant help via WhatsApp from our friendly team'
+  },
+  'online_business.help.whatsapp_support.action': {
+    ms: 'Chat Sekarang',
+    en: 'Chat Now'
+  },
+
+  'online_business.help.phone_support.title': {
+    ms: 'Sokongan Telefon',
+    en: 'Phone Support'
+  },
+  'online_business.help.phone_support.description': {
+    ms: 'Bercakap terus dengan pasukan sokongan kami dalam bahasa anda',
+    en: 'Speak directly with our support team in your language'
+  },
+  'online_business.help.phone_support.action': {
+    ms: 'Panggil Sekarang',
+    en: 'Call Now'
+  },
+
+  // Quick Start Guides Section
+  'online_business.guides.title': {
+    ms: '📚 Panduan Permulaan Pantas',
+    en: '📚 Quick Start Guides'
+  },
+  'online_business.guides.subtitle': {
+    ms: 'Panduan mudah untuk membantu anda memulakan perniagaan dalam talian',
+    en: 'Simple guides to help you get started with your online business'
+  },
+
+  // Quick Start Guide Items
+  'online_business.guides.photography.title': {
+    ms: 'Fotografi Produk Dipermudahkan',
+    en: 'Product Photography Made Simple'
+  },
+  'online_business.guides.photography.description': {
+    ms: 'Ambil gambar yang hebat hanya dengan telefon anda',
+    en: 'Take great photos with just your phone'
+  },
+  'online_business.guides.photography.difficulty': {
+    ms: 'Pemula',
+    en: 'Beginner'
+  },
+  'online_business.guides.photography.time': {
+    ms: '5 min bacaan',
+    en: '5 min read'
+  },
+
+  'online_business.guides.pricing.title': {
+    ms: 'Cara Menetapkan Harga Produk Anda',
+    en: 'How to Price Your Products'
+  },
+  'online_business.guides.pricing.description': {
+    ms: 'Formula mudah untuk menetapkan harga yang menguntungkan',
+    en: 'Simple formulas to set profitable prices'
+  },
+  'online_business.guides.pricing.difficulty': {
+    ms: 'Pemula',
+    en: 'Beginner'
+  },
+  'online_business.guides.pricing.time': {
+    ms: '3 min bacaan',
+    en: '3 min read'
+  },
+
+  'online_business.guides.shipping.title': {
+    ms: 'Panduan Penghantaran & Penyampaian',
+    en: 'Shipping & Delivery Guide'
+  },
+  'online_business.guides.shipping.description': {
+    ms: 'Semua yang perlu anda tahu tentang menghantar produk',
+    en: 'Everything you need to know about sending products'
+  },
+  'online_business.guides.shipping.difficulty': {
+    ms: 'Pemula',
+    en: 'Beginner'
+  },
+  'online_business.guides.shipping.time': {
+    ms: '4 min bacaan',
+    en: '4 min read'
+  },
+
+  'online_business.guides.read': {
+    ms: 'Baca',
+    en: 'Read'
+  },
+
+  // Platform Descriptions
+  'online_business.platform.shopee.description': {
+    ms: 'Platform e-dagang terkemuka di Asia Tenggara dengan berjuta-juta pembeli aktif',
+    en: 'Southeast Asia\'s leading e-commerce platform with millions of active buyers'
+  },
+  'online_business.platform.lazada.description': {
+    ms: 'Platform e-dagang perintis di Asia Tenggara dengan rangkaian logistik yang luas',
+    en: 'Pioneer e-commerce platform in Southeast Asia with extensive logistics network'
+  },
+  'online_business.platform.tiktok.description': {
+    ms: 'Platform perdagangan sosial yang disepadukan dengan pangkalan pengguna besar TikTok',
+    en: 'Social commerce platform integrated with TikTok\'s massive user base'
+  },
+  'online_business.platform.facebook.description': {
+    ms: 'Capai pelanggan melalui ciri membeli-belah Facebook dan Instagram',
+    en: 'Reach customers through Facebook and Instagram shopping features'
+  },
+  'online_business.platform.grab.description': {
+    ms: 'Platform penghantaran makanan yang menghubungkan restoran dengan pelanggan yang lapar',
+    en: 'Food delivery platform connecting restaurants with hungry customers'
+  },
+  'online_business.platform.foodpanda.description': {
+    ms: 'Perkhidmatan penghantaran makanan terkemuka dengan rangkaian restoran yang luas',
+    en: 'Leading food delivery service with extensive restaurant network'
+  },
+
+  // Platform Features
+  'online_business.feature.product_sync': {
+    ms: 'Segerak Produk',
+    en: 'Product Sync'
+  },
+  'online_business.feature.order_management': {
+    ms: 'Pengurusan Pesanan',
+    en: 'Order Management'
+  },
+  'online_business.feature.inventory_tracking': {
+    ms: 'Jejak Inventori',
+    en: 'Inventory Tracking'
+  },
+  'online_business.feature.analytics': {
+    ms: 'Analitik',
+    en: 'Analytics'
+  },
+  'online_business.feature.product_catalog': {
+    ms: 'Katalog Produk',
+    en: 'Product Catalog'
+  },
+  'online_business.feature.order_processing': {
+    ms: 'Pemprosesan Pesanan',
+    en: 'Order Processing'
+  },
+  'online_business.feature.payment_integration': {
+    ms: 'Integrasi Pembayaran',
+    en: 'Payment Integration'
+  },
+  'online_business.feature.shipping': {
+    ms: 'Penghantaran',
+    en: 'Shipping'
+  },
+  'online_business.feature.live_selling': {
+    ms: 'Jualan Langsung',
+    en: 'Live Selling'
+  },
+  'online_business.feature.video_commerce': {
+    ms: 'Perdagangan Video',
+    en: 'Video Commerce'
+  },
+  'online_business.feature.influencer_partnerships': {
+    ms: 'Perkongsian Influencer',
+    en: 'Influencer Partnerships'
+  },
+  'online_business.feature.social_analytics': {
+    ms: 'Analitik Sosial',
+    en: 'Social Analytics'
+  },
+  'online_business.feature.instagram_integration': {
+    ms: 'Integrasi Instagram',
+    en: 'Instagram Integration'
+  },
+  'online_business.feature.facebook_ads': {
+    ms: 'Iklan Facebook',
+    en: 'Facebook Ads'
+  },
+  'online_business.feature.messenger_commerce': {
+    ms: 'Perdagangan Messenger',
+    en: 'Messenger Commerce'
+  },
+  'online_business.feature.catalog_sync': {
+    ms: 'Segerak Katalog',
+    en: 'Catalog Sync'
+  },
+  'online_business.feature.menu_management': {
+    ms: 'Pengurusan Menu',
+    en: 'Menu Management'
+  },
+  'online_business.feature.order_tracking': {
+    ms: 'Jejak Pesanan',
+    en: 'Order Tracking'
+  },
+  'online_business.feature.delivery_analytics': {
+    ms: 'Analitik Penghantaran',
+    en: 'Delivery Analytics'
+  },
+  'online_business.feature.customer_reviews': {
+    ms: 'Ulasan Pelanggan',
+    en: 'Customer Reviews'
+  },
+  'online_business.feature.restaurant_dashboard': {
+    ms: 'Papan Pemuka Restoran',
+    en: 'Restaurant Dashboard'
+  },
+  'online_business.feature.realtime_orders': {
+    ms: 'Pesanan Masa Nyata',
+    en: 'Real-time Orders'
+  },
+  'online_business.feature.real_time_orders': {
+    ms: 'Pesanan Masa Nyata',
+    en: 'Real-time Orders'
+  },
+  'online_business.feature.performance_metrics': {
+    ms: 'Metrik Prestasi',
+    en: 'Performance Metrics'
+  },
+  'online_business.feature.promotion_tools': {
+    ms: 'Alat Promosi',
+    en: 'Promotion Tools'
+  },
+
+  // Setup Time and Difficulty
+  'online_business.difficulty.easy': {
+    ms: 'Mudah',
+    en: 'Easy'
+  },
+  'online_business.difficulty.medium': {
+    ms: 'Sederhana',
+    en: 'Medium'
+  },
+  'online_business.difficulty.advanced': {
+    ms: 'Lanjutan',
+    en: 'Advanced'
+  },
+  'online_business.setup_time.1_2_days': {
+    ms: '1-2 hari',
+    en: '1-2 days'
+  },
+  'online_business.setup_time.2_5_days': {
+    ms: '2-5 hari',
+    en: '2-5 days'
+  },
+  'online_business.setup_time.1_3_days': {
+    ms: '1-3 hari',
+    en: '1-3 days'
+  },
+
+  // Verification Section
+  'online_business.verification.in_progress': {
+    ms: 'Pengesahan akaun sedang dijalankan',
+    en: 'Account verification in progress'
+  },
+  'online_business.verification.approval_process': {
+    ms: 'Proses Kelulusan Platform',
+    en: 'Platform Approval Process'
+  },
+  'online_business.verification.account_review': {
+    ms: 'Butiran akaun sedang dikaji semula',
+    en: 'Account details under review'
+  },
+  'online_business.verification.business_pending': {
+    ms: 'Pengesahan perniagaan belum selesai',
+    en: 'Business verification pending'
+  },
+  'online_business.verification.compliance_check': {
+    ms: 'Pemeriksaan pematuhan sedang dijalankan',
+    en: 'Compliance check in progress'
+  },
+  'online_business.verification.current_status': {
+    ms: 'Status Semasa',
+    en: 'Current Status'
+  },
+  'online_business.verification.pending': {
+    ms: 'Belum Selesai',
+    en: 'Pending'
+  },
+  'online_business.verification.progress': {
+    ms: 'Kemajuan',
+    en: 'Progress'
+  },
+  'online_business.verification.percent_complete': {
+    ms: '40% selesai',
+    en: '40% complete'
+  },
+  'online_business.verification.started': {
+    ms: 'Dimulakan',
+    en: 'Started'
+  },
+  'online_business.verification.est_completion': {
+    ms: 'Anggaran Siap',
+    en: 'Est. Completion'
+  },
+
   // Language identifier
   'language': {
     ms: 'ms',

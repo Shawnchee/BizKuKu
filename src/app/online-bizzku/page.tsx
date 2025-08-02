@@ -1,19 +1,22 @@
 "use client"
 
-import { motion } from "framer-motion" 
+import { motion } from "framer-motion"
 import BusinessDashboard from "@/components/online-bizz/BusinessDashboard"
 import BusinessResources from "@/components/online-bizz/BusinessResources"
-import { 
-  platforms, 
-  connectedAccounts, 
-  consolidatedStats, 
-  helpResources, 
-  quickStartGuides 
+import { useLanguage } from "@/contexts/LanguageContext"
+import {
+  platforms,
+  connectedAccounts,
+  consolidatedStats,
+  helpResources,
+  quickStartGuides
 } from "@/lib/online-bizz-data"
 import GradientBackground from "@/components/backgrounds/GradientBackground"
 
 
 export default function OnlineBizzkuPage() {
+  const { t } = useLanguage()
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden py-10">
       <GradientBackground />
@@ -40,16 +43,16 @@ export default function OnlineBizzkuPage() {
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
                 <span className="bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
-                  Online BizzKu
+                  {t('online_business.title')}
                 </span>
               </motion.h1>
-              <motion.p 
+              <motion.p
                 className="text-lg text-gray-700 mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
-                Connect and manage all your online business platforms in one place
+                {t('online_business.subtitle')}
               </motion.p>
             </div>
           </div>
