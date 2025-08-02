@@ -28,7 +28,7 @@ const translations = {
     en: 'Story'
   },
   'nav.application-status': {
-    ms: 'Status Permohonan',
+    ms: 'Permohonan',
     en: 'Application Status'
   },
   'nav.online-bizzku': {
@@ -36,11 +36,11 @@ const translations = {
     en: 'Online Business'
   },
   'nav.mini-services': {
-    ms: 'Alat Perniagaan',
+    ms: 'Perkhidmatan Sampingan',
     en: 'Business Toolkit'
   },
   'nav.recommendation': {
-    ms: 'Cadangan Pinjaman',
+    ms: 'Pinjaman',
     en: 'Funding Recommendation'
   },
   'nav.login': {
@@ -1282,8 +1282,8 @@ const translations = {
     en: 'Hi! 👋 How can I help you with your business support today?'
   },
   'chatbot.placeholder': {
-    ms: 'Tanya BizMate...',
-    en: 'Ask BizMate...'
+    ms: 'Tanya Sesuatu...',
+    en: 'Ask Anything...'
   },
   'chatbot.error': {
     ms: 'Maaf, ada masalah. Sila cuba lagi.',

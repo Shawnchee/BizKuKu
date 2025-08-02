@@ -96,6 +96,7 @@ export const AVATAR_SUPPORTED_REGIONS = [
 
 export const AVATAR_CONFIGS: AvatarConfig[] = [
   // Based on docs/AZURE_AVATAR_SETUP.md
+  { character: 'meg', style: 'business', voice: 'en-US-AvaMultilingualNeural', name: 'Meg Business', background: '#F5F5F5' },
   { character: 'lisa', style: 'casual-sitting', voice: 'en-US-AvaMultilingualNeural', name: 'Lisa Casual', background: '#FFFFFF' },
   { character: 'lisa', style: 'graceful-sitting', voice: 'en-US-AvaMultilingualNeural', name: 'Lisa Graceful', background: '#FFFFFF' },
   { character: 'anna', style: 'casual-sitting', voice: 'en-US-AriaNeural', name: 'Anna Casual', background: '#FFFFFF' },

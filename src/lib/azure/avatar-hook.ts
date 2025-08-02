@@ -323,7 +323,16 @@ export function useAzureAvatar(options: UseAzureAvatarOptions = {}) {
       const success = await connectionManagerRef.current.speakText(text)
       
       if (success) {
-        // Process queue after current speech
+        // Calculate estimated speaking duration (roughly 150 words per minute)
+        const wordCount = text.split(' ').length
+        const estimatedDuration = (wordCount / 150) * 60 * 1000 // Convert to milliseconds
+        const minDuration = 2000 // Minimum 2 seconds
+        const maxDuration = 15000 // Maximum 15 seconds
+        const speakingDuration = Math.max(minDuration, Math.min(maxDuration, estimatedDuration))
+        
+        console.log(`🗣️ Speaking for approximately ${speakingDuration}ms (${wordCount} words)`)
+        
+        // Process queue after estimated speaking duration
         setTimeout(() => {
           actions.stopSpeaking()
           if (state.spokenTextQueue.length > 0) {
@@ -331,7 +340,7 @@ export function useAzureAvatar(options: UseAzureAvatarOptions = {}) {
             actions.removeFromQueue()
             speakText(nextText)
           }
-        }, 100)
+        }, speakingDuration)
       } else {
         actions.stopSpeaking()
       }

@@ -2,13 +2,23 @@
 
 import { useState } from 'react'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { 
-  FileText, Receipt, Calculator, HelpCircle, 
+import HoverCard from '@/components/ui/HoverCard'
+import Iridescence from '@/components/backgrounds/Iridescence'
+import {
+  FileText, Receipt, Calculator, HelpCircle,
   ShoppingCart, Package, Gift, Truck,
   Globe, Calendar, Clock,
   FileCheck, Shield,
-  X, ChevronRight, Plus
+  X, ChevronRight, Plus,
+  Heart, TrendingUp
 } from 'lucide-react'
+
+interface PreviewItem {
+  type: 'image' | 'text' | 'file' | 'feature'
+  label: string
+  content: string | React.ReactNode
+  icon?: React.ComponentType<any>
+}
 
 interface Service {
   id: string
@@ -20,6 +30,10 @@ interface Service {
   category: string
   color: string
   bgColor: string
+  outputs: string[]
+  previews: PreviewItem[]
+  priority?: 'high' | 'medium' | 'low'
+  isPopular?: boolean
   onboardingSteps: {
     title: string
     titleMs: string
@@ -31,19 +45,41 @@ export default function MiniServices() {
   const { t } = useLanguage()
   const [selectedService, setSelectedService] = useState<string | null>(null)
   const [currentStep, setCurrentStep] = useState(0)
+  const [favorites, setFavorites] = useState<Set<string>>(new Set())
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
 
   const services: Service[] = [
-    // Financial & Compliance (4 services)
     {
       id: 'e-invoicing',
       title: 'E-Invoicing System',
       titleMs: 'Sistem E-Invois',
-      description: 'Generate MyInvois compliant digital invoices',
-      descriptionMs: 'Jana invois digital yang mematuhi MyInvois',
+      description: 'Generate MyInvois compliant digital invoices • PDF output',
+      descriptionMs: 'Jana invois digital yang mematuhi MyInvois • Output PDF',
       icon: FileText,
       category: 'financial',
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
+      priority: 'high',
+      isPopular: true,
+      outputs: ['PDF Invoice', 'Email Delivery'],
+      previews: [
+        {
+          type: 'text',
+          label: 'Sample Invoice Header',
+          content: 'INVOICE #INV-2024-001\nDate: 15 Jan 2024\nTo: ABC Sdn Bhd\nSSM: 123456-A\nGST ID: 000123456789',
+          icon: FileText
+        },
+        {
+          type: 'feature',
+          label: 'MyInvois Compliance',
+          content: '✓ LHDN approved format\n✓ Digital signature\n✓ QR code verification\n✓ Auto GST calculation'
+        },
+        {
+          type: 'file',
+          label: 'Export Formats',
+          content: 'invoice_001.pdf'
+        }
+      ],
       onboardingSteps: [
         {
           title: 'Business Details',
@@ -82,12 +118,28 @@ export default function MiniServices() {
       id: 'digital-receipt',
       title: 'Digital Receipt Generator',
       titleMs: 'Penjana Resit Digital',
-      description: 'Create professional receipts with GST/SST',
-      descriptionMs: 'Cipta resit profesional dengan GST/SST',
+      description: 'Create professional receipts with GST/SST • PDF & print ready',
+      descriptionMs: 'Cipta resit profesional dengan GST/SST • PDF & siap cetak',
       icon: Receipt,
       category: 'financial',
       color: 'from-green-500 to-green-600',
       bgColor: 'bg-green-50',
+      priority: 'high',
+      isPopular: true,
+      outputs: ['PDF Receipt', 'Print Format', 'Email Copy'],
+      previews: [
+        {
+          type: 'text',
+          label: 'Sample Receipt',
+          content: 'RECEIPT #R-2024-001\nCafe Delicious\nNasi Lemak x2    RM 10.00\nTeh Tarik x1     RM  3.50\nSubtotal:        RM 13.50\nGST (6%):        RM  0.81\nTotal:           RM 14.31',
+          icon: Receipt
+        },
+        {
+          type: 'feature',
+          label: 'Features',
+          content: '✓ Auto GST/SST calculation\n✓ Professional templates\n✓ Instant PDF generation\n✓ Email delivery'
+        }
+      ],
       onboardingSteps: [
         {
           title: 'Receipt Template',
@@ -116,12 +168,26 @@ export default function MiniServices() {
       id: 'tax-calculator',
       title: 'Tax Calculator',
       titleMs: 'Kalkulator Cukai',
-      description: 'Calculate personal and business tax',
-      descriptionMs: 'Kira cukai peribadi dan perniagaan',
+      description: 'Calculate personal and business tax • PDF summary report',
+      descriptionMs: 'Kira cukai peribadi dan perniagaan • Laporan ringkasan PDF',
       icon: Calculator,
       category: 'financial',
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-purple-50',
+      outputs: ['Tax Summary PDF', 'Calculation Breakdown', 'Filing Checklist'],
+      previews: [
+        {
+          type: 'text',
+          label: 'Tax Calculation Sample',
+          content: 'Annual Income: RM 60,000\nPersonal Relief: RM 9,000\nTaxable Income: RM 51,000\nTax Payable: RM 1,350\nEffective Rate: 2.25%',
+          icon: Calculator
+        },
+        {
+          type: 'feature',
+          label: 'Calculation Features',
+          content: '✓ Personal & business tax\n✓ Relief optimization\n✓ Monthly estimates\n✓ Filing reminders'
+        }
+      ],
       onboardingSteps: [
         {
           title: 'Income Details',
@@ -146,12 +212,26 @@ export default function MiniServices() {
       id: 'gst-helper',
       title: 'GST/SST Helper',
       titleMs: 'Pembantu GST/SST',
-      description: 'GST/SST calculation and filing assistance',
-      descriptionMs: 'Bantuan pengiraan dan pemfailan GST/SST',
+      description: 'GST/SST calculation and filing assistance • Auto reminders',
+      descriptionMs: 'Bantuan pengiraan dan pemfailan GST/SST • Peringatan auto',
       icon: HelpCircle,
       category: 'financial',
       color: 'from-orange-500 to-orange-600',
       bgColor: 'bg-orange-50',
+      outputs: ['Filing Forms', 'Calculation Sheet', 'Email Reminders'],
+      previews: [
+        {
+          type: 'text',
+          label: 'GST Return Sample',
+          content: 'GST-03 Return\nPeriod: Jan-Mar 2024\nOutput Tax: RM 1,200\nInput Tax: RM 800\nNet GST: RM 400\nDue Date: 30 Apr 2024',
+          icon: HelpCircle
+        },
+        {
+          type: 'feature',
+          label: 'Helper Features',
+          content: '✓ Auto calculations\n✓ Filing reminders\n✓ Form pre-filling\n✓ Deadline tracking'
+        }
+      ],
       onboardingSteps: [
         {
           title: 'Tax Settings',
@@ -173,17 +253,25 @@ export default function MiniServices() {
       ]
     },
 
-    // Point of Sale & Operations (4 services)
     {
       id: 'mobile-pos',
       title: 'Mobile POS App',
       titleMs: 'Aplikasi POS Mudah Alih',
-      description: 'Turn your phone into a cash register',
-      descriptionMs: 'Tukar telefon anda jadi mesin kira-kira',
+      description: 'Turn your phone into a cash register • Real-time sales tracking',
+      descriptionMs: 'Tukar telefon anda jadi mesin kira-kira • Jejak jualan masa nyata',
       icon: ShoppingCart,
       category: 'operations',
       color: 'from-indigo-500 to-indigo-600',
       bgColor: 'bg-indigo-50',
+      outputs: ['Sales Reports', 'Receipt Prints', 'Daily Summary'],
+      previews: [
+        {
+          type: 'text',
+          label: 'POS Interface',
+          content: 'Product: Nasi Lemak\nPrice: RM 5.00\nQty: 2\nSubtotal: RM 10.00\nPayment: Cash/QR',
+          icon: ShoppingCart
+        }
+      ],
       onboardingSteps: [
         {
           title: 'Product Catalog',
@@ -234,6 +322,8 @@ export default function MiniServices() {
       category: 'operations',
       color: 'from-teal-500 to-teal-600',
       bgColor: 'bg-teal-50',
+      outputs: ['Stock Reports', 'Alert Notifications'],
+      previews: [{ type: 'text', label: 'Sample', content: 'Stock tracking preview', icon: Package }],
       onboardingSteps: [
         {
           title: 'Stock Entry',
@@ -260,6 +350,8 @@ export default function MiniServices() {
       category: 'operations',
       color: 'from-pink-500 to-pink-600',
       bgColor: 'bg-pink-50',
+      outputs: ['Digital Cards', 'Customer Database'],
+      previews: [{ type: 'text', label: 'Sample', content: 'Loyalty program preview', icon: Gift }],
       onboardingSteps: [
         {
           title: 'Reward Structure',
@@ -288,6 +380,8 @@ export default function MiniServices() {
       category: 'operations',
       color: 'from-yellow-500 to-yellow-600',
       bgColor: 'bg-yellow-50',
+      outputs: ['Integration Setup', 'Tracking Links'],
+      previews: [{ type: 'text', label: 'Sample', content: 'Delivery integration preview', icon: Truck }],
       onboardingSteps: [
         {
           title: 'Delivery Partners',
@@ -320,6 +414,8 @@ export default function MiniServices() {
       category: 'digital',
       color: 'from-cyan-500 to-cyan-600',
       bgColor: 'bg-cyan-50',
+      outputs: ['Website URL', 'Mobile Responsive'],
+      previews: [{ type: 'text', label: 'Sample', content: 'Website preview', icon: Globe }],
       onboardingSteps: [
         {
           title: 'Template Selection',
@@ -351,6 +447,8 @@ export default function MiniServices() {
       category: 'digital',
       color: 'from-violet-500 to-violet-600',
       bgColor: 'bg-violet-50',
+      outputs: ['Booking Confirmations', 'Calendar Sync'],
+      previews: [{ type: 'text', label: 'Sample', content: 'Booking system preview', icon: Calendar }],
       onboardingSteps: [
         {
           title: 'Service Setup',
@@ -382,6 +480,8 @@ export default function MiniServices() {
       category: 'digital',
       color: 'from-rose-500 to-rose-600',
       bgColor: 'bg-rose-50',
+      outputs: ['Schedule Reports', 'Staff Calendars'],
+      previews: [{ type: 'text', label: 'Sample', content: 'Appointment scheduler preview', icon: Clock }],
       onboardingSteps: [
         {
           title: 'Staff Availability',
@@ -417,6 +517,8 @@ export default function MiniServices() {
       category: 'professional',
       color: 'from-emerald-500 to-emerald-600',
       bgColor: 'bg-emerald-50',
+      outputs: ['Filed Returns', 'Confirmation Receipt'],
+      previews: [{ type: 'text', label: 'Sample', content: 'LHDN filing preview', icon: FileCheck }],
       onboardingSteps: [
         {
           title: 'Document Checklist',
@@ -454,6 +556,8 @@ export default function MiniServices() {
       category: 'professional',
       color: 'from-slate-500 to-slate-600',
       bgColor: 'bg-slate-50',
+      outputs: ['Quote Comparisons', 'Policy Documents'],
+      previews: [{ type: 'text', label: 'Sample', content: 'Insurance quotes preview', icon: Shield }],
       onboardingSteps: [
         {
           title: 'Business Type',
@@ -492,6 +596,26 @@ export default function MiniServices() {
     setCurrentStep(0)
   }
 
+  const toggleFavorite = (serviceId: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    setFavorites(prev => {
+      const newFavorites = new Set(prev)
+      if (newFavorites.has(serviceId)) {
+        newFavorites.delete(serviceId)
+      } else {
+        newFavorites.add(serviceId)
+      }
+      return newFavorites
+    })
+  }
+
+  const getPriorityBadge = (priority?: string, isPopular?: boolean) => {
+    if (priority === 'high' || isPopular) {
+      return { label: 'Recommended', color: 'bg-blue-100 text-blue-700', icon: TrendingUp }
+    }
+    return null
+  }
+
   const handleNextStep = () => {
     if (selectedServiceData && currentStep < selectedServiceData.onboardingSteps.length - 1) {
       setCurrentStep(currentStep + 1)
@@ -505,54 +629,113 @@ export default function MiniServices() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="relative min-h-screen overflow-hidden">
+      <Iridescence
+        color={[1, 1, 1]}
+        mouseReact={true}
+        amplitude={0.15}
+        speed={0.8}
+        className="absolute inset-0 z-0"
+      />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
             {t('language') === 'ms' ? 'Perkhidmatan Mini' : 'Mini Services'}
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            {t('language') === 'ms' 
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-6">
+            {t('language') === 'ms'
               ? 'Akses alat dan perkhidmatan penting untuk menjalankan perniagaan anda dengan lebih cekap'
               : 'Access essential tools and services to run your business more efficiently'
             }
           </p>
+
+          <div className="flex justify-center items-center gap-4 mb-8">
+            <button
+              onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                showFavoritesOnly
+                  ? 'bg-red-100 text-red-700 border border-red-200'
+                  : 'bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200'
+              }`}
+            >
+              {showFavoritesOnly ? 'Show All' : 'Show Favorites'}
+              {favorites.size > 0 && (
+                <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
+                  {favorites.size}
+                </span>
+              )}
+            </button>
+
+
+          </div>
         </div>
 
-        {/* Services Grid */}
+ 
         {Object.entries(categories).map(([categoryKey, category]) => (
           <div key={categoryKey} className="mb-12">
             <h2 className={`text-2xl font-bold ${category.color} mb-6`}>
               {t('language') === 'ms' ? category.nameMs : category.name}
-              <span className="text-sm text-gray-500 ml-2">
-                ({services.filter(s => s.category === categoryKey).length} services)
-              </span>
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {services
                 .filter(service => service.category === categoryKey)
+                .filter(service => !showFavoritesOnly || favorites.has(service.id))
                 .map((service) => {
                   const IconComponent = service.icon
                   return (
-                    <div
+                    <HoverCard
                       key={service.id}
-                      onClick={() => handleServiceClick(service.id)}
-                      className={`p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 hover:shadow-xl ${service.bgColor} border-gray-200 hover:border-opacity-50`}
+                      title={t('language') === 'ms' ? service.titleMs : service.title}
+                      description={t('language') === 'ms' ? service.descriptionMs : service.description}
+                      outputs={service.outputs}
+                      previews={service.previews}
                     >
-                      <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center shadow-lg`}>
-                        <IconComponent className="w-8 h-8 text-white" />
+                      <div
+                        onClick={() => handleServiceClick(service.id)}
+                        className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 hover:shadow-xl ${service.bgColor} bg-white/90 backdrop-blur-sm border-white/30 hover:bg-white/95 hover:border-white/50 ${service.priority === 'high' ? 'ring-2 ring-blue-300/50' : ''}`}
+                      >
+                        {/* Recommended Badge */}
+                        {(service.priority === 'high' || service.isPopular) && (
+                          <div className="absolute top-3 left-3">
+                            {(() => {
+                              const badge = getPriorityBadge(service.priority, service.isPopular)
+                              if (!badge) return null
+                              const BadgeIcon = badge.icon
+                              return (
+                                <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${badge.color}`}>
+                                  <BadgeIcon className="w-3 h-3" />
+                                  {badge.label}
+                                </div>
+                              )
+                            })()}
+                          </div>
+                        )}
+
+                        {/* Favorite Button */}
+                        <button
+                          onClick={(e) => toggleFavorite(service.id, e)}
+                          className="absolute bottom-3 right-3 p-2 rounded-full hover:bg-white hover:bg-opacity-50 transition-colors"
+                        >
+                          <Heart
+                            className={`w-4 h-4 ${favorites.has(service.id) ? 'fill-red-500 text-red-500' : 'text-gray-400'}`}
+                          />
+                        </button>
+
+                        <div className={`w-16 h-16 mx-auto ${(service.priority === 'high' || service.isPopular) ? 'mt-8' : 'mt-4'} mb-4 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center shadow-lg`}>
+                          <IconComponent className="w-8 h-8 text-white" />
+                        </div>
+
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">
+                          {t('language') === 'ms' ? service.titleMs : service.title}
+                        </h3>
+
+                        <p className="text-sm text-gray-600 text-center leading-relaxed">
+                          {t('language') === 'ms' ? service.descriptionMs : service.description}
+                        </p>
                       </div>
-                      
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">
-                        {t('language') === 'ms' ? service.titleMs : service.title}
-                      </h3>
-                      
-                      <p className="text-sm text-gray-600 text-center leading-relaxed">
-                        {t('language') === 'ms' ? service.descriptionMs : service.description}
-                      </p>
-                    </div>
+                    </HoverCard>
                   )
                 })}
             </div>
@@ -560,12 +743,11 @@ export default function MiniServices() {
         ))}
       </div>
 
-      {/* Service Modal */}
       {selectedService && selectedServiceData && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white/95 backdrop-blur-md rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-white/20">
             {/* Modal Header */}
-            <div className={`${selectedServiceData.bgColor} p-6 border-b`}>
+            <div className={`${selectedServiceData.bgColor} bg-white/80 backdrop-blur-sm p-6 border-b border-white/20`}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${selectedServiceData.color} flex items-center justify-center`}>
@@ -589,7 +771,6 @@ export default function MiniServices() {
               </div>
             </div>
 
-            {/* Modal Content */}
             <div className="p-6">
               <h4 className="text-lg font-semibold mb-4">
                 {t('language') === 'ms' 
@@ -602,7 +783,7 @@ export default function MiniServices() {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-6 border-t bg-gray-50 flex justify-between">
+            <div className="p-6 border-t border-white/20 bg-white/60 backdrop-blur-sm flex justify-between">
               <button
                 onClick={handlePrevStep}
                 disabled={currentStep === 0}

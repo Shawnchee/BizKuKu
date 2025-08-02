@@ -70,6 +70,21 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
     return AvatarErrorHandler.formatUserFriendlyMessage(enhancedError, language)
   }, [enhancedError, language])
 
+  // Create an enhanced stopSpeaking handler that ensures state is updated immediately
+  const handleStopSpeaking = React.useCallback(async () => {
+    try {
+      // Call the original stopSpeaking function
+      await stopSpeaking()
+      
+      // Force update any parent components that might be listening to speaking state
+      if (callbacks.onSpeechEnd) {
+        callbacks.onSpeechEnd()
+      }
+    } catch (error) {
+      console.error('Error in handleStopSpeaking:', error)
+    }
+  }, [stopSpeaking, callbacks])
+
   // Get configuration info for debugging
   const configInfo = React.useMemo(() => {
     if (process.env.NODE_ENV === 'development') {
@@ -179,10 +194,10 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
         {!isLoading && avatarReady && (
           <video
             ref={videoRef}
-            className={`w-80 h-80 object-cover shadow-xl transform transition-all duration-300 ${
-              isSpeaking ? 'scale-105 shadow-blue-500/50' : 'scale-100'
+            className={`w-160 h-120 ml-4 object-cover rounded-xl shadow-xl transform transition-all duration-300 ${
+              isSpeaking ? 'scale-103 shadow-blue-400/40' : 'scale-100'
             }`}
-            muted={true}
+            muted={false}
             autoPlay
             playsInline
             onLoadStart={() => {
@@ -252,10 +267,11 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
             }}
             onError={(e) => {
               console.error('📺 Video error:', e)
+              const videoError = (e.target as HTMLVideoElement)?.error;
               console.error('📺 Video error details:', {
-                error: e.target?.error,
-                code: e.target?.error?.code,
-                message: e.target?.error?.message,
+                error: videoError,
+                code: videoError?.code,
+                message: videoError?.message,
                 srcObject: !!videoRef.current?.srcObject,
                 readyState: videoRef.current?.readyState,
                 networkState: videoRef.current?.networkState
@@ -282,7 +298,7 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
           </div>
         )}
 
-        {/* Audio Blocked State - Minimal */}
+        {/* Audio Blocked State - Minimal
         {isAudioBlocked && (
           <div className="flex flex-col items-center justify-center p-8 text-center">
             <VolumeX className="w-8 h-8 text-red-600 mb-2" />
@@ -293,70 +309,18 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
               {language === 'ms' ? 'Klik mikrofon untuk mengaktifkan' : 'Click the mic to enable'}
             </p>
           </div>
-        )}
+        )} */}
 
-        {/* Hidden audio element */}
-        <audio ref={audioRef} style={{ display: 'none' }} />
+        {/* Audio element for speech output */}
+        <audio 
+          ref={audioRef} 
+          style={{ display: 'none' }} 
+          autoPlay
+          controls={false}
+          preload="auto"
+          muted={false}
+        />
       </div>
-
-      {/* Control Buttons */}
-      {showControls && avatarReady && sessionActive && (
-        <div className="flex gap-3 mb-4">
-          {/* Voice Control Button */}
-          <button
-            onClick={isListening ? stopListening : startListening}
-            disabled={isSpeaking && !isAudioBlocked}
-            className={`p-4 rounded-full transition-all duration-300 ${
-              isAudioBlocked
-                ? 'bg-yellow-500 hover:bg-yellow-600 animate-pulse'
-                : isListening
-                ? 'bg-red-500 hover:bg-red-600 animate-pulse'
-                : 'bg-green-500 hover:bg-green-600'
-            } text-white shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed`}
-            title={
-              isAudioBlocked
-                ? (language === 'ms' ? 'Aktifkan audio' : 'Enable audio')
-                : isListening
-                ? (language === 'ms' ? 'Hentikan mendengar' : 'Stop listening')
-                : (language === 'ms' ? 'Tekan untuk bercakap' : 'Press to speak')
-            }
-          >
-            {isListening ? (
-              <MicOff className="w-6 h-6" />
-            ) : (
-              <Mic className="w-6 h-6" />
-            )}
-          </button>
-
-          {/* Stop Speaking Button */}
-          {isSpeaking && (
-            <button
-              onClick={stopSpeaking}
-              className="p-4 rounded-full bg-orange-500 hover:bg-orange-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              title={language === 'ms' ? 'Hentikan bercakap' : 'Stop speaking'}
-            >
-              <VolumeX className="w-6 h-6" />
-            </button>
-          )}
-
-          {/* Continuous Conversation Toggle */}
-          <button
-            onClick={toggleContinuousConversation}
-            className={`p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
-              continuousConversation 
-                ? 'bg-purple-500 hover:bg-purple-600 text-white' 
-                : 'bg-gray-300 hover:bg-gray-400 text-gray-700'
-            }`}
-            title={
-              continuousConversation
-                ? (language === 'ms' ? 'Matikan mod berterusan' : 'Disable continuous mode')
-                : (language === 'ms' ? 'Aktifkan mod berterusan' : 'Enable continuous mode')
-            }
-          >
-            <Settings className="w-5 h-5" />
-          </button>
-        </div>
-      )}
 
       {/* Error Display */}
       {error && hasValidCredentials && (
@@ -390,26 +354,11 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
               </button>
             )}
           </div>
-          
-          {/* Debug info in development */}
-          {process.env.NODE_ENV === 'development' && enhancedError && (
-            <details className="mt-2">
-              <summary className="text-xs text-gray-500 cursor-pointer">
-                Debug Info
-              </summary>
-              <div className="mt-1 text-xs text-gray-600 bg-gray-50 p-2 rounded">
-                <div>Code: {enhancedError.code}</div>
-                <div>Category: {enhancedError.category}</div>
-                <div>Severity: {enhancedError.severity}</div>
-                <div>Recoverable: {enhancedError.recoverable ? 'Yes' : 'No'}</div>
-              </div>
-            </details>
-          )}
         </div>
       )}
 
-      {/* Status Indicator */}
-      {showStatus && (
+     
+      {/* {showStatus && (
         <div className="text-center">
           <div className="flex items-center justify-center gap-2">
             <div className={`w-2 h-2 rounded-full ${
@@ -434,9 +383,9 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
                 : (language === 'ms' ? 'Menunggu avatar' : 'Waiting for avatar')
               }
             </span>
-          </div>
+          </div> */}
           
-          {/* Enhanced status details */}
+          {/* Enhanced status details
           {avatarReady && (
             <div className="mt-1 text-xs text-gray-500">
               {currentAvatarConfig?.name && (
@@ -449,9 +398,9 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
                 <span className="ml-2 text-purple-600">🔄 Continuous</span>
               )}
             </div>
-          )}
+          )} */}
           
-          {/* Development debug info */}
+          {/* Development debug info
           {process.env.NODE_ENV === 'development' && (
             <div className="mt-2 text-xs text-gray-500 space-y-1">
               <div>
@@ -486,9 +435,69 @@ const AzureAvatarV2: React.FC<AzureAvatarV2Props> = memo(({
                 </details>
               )}
             </div>
-          )}
+          )} */}
+        {/* </div>
+      )} */}
+
+      {/* Control Buttons */}
+      {showControls && avatarReady && sessionActive && (
+        <div className="flex gap-3 mb-4 mt-6">
+          {/* Voice Control Button
+          <button
+            onClick={isListening ? stopListening : startListening}
+            disabled={isSpeaking && !isAudioBlocked}
+            className={`p-4 rounded-full transition-all duration-300 ${
+              isAudioBlocked
+                ? 'bg-yellow-500 hover:bg-yellow-600 animate-pulse'
+                : isListening
+                ? 'bg-red-500 hover:bg-red-600 animate-pulse'
+                : 'bg-green-500 hover:bg-green-600'
+            } text-white shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed`}
+            title={
+              isAudioBlocked
+                ? (language === 'ms' ? 'Aktifkan audio' : 'Enable audio')
+                : isListening
+                ? (language === 'ms' ? 'Hentikan mendengar' : 'Stop listening')
+                : (language === 'ms' ? 'Tekan untuk bercakap' : 'Press to speak')
+            }
+          >
+            {isListening ? (
+              <MicOff className="w-6 h-6" />
+            ) : (
+              <Mic className="w-6 h-6" />
+            )}
+          </button> */}
+
+          {/* Stop Speaking Button */}
+          {/* {isSpeaking && (
+            <button
+              onClick={handleStopSpeaking}
+              className="p-4 rounded-full bg-orange-500 hover:bg-orange-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              title={language === 'ms' ? 'Hentikan bercakap' : 'Stop speaking'}
+            >
+              <VolumeX className="w-6 h-6" />
+            </button>
+          )} */}
+
+          {/* Continuous Conversation Toggle
+          <button
+            onClick={toggleContinuousConversation}
+            className={`p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+              continuousConversation 
+                ? 'bg-purple-500 hover:bg-purple-600 text-white' 
+                : 'bg-gray-300 hover:bg-gray-400 text-gray-700'
+            }`}
+            title={
+              continuousConversation
+                ? (language === 'ms' ? 'Matikan mod berterusan' : 'Disable continuous mode')
+                : (language === 'ms' ? 'Aktifkan mod berterusan' : 'Enable continuous mode')
+            }
+          >
+            <Settings className="w-5 h-5" />
+          </button> */}
         </div>
       )}
+
     </div>
   )
 })

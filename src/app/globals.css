@@ -279,3 +279,22 @@ body.chatbot-expanded {
     transition: margin-right 0.3s;
   }
 }
+
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background: linear-gradient(
+    120deg,
+    #ffffff,
+    #f0f0ff,
+    #fef0ff,
+    #e6f0ff
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 30s ease infinite;
+}
