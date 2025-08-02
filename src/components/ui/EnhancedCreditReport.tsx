@@ -40,6 +40,103 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'overview' | 'factors' | 'actions'>('overview');
   const [selectedFactor, setSelectedFactor] = useState<string | null>(null);
+  const [showRecommendations, setShowRecommendations] = useState(false);
+
+  // Translation mapping functions for business health data
+  const getStrengthTranslation = (strength: string): string => {
+    const strengthMap: { [key: string]: string } = {
+      'Excellent payment history with no late payments': 'business_health.strength.payment_history',
+      'Long-established credit history (8+ years)': 'business_health.strength.credit_history',
+      'Diverse credit mix across multiple account types': 'business_health.strength.credit_mix',
+      'Strong relationship with financial institutions': 'business_health.strength.financial_relationship'
+    };
+    return strengthMap[strength] ? t(strengthMap[strength]) : strength;
+  };
+
+  const getActionTranslation = (action: string): string => {
+    const actionMap: { [key: string]: string } = {
+      'Reduce total debt balances to improve amounts owed ratio': 'business_health.action.reduce_debt_balances',
+      'Limit new credit applications to avoid negative impact': 'business_health.action.limit_credit_applications',
+      'Maintain timely payments across all credit accounts': 'business_health.action.maintain_timely_payments',
+      'Keep older credit accounts open to preserve credit history length': 'business_health.action.keep_old_accounts',
+      'Diversify credit mix responsibly without overextending': 'business_health.action.diversify_responsibly'
+    };
+    return actionMap[action] ? t(actionMap[action]) : action;
+  };
+
+  // Structured recommendations based on credit score and business health
+  const recommendations = useMemo(() => {
+    const score = creditScoreData.currentScore;
+    const urgent = [];
+    const important = [];
+    const longTerm = [];
+
+    // Urgent actions (score < 600)
+    if (score < 600) {
+      urgent.push({
+        id: 'payment_history',
+        titleKey: 'recommendations.payment_history.title',
+        descriptionKey: 'recommendations.payment_history.description',
+        impact: 'High',
+        timeframeKey: 'recommendations.timeframe.30_90_days',
+        icon: Clock,
+        priority: 'urgent'
+      });
+      urgent.push({
+        id: 'reduce_utilization',
+        titleKey: 'recommendations.reduce_utilization.title',
+        descriptionKey: 'recommendations.reduce_utilization.description',
+        impact: 'High',
+        timeframeKey: 'recommendations.timeframe.30_60_days',
+        icon: Target,
+        priority: 'urgent'
+      });
+    }
+
+    // Important actions (score 600-750)
+    if (score >= 600 && score < 750) {
+      important.push({
+        id: 'diversify_credit',
+        titleKey: 'recommendations.diversify_credit.title',
+        descriptionKey: 'recommendations.diversify_credit.description',
+        impact: 'Medium',
+        timeframeKey: 'recommendations.timeframe.6_12_months',
+        icon: BarChart3,
+        priority: 'important'
+      });
+      important.push({
+        id: 'monitor_reports',
+        titleKey: 'recommendations.monitor_reports.title',
+        descriptionKey: 'recommendations.monitor_reports.description',
+        impact: 'Medium',
+        timeframeKey: 'recommendations.timeframe.ongoing',
+        icon: Eye,
+        priority: 'important'
+      });
+    }
+
+    // Long-term actions (all scores)
+    longTerm.push({
+      id: 'build_history',
+      titleKey: 'recommendations.build_history.title',
+      descriptionKey: 'recommendations.build_history.description',
+      impact: 'Medium',
+      timeframeKey: 'recommendations.timeframe.12_plus_months',
+      icon: Shield,
+      priority: 'long-term'
+    });
+    longTerm.push({
+      id: 'business_growth',
+      titleKey: 'recommendations.business_growth.title',
+      descriptionKey: 'recommendations.business_growth.description',
+      impact: 'High',
+      timeframeKey: 'recommendations.timeframe.6_18_months',
+      icon: TrendingUp,
+      priority: 'long-term'
+    });
+
+    return { urgent, important, longTerm };
+  }, [creditScoreData.currentScore]);
 
   // Enhanced scoring logic
   const scoringMetrics = useMemo(() => {
@@ -151,6 +248,262 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
     visible: { opacity: 1, y: 0 }
   };
 
+  // Recommendation Modal Component
+  const RecommendationModal = () => (
+    <AnimatePresence>
+      {showRecommendations && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+          onClick={() => setShowRecommendations(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6 text-white">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">📊 {t('recommendations.modal.title')}</h3>
+                  <p className="text-blue-100">{t('recommendations.modal.subtitle')}</p>
+                </div>
+                <button
+                  onClick={() => setShowRecommendations(false)}
+                  className="text-white hover:text-blue-200 transition-colors p-2 rounded-full hover:bg-white hover:bg-opacity-20"
+                >
+                  <XCircle className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-8 max-h-[70vh] overflow-y-auto">
+              {/* Current Score Overview */}
+              <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6 mb-8">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">{t('recommendations.current_score')}</h4>
+                    <div className="flex items-center gap-4">
+                      <span className="text-3xl font-bold text-blue-600">{creditScoreData.currentScore}</span>
+                      <div className={`px-3 py-1 rounded-full text-sm font-medium ${scoringMetrics.bgColor}`}>
+                        {scoringMetrics.tier.charAt(0).toUpperCase() + scoringMetrics.tier.slice(1)}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-gray-600 mb-1">{t('recommendations.potential_increase')}</p>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-green-500" />
+                      <span className="text-xl font-bold text-green-600">+50-120</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Recommendation Categories */}
+              <div className="space-y-8">
+                {/* Urgent Actions */}
+                {recommendations.urgent.length > 0 && (
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                      <h4 className="text-xl font-bold text-red-700">🚨 {t('recommendations.urgent_actions')}</h4>
+                      <span className="text-sm text-red-600 bg-red-100 px-2 py-1 rounded-full">{t('recommendations.high_impact')}</span>
+                    </div>
+                    <div className="grid gap-4">
+                      {recommendations.urgent.map((rec, index) => {
+                        const IconComponent = rec.icon;
+                        return (
+                          <motion.div
+                            key={rec.id}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-red-50 border border-red-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300"
+                          >
+                            <div className="flex items-start gap-4">
+                              <div className="bg-red-500 text-white p-3 rounded-lg">
+                                <IconComponent className="w-6 h-6" />
+                              </div>
+                              <div className="flex-1">
+                                <h5 className="text-lg font-semibold text-gray-800 mb-2">{t(rec.titleKey)}</h5>
+                                <p className="text-gray-600 mb-3">{t(rec.descriptionKey)}</p>
+                                <div className="flex items-center gap-4 text-sm">
+                                  <span className="bg-red-100 text-red-700 px-3 py-1 rounded-full font-medium">
+                                    {t('recommendations.impact_label')}: {t(`recommendations.impact.${rec.impact.toLowerCase()}`)}
+                                  </span>
+                                  <span className="text-gray-500 flex items-center gap-1">
+                                    <Clock className="w-4 h-4" />
+                                    {t(rec.timeframeKey)}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Important Actions */}
+                {recommendations.important.length > 0 && (
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                      <h4 className="text-xl font-bold text-orange-700">⚡ {t('recommendations.important_actions')}</h4>
+                      <span className="text-sm text-orange-600 bg-orange-100 px-2 py-1 rounded-full">{t('recommendations.medium_impact')}</span>
+                    </div>
+                    <div className="grid gap-4">
+                      {recommendations.important.map((rec, index) => {
+                        const IconComponent = rec.icon;
+                        return (
+                          <motion.div
+                            key={rec.id}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.1 + 0.3 }}
+                            className="bg-orange-50 border border-orange-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300"
+                          >
+                            <div className="flex items-start gap-4">
+                              <div className="bg-orange-500 text-white p-3 rounded-lg">
+                                <IconComponent className="w-6 h-6" />
+                              </div>
+                              <div className="flex-1">
+                                <h5 className="text-lg font-semibold text-gray-800 mb-2">{t(rec.titleKey)}</h5>
+                                <p className="text-gray-600 mb-3">{t(rec.descriptionKey)}</p>
+                                <div className="flex items-center gap-4 text-sm">
+                                  <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full font-medium">
+                                    {t('recommendations.impact_label')}: {t(`recommendations.impact.${rec.impact.toLowerCase()}`)}
+                                  </span>
+                                  <span className="text-gray-500 flex items-center gap-1">
+                                    <Clock className="w-4 h-4" />
+                                    {t(rec.timeframeKey)}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Long-term Actions */}
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <h4 className="text-xl font-bold text-green-700">🎯 {t('recommendations.longterm_growth')}</h4>
+                    <span className="text-sm text-green-600 bg-green-100 px-2 py-1 rounded-full">{t('recommendations.sustainable_growth')}</span>
+                  </div>
+                  <div className="grid gap-4">
+                    {recommendations.longTerm.map((rec, index) => {
+                      const IconComponent = rec.icon;
+                      return (
+                        <motion.div
+                          key={rec.id}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 + 0.6 }}
+                          className="bg-green-50 border border-green-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300"
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className="bg-green-500 text-white p-3 rounded-lg">
+                              <IconComponent className="w-6 h-6" />
+                            </div>
+                            <div className="flex-1">
+                              <h5 className="text-lg font-semibold text-gray-800 mb-2">{t(rec.titleKey)}</h5>
+                              <p className="text-gray-600 mb-3">{t(rec.descriptionKey)}</p>
+                              <div className="flex items-center gap-4 text-sm">
+                                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
+                                  {t('recommendations.impact_label')}: {t(`recommendations.impact.${rec.impact.toLowerCase()}`)}
+                                </span>
+                                <span className="text-gray-500 flex items-center gap-1">
+                                  <Clock className="w-4 h-4" />
+                                  {t(rec.timeframeKey)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Summary */}
+              <div className="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-200">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-blue-600" />
+                  {t('recommendations.quick_checklist')}
+                </h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>{t('recommendations.checklist.review_payments')}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>{t('recommendations.checklist.auto_payments')}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>{t('recommendations.checklist.check_utilization')}</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>{t('recommendations.checklist.review_reports')}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>{t('recommendations.checklist.monitor_cashflow')}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>{t('recommendations.checklist.debt_strategy')}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="bg-gray-50 px-8 py-4 border-t border-gray-200">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-600">
+                  💡 {t('recommendations.improvement_potential')}
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowRecommendations(false)}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                  >
+                    {t('recommendations.close')}
+                  </button>
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                    {t('recommendations.save_plan')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
   return (
     <div className={`bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden ${className}`}>
       {/* Header */}
@@ -179,9 +532,9 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
       <div className="px-8 py-4 border-b border-gray-100">
         <div className="flex space-x-1">
           {[
-            { id: 'overview', label: 'Overview', icon: Eye },
-            { id: 'factors', label: 'Factors', icon: BarChart3 },
-            { id: 'actions', label: 'Actions', icon: Target }
+            { id: 'overview', labelKey: 'tabs.overview', icon: Eye },
+            { id: 'factors', labelKey: 'tabs.factors', icon: BarChart3 },
+            { id: 'actions', labelKey: 'tabs.actions', icon: Target }
           ].map((tab) => (
             <motion.button
               key={tab.id}
@@ -197,7 +550,7 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
               `}
             >
               <tab.icon className="w-4 h-4" />
-              {tab.label}
+              {t(tab.labelKey)}
             </motion.button>
           ))}
         </div>
@@ -378,9 +731,9 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
                     <div className="flex items-start gap-3">
                       <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-semibold text-amber-800 mb-1">Key Insight</h4>
+                        <h4 className="font-semibold text-amber-800 mb-1">{t('credit_report.key_insight')}</h4>
                         <p className="text-sm text-amber-700">
-                          Your payment history (45% weight) is excellent. Focus on reducing amounts owed and limiting new credit applications to boost your score by 15-25 points.
+                          {t('credit_report.payment_history_excellent')}
                         </p>
                       </div>
                     </div>
@@ -440,13 +793,13 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
                             {t(`credit_score.factors.${factor.id}`) || factor.name}
                           </h4>
                           <div className="flex items-center gap-2 text-sm text-gray-500">
-                            <span>Weight: {factor.weight}%</span>
+                            <span>{t('credit_score.weight')}: {factor.weight}%</span>
                             <span>•</span>
                             <span className={`font-medium ${
                               factor.impact === 'high' ? 'text-red-600' :
                               factor.impact === 'medium' ? 'text-amber-600' : 'text-green-600'
                             }`}>
-                              {t(`credit_score.impact.${factor.impact}`)} Impact
+                              {t(`credit_score.impact_text.${factor.impact}`)}
                             </span>
                           </div>
                         </div>
@@ -539,7 +892,7 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
                       {index + 1}
                     </div>
                     <div className="flex-1">
-                      <p className="text-gray-800 font-medium mb-2">{action}</p>
+                      <p className="text-gray-800 font-medium mb-2">{getActionTranslation(action)}</p>
                       <div className="flex items-center gap-2 text-sm text-blue-600">
                         <Target className="w-4 h-4" />
                         <span>Priority: High</span>
@@ -564,7 +917,7 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
                       className="flex items-center gap-3 p-4 bg-green-50 rounded-lg border border-green-200"
                     >
                       <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                      <span className="text-green-800 font-medium">{strength}</span>
+                      <span className="text-green-800 font-medium">{getStrengthTranslation(strength)}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -595,6 +948,7 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => setShowRecommendations(true)}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 shadow-md hover:shadow-lg flex items-center gap-2"
             >
               <FileText className="w-4 h-4" />
@@ -603,6 +957,9 @@ const EnhancedCreditReport = memo<EnhancedCreditReportProps>(({
           </div>
         </div>
       </div>
+      
+      {/* Recommendation Modal */}
+      <RecommendationModal />
     </div>
   );
 });

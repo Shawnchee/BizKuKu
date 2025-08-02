@@ -47,7 +47,21 @@ const translations = {
     ms: 'Log Masuk',
     en: 'Login'
   },
-  
+
+  // Tab Navigation
+  'tabs.overview': {
+    ms: 'Gambaran Keseluruhan',
+    en: 'Overview'
+  },
+  'tabs.factors': {
+    ms: 'Faktor',
+    en: 'Factors'
+  },
+  'tabs.actions': {
+    ms: 'Tindakan',
+    en: 'Actions'
+  },
+
   // Hero Section
   'hero.badge': {
     ms: 'Terbaik untuk Perusahaan Kecil',
@@ -3456,6 +3470,22 @@ const translations = {
     ms: 'Rendah',
     en: 'Low'
   },
+  'credit_score.weight': {
+    ms: 'Berat',
+    en: 'Weight'
+  },
+  'credit_score.impact_text.high': {
+    ms: 'Tinggi Impact',
+    en: 'High Impact'
+  },
+  'credit_score.impact_text.medium': {
+    ms: 'Sederhana Impact',
+    en: 'Medium Impact'
+  },
+  'credit_score.impact_text.low': {
+    ms: 'Rendah Impact',
+    en: 'Low Impact'
+  },
   'business_health.title': {
     ms: 'Laporan Kesihatan Perniagaan',
     en: 'Business Health Report'
@@ -3519,6 +3549,266 @@ const translations = {
   'credit_score.footer_description': {
     ms: 'Ingin memperbaiki skor kredit anda? Dapatkan cadangan yang diperibadikan atau muat turun laporan terperinci anda.',
     en: 'Want to improve your credit score? Get personalized recommendations or download your detailed report.'
+  },
+
+  // Recommendation Modal
+  'recommendations.modal.title': {
+    ms: 'Cadangan Penambahbaikan Kredit',
+    en: 'Credit Improvement Recommendations'
+  },
+  'recommendations.modal.subtitle': {
+    ms: 'Pelan tindakan diperibadikan untuk meningkatkan skor kredit anda',
+    en: 'Personalized action plan to boost your credit score'
+  },
+  'recommendations.current_score': {
+    ms: 'Skor Kredit Semasa',
+    en: 'Current Credit Score'
+  },
+  'recommendations.potential_increase': {
+    ms: 'Peningkatan Berpotensi',
+    en: 'Potential Increase'
+  },
+  'recommendations.urgent_actions': {
+    ms: 'Tindakan Segera',
+    en: 'Urgent Actions'
+  },
+  'recommendations.important_actions': {
+    ms: 'Tindakan Penting',
+    en: 'Important Actions'
+  },
+  'recommendations.longterm_growth': {
+    ms: 'Pertumbuhan Jangka Panjang',
+    en: 'Long-term Growth'
+  },
+  'recommendations.high_impact': {
+    ms: 'Impak Tinggi',
+    en: 'High Impact'
+  },
+  'recommendations.medium_impact': {
+    ms: 'Impak Sederhana',
+    en: 'Medium Impact'
+  },
+  'recommendations.sustainable_growth': {
+    ms: 'Pertumbuhan Mampan',
+    en: 'Sustainable Growth'
+  },
+  'recommendations.impact_label': {
+    ms: 'Impak',
+    en: 'Impact'
+  },
+  'recommendations.quick_checklist': {
+    ms: 'Senarai Semak Pantas',
+    en: 'Quick Start Checklist'
+  },
+  'recommendations.improvement_potential': {
+    ms: 'Mengikuti cadangan ini boleh meningkatkan skor anda sebanyak 50-120 mata',
+    en: 'Following these recommendations could improve your score by 50-120 points'
+  },
+  'recommendations.close': {
+    ms: 'Tutup',
+    en: 'Close'
+  },
+  'recommendations.save_plan': {
+    ms: 'Simpan Pelan Tindakan',
+    en: 'Save Action Plan'
+  },
+
+  // Urgent Actions
+  'recommendations.payment_history.title': {
+    ms: 'Perbaiki Sejarah Pembayaran',
+    en: 'Improve Payment History'
+  },
+  'recommendations.payment_history.description': {
+    ms: 'Buat semua pembayaran tepat pada masa untuk 3-6 bulan akan datang',
+    en: 'Make all payments on time for the next 3-6 months'
+  },
+  'recommendations.reduce_utilization.title': {
+    ms: 'Kurangkan Penggunaan Kredit',
+    en: 'Reduce Credit Utilization'
+  },
+  'recommendations.reduce_utilization.description': {
+    ms: 'Pastikan penggunaan kredit di bawah 30% untuk semua akaun',
+    en: 'Keep credit utilization below 30% across all accounts'
+  },
+
+  // Important Actions
+  'recommendations.diversify_credit.title': {
+    ms: 'Pelbagaikan Campuran Kredit',
+    en: 'Diversify Credit Mix'
+  },
+  'recommendations.diversify_credit.description': {
+    ms: 'Tambah jenis akaun kredit yang berbeza (pinjaman ansuran, dll)',
+    en: 'Add different types of credit accounts (installment loans, etc.)'
+  },
+  'recommendations.monitor_reports.title': {
+    ms: 'Pemantauan Kredit Berkala',
+    en: 'Regular Credit Monitoring'
+  },
+  'recommendations.monitor_reports.description': {
+    ms: 'Semak laporan kredit bulanan untuk kesilapan dan ketidakselarasan',
+    en: 'Review credit reports monthly for errors and discrepancies'
+  },
+
+  // Long-term Actions
+  'recommendations.build_history.title': {
+    ms: 'Bina Sejarah Kredit Panjang',
+    en: 'Build Long Credit History'
+  },
+  'recommendations.build_history.description': {
+    ms: 'Pastikan akaun lama tetap dibuka untuk mengekalkan panjang sejarah kredit',
+    en: 'Keep oldest accounts open to maintain credit history length'
+  },
+  'recommendations.business_growth.title': {
+    ms: 'Kembangkan Operasi Perniagaan',
+    en: 'Scale Business Operations'
+  },
+  'recommendations.business_growth.description': {
+    ms: 'Tingkatkan aliran pendapatan dan perbaiki konsistensi aliran tunai',
+    en: 'Increase revenue streams and improve cash flow consistency'
+  },
+
+  // Timeframes
+  'recommendations.timeframe.30_90_days': {
+    ms: '30-90 hari',
+    en: '30-90 days'
+  },
+  'recommendations.timeframe.30_60_days': {
+    ms: '30-60 hari',
+    en: '30-60 days'
+  },
+  'recommendations.timeframe.6_12_months': {
+    ms: '6-12 bulan',
+    en: '6-12 months'
+  },
+  'recommendations.timeframe.ongoing': {
+    ms: 'Berterusan',
+    en: 'Ongoing'
+  },
+  'recommendations.timeframe.12_plus_months': {
+    ms: '12+ bulan',
+    en: '12+ months'
+  },
+  'recommendations.timeframe.6_18_months': {
+    ms: '6-18 bulan',
+    en: '6-18 months'
+  },
+
+  // Checklist Items
+  'recommendations.checklist.review_payments': {
+    ms: 'Semak semua tarikh akhir pembayaran',
+    en: 'Review all payment due dates'
+  },
+  'recommendations.checklist.auto_payments': {
+    ms: 'Sediakan pembayaran automatik',
+    en: 'Set up automatic payments'
+  },
+  'recommendations.checklist.check_utilization': {
+    ms: 'Semak kadar penggunaan kredit',
+    en: 'Check credit utilization rates'
+  },
+  'recommendations.checklist.review_reports': {
+    ms: 'Semak laporan kredit untuk kesilapan',
+    en: 'Review credit reports for errors'
+  },
+  'recommendations.checklist.monitor_cashflow': {
+    ms: 'Pantau aliran tunai perniagaan',
+    en: 'Monitor business cash flow'
+  },
+  'recommendations.checklist.debt_strategy': {
+    ms: 'Rancang strategi pengurangan hutang',
+    en: 'Plan debt reduction strategy'
+  },
+
+  // Impact levels
+  'recommendations.impact.high': {
+    ms: 'Tinggi',
+    en: 'High'
+  },
+  'recommendations.impact.medium': {
+    ms: 'Sederhana',
+    en: 'Medium'
+  },
+
+  // Credit report insights
+  'credit_report.key_insight': {
+    ms: 'Pandangan Utama',
+    en: 'Key Insight'
+  },
+  'credit_report.payment_history_excellent': {
+    ms: 'Sejarah pembayaran anda (berat 45%) adalah cemerlang. Fokus pada mengurangkan jumlah hutang dan hadkan permohonan kredit baru untuk meningkatkan skor anda sebanyak 15-25 mata.',
+    en: 'Your payment history (45% weight) is excellent. Focus on reducing amounts owed and limiting new credit applications to boost your score by 15-25 points.'
+  },
+
+  // Business Health - Key Strengths
+  'business_health.strength.payment_history': {
+    ms: 'Sejarah pembayaran cemerlang tanpa pembayaran lewat',
+    en: 'Excellent payment history with no late payments'
+  },
+  'business_health.strength.credit_history': {
+    ms: 'Sejarah kredit yang telah lama ditubuhkan (8+ tahun)',
+    en: 'Long-established credit history (8+ years)'
+  },
+  'business_health.strength.credit_mix': {
+    ms: 'Campuran kredit yang pelbagai merentas pelbagai jenis akaun',
+    en: 'Diverse credit mix across multiple account types'
+  },
+  'business_health.strength.financial_relationship': {
+    ms: 'Hubungan yang kukuh dengan institusi kewangan',
+    en: 'Strong relationship with financial institutions'
+  },
+
+  // Business Health - Improvement Areas
+  'business_health.improvement.total_amounts_owed': {
+    ms: 'Jumlah keseluruhan yang terhutang merentas kemudahan kredit',
+    en: 'Total amounts owed across credit facilities'
+  },
+  'business_health.improvement.recent_credit_applications': {
+    ms: 'Permohonan kredit baharu baru-baru ini',
+    en: 'Recent new credit applications'
+  },
+  'business_health.improvement.utilization_optimization': {
+    ms: 'Pengoptimuman nisbah penggunaan kredit',
+    en: 'Credit utilization ratio optimization'
+  },
+  'business_health.improvement.debt_income_ratio': {
+    ms: 'Pengurusan nisbah hutang kepada pendapatan',
+    en: 'Debt-to-income ratio management'
+  },
+
+  // Business Health - Recommended Actions
+  'business_health.action.reduce_debt_balances': {
+    ms: 'Kurangkan baki hutang keseluruhan untuk memperbaiki nisbah jumlah terhutang',
+    en: 'Reduce total debt balances to improve amounts owed ratio'
+  },
+  'business_health.action.limit_credit_applications': {
+    ms: 'Hadkan permohonan kredit baharu untuk mengelakkan kesan negatif',
+    en: 'Limit new credit applications to avoid negative impact'
+  },
+  'business_health.action.maintain_timely_payments': {
+    ms: 'Kekalkan pembayaran tepat masa merentas semua akaun kredit',
+    en: 'Maintain timely payments across all credit accounts'
+  },
+  'business_health.action.keep_old_accounts': {
+    ms: 'Pastikan akaun kredit lama tetap dibuka untuk memelihara panjang sejarah kredit',
+    en: 'Keep older credit accounts open to preserve credit history length'
+  },
+  'business_health.action.diversify_responsibly': {
+    ms: 'Pelbagaikan campuran kredit secara bertanggungjawab tanpa melampaui batas',
+    en: 'Diversify credit mix responsibly without overextending'
+  },
+
+  // Business Health - Risk Factors
+  'business_health.risk.high_debt_levels': {
+    ms: 'Tahap hutang tinggi mempengaruhi skor jumlah terhutang',
+    en: 'High total debt levels affecting amounts owed score'
+  },
+  'business_health.risk.recent_inquiries': {
+    ms: 'Pertanyaan kredit baru-baru ini menunjukkan tingkah laku mencari kredit yang meningkat',
+    en: 'Recent credit inquiries showing increased credit-seeking behavior'
+  },
+  'business_health.risk.debt_concentration': {
+    ms: 'Penumpuan hutang dalam satu jenis kemudahan kredit',
+    en: 'Concentration of debt in single credit facility type'
   }
 }
 

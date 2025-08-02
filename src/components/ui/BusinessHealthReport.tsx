@@ -20,6 +20,28 @@ const BusinessHealthReportComponent = memo<BusinessHealthReportProps>(({
   const { t } = useLanguage();
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
+  // Translation mapping functions for business health data
+  const getStrengthTranslation = (strength: string): string => {
+    const strengthMap: { [key: string]: string } = {
+      'Excellent payment history with no late payments': 'business_health.strength.payment_history',
+      'Long-established credit history (8+ years)': 'business_health.strength.credit_history',
+      'Diverse credit mix across multiple account types': 'business_health.strength.credit_mix',
+      'Strong relationship with financial institutions': 'business_health.strength.financial_relationship'
+    };
+    return strengthMap[strength] ? t(strengthMap[strength]) : strength;
+  };
+
+  const getActionTranslation = (action: string): string => {
+    const actionMap: { [key: string]: string } = {
+      'Reduce total debt balances to improve amounts owed ratio': 'business_health.action.reduce_debt_balances',
+      'Limit new credit applications to avoid negative impact': 'business_health.action.limit_credit_applications',
+      'Maintain timely payments across all credit accounts': 'business_health.action.maintain_timely_payments',
+      'Keep older credit accounts open to preserve credit history length': 'business_health.action.keep_old_accounts',
+      'Diversify credit mix responsibly without overextending': 'business_health.action.diversify_responsibly'
+    };
+    return actionMap[action] ? t(actionMap[action]) : action;
+  };
+
   const getStatusIcon = (status: 'healthy' | 'warning' | 'critical') => {
     switch (status) {
       case 'healthy':
@@ -219,7 +241,7 @@ const BusinessHealthReportComponent = memo<BusinessHealthReportProps>(({
                     className="flex items-center gap-2 p-2 text-sm text-green-700 bg-green-50 rounded"
                   >
                     <CheckCircle className="w-4 h-4 text-green-500" />
-                    {strength}
+                    {getStrengthTranslation(strength)}
                   </motion.div>
                 ))}
               </motion.div>
@@ -268,7 +290,7 @@ const BusinessHealthReportComponent = memo<BusinessHealthReportProps>(({
                     <div className="w-4 h-4 rounded-full bg-blue-500 text-white text-xs flex items-center justify-center mt-0.5 flex-shrink-0">
                       {index + 1}
                     </div>
-                    {action}
+                    {getActionTranslation(action)}
                   </motion.div>
                 ))}
               </motion.div>
