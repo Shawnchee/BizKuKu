@@ -26,9 +26,7 @@ interface PreviewItem {
 interface Service {
   id: string
   title: string
-  titleMs: string
   description: string
-  descriptionMs: string
   icon: any
   category: string
   color: string
@@ -39,7 +37,6 @@ interface Service {
   isPopular?: boolean
   onboardingSteps: {
     title: string
-    titleMs: string
     component: React.ReactNode
   }[]
 }
@@ -54,63 +51,59 @@ export default function MiniServices() {
   const services: Service[] = [
     {
       id: 'e-invoicing',
-      title: 'E-Invoicing System',
-      titleMs: 'Sistem E-Invois',
-      description: 'Generate MyInvois compliant digital invoices • PDF output',
-      descriptionMs: 'Jana invois digital yang mematuhi MyInvois • Output PDF',
+      title: 'mini_services.einvoicing.title',
+      description: 'mini_services.einvoicing.description',
       icon: FileText,
       category: 'financial',
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
       priority: 'high',
       isPopular: true,
-      outputs: ['PDF Invoice', 'Email Delivery'],
+      outputs: ['mini_services.output.pdf_invoice', 'mini_services.output.email_delivery'],
       previews: [
         {
           type: 'text',
-          label: 'Sample Invoice Header',
-          content: 'INVOICE #INV-2024-001\nDate: 15 Jan 2024\nTo: ABC Sdn Bhd\nSSM: 123456-A\nGST ID: 000123456789',
+          label: 'mini_services.preview.sample_invoice_header',
+          content: 'mini_services.sample.invoice_header',
           icon: FileText
         },
         {
           type: 'feature',
-          label: 'MyInvois Compliance',
-          content: '✓ LHDN approved format\n✓ Digital signature\n✓ QR code verification\n✓ Auto GST calculation'
+          label: 'mini_services.preview.myinvois_compliance',
+          content: 'mini_services.features.myinvois_compliance'
         },
         {
           type: 'file',
-          label: 'Export Formats',
-          content: 'invoice_001.pdf'
+          label: 'mini_services.preview.export_formats',
+          content: 'mini_services.file.invoice_001'
         }
       ],
       onboardingSteps: [
         {
-          title: 'Business Details',
-          titleMs: 'Butiran Perniagaan',
+          title: 'mini_services.einvoicing.step1.title',
           component: (
             <div className="space-y-4">
-              <input placeholder="Business Name" className="w-full p-3 border rounded-lg" />
-              <input placeholder="SSM Registration No." className="w-full p-3 border rounded-lg" />
-              <input placeholder="Tax Identification No." className="w-full p-3 border rounded-lg" />
-              <textarea placeholder="Business Address" className="w-full p-3 border rounded-lg h-20" />
+              <input placeholder={t('mini_services.form.business_name')} className="w-full p-3 border rounded-lg" />
+              <input placeholder={t('mini_services.form.ssm_registration')} className="w-full p-3 border rounded-lg" />
+              <input placeholder={t('mini_services.form.tax_id')} className="w-full p-3 border rounded-lg" />
+              <textarea placeholder={t('mini_services.form.business_address')} className="w-full p-3 border rounded-lg h-20" />
             </div>
           )
         },
         {
-          title: 'Invoice Template',
-          titleMs: 'Template Invois',
+          title: 'mini_services.einvoicing.step2.title',
           component: (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 border-2 border-blue-500 rounded-lg bg-blue-50">
-                  <div className="text-sm font-medium">Professional</div>
+                  <div className="text-sm font-medium">{t('mini_services.invoice.professional')}</div>
                 </div>
                 <div className="p-4 border rounded-lg hover:border-blue-300">
-                  <div className="text-sm font-medium">Simple</div>
+                  <div className="text-sm font-medium">{t('mini_services.invoice.simple')}</div>
                 </div>
               </div>
               <div className="p-4 bg-gray-50 rounded-lg">
-                <div className="text-xs text-gray-600">Preview: Invoice template will appear here</div>
+                <div className="text-xs text-gray-600">{t('mini_services.preview_text.invoice_template')}</div>
               </div>
             </div>
           )
@@ -119,48 +112,45 @@ export default function MiniServices() {
     },
     {
       id: 'digital-receipt',
-      title: 'Digital Receipt Generator',
-      titleMs: 'Penjana Resit Digital',
-      description: 'Create professional receipts with GST/SST • PDF & print ready',
-      descriptionMs: 'Cipta resit profesional dengan GST/SST • PDF & siap cetak',
+      title: 'mini_services.digital_receipt.title',
+      description: 'mini_services.digital_receipt.description',
       icon: Receipt,
       category: 'financial',
       color: 'from-green-500 to-green-600',
       bgColor: 'bg-green-50',
       priority: 'high',
       isPopular: true,
-      outputs: ['PDF Receipt', 'Print Format', 'Email Copy'],
+      outputs: ['mini_services.output.pdf_receipt', 'mini_services.output.print_format', 'mini_services.output.email_copy'],
       previews: [
         {
           type: 'text',
-          label: 'Sample Receipt',
-          content: 'RECEIPT #R-2024-001\nCafe Delicious\nNasi Lemak x2    RM 10.00\nTeh Tarik x1     RM  3.50\nSubtotal:        RM 13.50\nGST (6%):        RM  0.81\nTotal:           RM 14.31',
+          label: 'mini_services.preview.sample_receipt',
+          content: 'mini_services.sample.receipt',
           icon: Receipt
         },
         {
           type: 'feature',
-          label: 'Features',
-          content: '✓ Auto GST/SST calculation\n✓ Professional templates\n✓ Instant PDF generation\n✓ Email delivery'
+          label: 'mini_services.preview.features',
+          content: 'mini_services.features.receipt_features'
         }
       ],
       onboardingSteps: [
         {
-          title: 'Receipt Template',
-          titleMs: 'Template Resit',
+          title: 'mini_services.digital_receipt.step1.title',
           component: (
             <div className="space-y-4">
               <select className="w-full p-3 border rounded-lg">
-                <option>Standard Receipt</option>
-                <option>Detailed Receipt</option>
-                <option>Minimal Receipt</option>
+                <option>{t('mini_services.receipt.standard')}</option>
+                <option>{t('mini_services.receipt.detailed')}</option>
+                <option>{t('mini_services.receipt.minimal')}</option>
               </select>
               <div className="flex items-center space-x-2">
                 <input type="checkbox" id="gst" className="rounded" />
-                <label htmlFor="gst">Include GST (6%)</label>
+                <label htmlFor="gst">{t('mini_services.tax.include_gst')}</label>
               </div>
               <div className="flex items-center space-x-2">
                 <input type="checkbox" id="sst" className="rounded" />
-                <label htmlFor="sst">Include SST</label>
+                <label htmlFor="sst">{t('mini_services.tax.include_sst')}</label>
               </div>
             </div>
           )
@@ -169,42 +159,39 @@ export default function MiniServices() {
     },
     {
       id: 'tax-calculator',
-      title: 'Tax Calculator',
-      titleMs: 'Kalkulator Cukai',
-      description: 'Calculate personal and business tax • PDF summary report',
-      descriptionMs: 'Kira cukai peribadi dan perniagaan • Laporan ringkasan PDF',
+      title: 'mini_services.tax_calculator.title',
+      description: 'mini_services.tax_calculator.description',
       icon: Calculator,
       category: 'financial',
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-purple-50',
-      outputs: ['Tax Summary PDF', 'Calculation Breakdown', 'Filing Checklist'],
+      outputs: ['mini_services.output.tax_summary_pdf', 'mini_services.output.calculation_breakdown', 'mini_services.output.filing_checklist'],
       previews: [
         {
           type: 'text',
-          label: 'Tax Calculation Sample',
-          content: 'Annual Income: RM 60,000\nPersonal Relief: RM 9,000\nTaxable Income: RM 51,000\nTax Payable: RM 1,350\nEffective Rate: 2.25%',
+          label: 'mini_services.preview.tax_calculation_sample',
+          content: 'mini_services.sample.tax_calculation',
           icon: Calculator
         },
         {
           type: 'feature',
-          label: 'Calculation Features',
-          content: '✓ Personal & business tax\n✓ Relief optimization\n✓ Monthly estimates\n✓ Filing reminders'
+          label: 'mini_services.preview.calculation_features',
+          content: 'mini_services.features.tax_calculation'
         }
       ],
       onboardingSteps: [
         {
-          title: 'Income Details',
-          titleMs: 'Butiran Pendapatan',
+          title: 'mini_services.tax_calculator.step1.title',
           component: (
             <div className="space-y-4">
-              <input placeholder="Annual Income (RM)" className="w-full p-3 border rounded-lg" />
+              <input placeholder={t('mini_services.form.annual_income')} className="w-full p-3 border rounded-lg" />
               <select className="w-full p-3 border rounded-lg">
-                <option>Individual</option>
-                <option>Married</option>
-                <option>Business</option>
+                <option>{t('mini_services.business_type.individual')}</option>
+                <option>{t('mini_services.business_type.married')}</option>
+                <option>{t('mini_services.business_type.business')}</option>
               </select>
               <div className="p-4 bg-purple-50 rounded-lg">
-                <div className="text-sm font-medium">Estimated Tax: RM 0</div>
+                <div className="text-sm font-medium">{t('mini_services.status.estimated_tax')}</div>
               </div>
             </div>
           )
@@ -213,42 +200,39 @@ export default function MiniServices() {
     },
     {
       id: 'gst-helper',
-      title: 'GST/SST Helper',
-      titleMs: 'Pembantu GST/SST',
-      description: 'GST/SST calculation and filing assistance • Auto reminders',
-      descriptionMs: 'Bantuan pengiraan dan pemfailan GST/SST • Peringatan auto',
+      title: 'mini_services.gst_helper.title',
+      description: 'mini_services.gst_helper.description',
       icon: HelpCircle,
       category: 'financial',
       color: 'from-orange-500 to-orange-600',
       bgColor: 'bg-orange-50',
-      outputs: ['Filing Forms', 'Calculation Sheet', 'Email Reminders'],
+      outputs: ['mini_services.output.filing_forms', 'mini_services.output.calculation_sheet', 'mini_services.output.email_reminders'],
       previews: [
         {
           type: 'text',
-          label: 'GST Return Sample',
-          content: 'GST-03 Return\nPeriod: Jan-Mar 2024\nOutput Tax: RM 1,200\nInput Tax: RM 800\nNet GST: RM 400\nDue Date: 30 Apr 2024',
+          label: 'mini_services.preview.gst_return_sample',
+          content: 'mini_services.sample.gst_return',
           icon: HelpCircle
         },
         {
           type: 'feature',
-          label: 'Helper Features',
-          content: '✓ Auto calculations\n✓ Filing reminders\n✓ Form pre-filling\n✓ Deadline tracking'
+          label: 'mini_services.preview.helper_features',
+          content: 'mini_services.features.gst_helper'
         }
       ],
       onboardingSteps: [
         {
-          title: 'Tax Settings',
-          titleMs: 'Tetapan Cukai',
+          title: 'mini_services.gst_helper.step1.title',
           component: (
             <div className="space-y-4">
               <select className="w-full p-3 border rounded-lg">
-                <option>GST Registered</option>
-                <option>SST Registered</option>
-                <option>Not Registered</option>
+                <option>{t('mini_services.tax.gst_registered')}</option>
+                <option>{t('mini_services.tax.sst_registered')}</option>
+                <option>{t('mini_services.tax.not_registered')}</option>
               </select>
               <div className="p-4 bg-orange-50 rounded-lg">
-                <div className="text-sm font-medium">Next Filing: 30 Apr 2024</div>
-                <div className="text-xs text-gray-600">Set reminder 7 days before</div>
+                <div className="text-sm font-medium">{t('mini_services.status.next_filing')}</div>
+                <div className="text-xs text-gray-600">{t('mini_services.status.set_reminder')}</div>
               </div>
             </div>
           )
@@ -258,32 +242,29 @@ export default function MiniServices() {
 
     {
       id: 'mobile-pos',
-      title: 'Mobile POS App',
-      titleMs: 'Aplikasi POS Mudah Alih',
-      description: 'Turn your phone into a cash register • Real-time sales tracking',
-      descriptionMs: 'Tukar telefon anda jadi mesin kira-kira • Jejak jualan masa nyata',
+      title: 'mini_services.mobile_pos.title',
+      description: 'mini_services.mobile_pos.description',
       icon: ShoppingCart,
       category: 'operations',
       color: 'from-indigo-500 to-indigo-600',
       bgColor: 'bg-indigo-50',
-      outputs: ['Sales Reports', 'Receipt Prints', 'Daily Summary'],
+      outputs: ['mini_services.output.sales_reports', 'mini_services.output.receipt_prints', 'mini_services.output.daily_summary'],
       previews: [
         {
           type: 'text',
-          label: 'POS Interface',
-          content: 'Product: Nasi Lemak\nPrice: RM 5.00\nQty: 2\nSubtotal: RM 10.00\nPayment: Cash/QR',
+          label: 'mini_services.preview.pos_interface',
+          content: 'mini_services.sample.pos_interface',
           icon: ShoppingCart
         }
       ],
       onboardingSteps: [
         {
-          title: 'Product Catalog',
-          titleMs: 'Katalog Produk',
+          title: 'mini_services.mobile_pos.step1.title',
           component: (
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-                <input placeholder="Product Name" className="flex-1 p-3 border rounded-lg" />
-                <input placeholder="Price" className="w-24 p-3 border rounded-lg" />
+                <input placeholder={t('mini_services.form.product_name')} className="flex-1 p-3 border rounded-lg" />
+                <input placeholder={t('mini_services.form.price')} className="w-24 p-3 border rounded-lg" />
                 <button className="p-3 bg-indigo-500 text-white rounded-lg">
                   <Plus className="w-4 h-4" />
                 </button>
@@ -298,16 +279,15 @@ export default function MiniServices() {
           )
         },
         {
-          title: 'Payment Methods',
-          titleMs: 'Kaedah Pembayaran',
+          title: 'mini_services.mobile_pos.step2.title',
           component: (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 border-2 border-indigo-500 rounded-lg bg-indigo-50 text-center">
-                  <div className="text-sm font-medium">Cash</div>
+                  <div className="text-sm font-medium">{t('mini_services.payment.cash')}</div>
                 </div>
                 <div className="p-4 border rounded-lg text-center">
-                  <div className="text-sm font-medium">QR Pay</div>
+                  <div className="text-sm font-medium">{t('mini_services.payment.qr_pay')}</div>
                 </div>
               </div>
             </div>
@@ -317,26 +297,23 @@ export default function MiniServices() {
     },
     {
       id: 'inventory',
-      title: 'Inventory Management',
-      titleMs: 'Pengurusan Inventori',
-      description: 'Track stock levels and get alerts',
-      descriptionMs: 'Jejak stok dan dapat amaran',
+      title: 'mini_services.inventory.title',
+      description: 'mini_services.inventory.description',
       icon: Package,
       category: 'operations',
       color: 'from-teal-500 to-teal-600',
       bgColor: 'bg-teal-50',
-      outputs: ['Stock Reports', 'Alert Notifications'],
-      previews: [{ type: 'text', label: 'Sample', content: 'Stock tracking preview', icon: Package }],
+      outputs: ['mini_services.output.stock_reports', 'mini_services.output.alert_notifications'],
+      previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.inventory', icon: Package }],
       onboardingSteps: [
         {
-          title: 'Stock Entry',
-          titleMs: 'Entri Stok',
+          title: 'mini_services.inventory.step1.title',
           component: (
             <div className="space-y-4">
-              <input placeholder="Item Name" className="w-full p-3 border rounded-lg" />
+              <input placeholder={t('mini_services.form.item_name')} className="w-full p-3 border rounded-lg" />
               <div className="grid grid-cols-2 gap-4">
-                <input placeholder="Current Stock" className="p-3 border rounded-lg" />
-                <input placeholder="Minimum Alert" className="p-3 border rounded-lg" />
+                <input placeholder={t('mini_services.form.current_stock')} className="p-3 border rounded-lg" />
+                <input placeholder={t('mini_services.form.minimum_alert')} className="p-3 border rounded-lg" />
               </div>
             </div>
           )
@@ -345,28 +322,25 @@ export default function MiniServices() {
     },
     {
       id: 'loyalty-program',
-      title: 'Loyalty Program Setup',
-      titleMs: 'Setup Program Kesetiaan',
-      description: 'Create digital stamp cards and rewards',
-      descriptionMs: 'Cipta kad setem digital dan ganjaran',
+      title: 'mini_services.loyalty_program.title',
+      description: 'mini_services.loyalty_program.description',
       icon: Gift,
       category: 'operations',
       color: 'from-pink-500 to-pink-600',
       bgColor: 'bg-pink-50',
-      outputs: ['Digital Cards', 'Customer Database'],
-      previews: [{ type: 'text', label: 'Sample', content: 'Loyalty program preview', icon: Gift }],
+      outputs: ['mini_services.output.digital_cards', 'mini_services.output.customer_database'],
+      previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.loyalty_program', icon: Gift }],
       onboardingSteps: [
         {
-          title: 'Reward Structure',
-          titleMs: 'Struktur Ganjaran',
+          title: 'mini_services.loyalty_program.step1.title',
           component: (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <input placeholder="Stamps needed" className="p-3 border rounded-lg" />
-                <input placeholder="Reward" className="p-3 border rounded-lg" />
+                <input placeholder={t('mini_services.placeholder.stamps_needed')} className="p-3 border rounded-lg" />
+                <input placeholder={t('mini_services.placeholder.reward')} className="p-3 border rounded-lg" />
               </div>
               <div className="p-4 bg-pink-50 rounded-lg">
-                <div className="text-sm">Preview: Collect 10 stamps = Free coffee</div>
+                <div className="text-sm">{t('mini_services.status.preview_reward')}</div>
               </div>
             </div>
           )
@@ -375,28 +349,25 @@ export default function MiniServices() {
     },
     {
       id: 'delivery-service',
-      title: 'Delivery Service Integration',
-      titleMs: 'Integrasi Perkhidmatan Penghantaran',
-      description: 'Connect with delivery partners',
-      descriptionMs: 'Sambung dengan rakan kongsi penghantaran',
+      title: 'mini_services.delivery_service.title',
+      description: 'mini_services.delivery_service.description',
       icon: Truck,
       category: 'operations',
       color: 'from-yellow-500 to-yellow-600',
       bgColor: 'bg-yellow-50',
-      outputs: ['Integration Setup', 'Tracking Links'],
-      previews: [{ type: 'text', label: 'Sample', content: 'Delivery integration preview', icon: Truck }],
+      outputs: ['mini_services.output.integration_setup', 'mini_services.output.tracking_links'],
+      previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.delivery_integration', icon: Truck }],
       onboardingSteps: [
         {
-          title: 'Delivery Partners',
-          titleMs: 'Rakan Kongsi Penghantaran',
+          title: 'mini_services.delivery_service.step1.title',
           component: (
             <div className="space-y-4">
               <div className="space-y-2">
-                {['Grab', 'Foodpanda', 'Lalamove'].map(partner => (
+                {[t('mini_services.delivery.grab'), t('mini_services.delivery.foodpanda'), t('mini_services.delivery.lalamove')].map(partner => (
                   <div key={partner} className="flex items-center space-x-2 p-3 border rounded-lg">
                     <input type="checkbox" />
                     <span>{partner}</span>
-                    <span className="ml-auto text-sm text-gray-600">5-15% commission</span>
+                    <span className="ml-auto text-sm text-gray-600">{t('mini_services.delivery.commission')}</span>
                   </div>
                 ))}
               </div>
@@ -409,32 +380,29 @@ export default function MiniServices() {
     // Digital Presence & Customer Management (3 services)
     {
       id: 'website-builder',
-      title: 'Mini Website Builder',
-      titleMs: 'Pembina Laman Web Mini',
-      description: 'Create a simple business website',
-      descriptionMs: 'Cipta laman web perniagaan mudah',
+      title: 'mini_services.website_builder.title',
+      description: 'mini_services.website_builder.description',
       icon: Globe,
       category: 'digital',
       color: 'from-cyan-500 to-cyan-600',
       bgColor: 'bg-cyan-50',
-      outputs: ['Website URL', 'Mobile Responsive'],
-      previews: [{ type: 'text', label: 'Sample', content: 'Website preview', icon: Globe }],
+      outputs: ['mini_services.output.website_url', 'mini_services.output.mobile_responsive'],
+      previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.website', icon: Globe }],
       onboardingSteps: [
         {
-          title: 'Template Selection',
-          titleMs: 'Pemilihan Template',
+          title: 'mini_services.website_builder.step1.title',
           component: (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 border-2 border-cyan-500 rounded-lg bg-cyan-50">
-                  <div className="text-sm font-medium">Restaurant</div>
+                  <div className="text-sm font-medium">{t('mini_services.website.restaurant')}</div>
                 </div>
                 <div className="p-4 border rounded-lg">
-                  <div className="text-sm font-medium">Retail</div>
+                  <div className="text-sm font-medium">{t('mini_services.website.retail')}</div>
                 </div>
               </div>
-              <input placeholder="Business Name" className="w-full p-3 border rounded-lg" />
-              <textarea placeholder="About Us" className="w-full p-3 border rounded-lg h-20" />
+              <input placeholder={t('mini_services.form.business_name')} className="w-full p-3 border rounded-lg" />
+              <textarea placeholder={t('mini_services.placeholder.about_us')} className="w-full p-3 border rounded-lg h-20" />
             </div>
           )
         }
@@ -442,31 +410,28 @@ export default function MiniServices() {
     },
     {
       id: 'booking-system',
-      title: 'Online Booking System',
-      titleMs: 'Sistem Tempahan Dalam Talian',
-      description: 'Accept online bookings and reservations',
-      descriptionMs: 'Terima tempahan dan reservasi dalam talian',
+      title: 'mini_services.booking_system.title',
+      description: 'mini_services.booking_system.description',
       icon: Calendar,
       category: 'digital',
       color: 'from-violet-500 to-violet-600',
       bgColor: 'bg-violet-50',
-      outputs: ['Booking Confirmations', 'Calendar Sync'],
-      previews: [{ type: 'text', label: 'Sample', content: 'Booking system preview', icon: Calendar }],
+      outputs: ['mini_services.output.booking_confirmations', 'mini_services.output.calendar_sync'],
+      previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.booking_system', icon: Calendar }],
       onboardingSteps: [
         {
-          title: 'Service Setup',
-          titleMs: 'Setup Perkhidmatan',
+          title: 'mini_services.booking_system.step1.title',
           component: (
             <div className="space-y-4">
-              <input placeholder="Service Name" className="w-full p-3 border rounded-lg" />
+              <input placeholder={t('mini_services.form.service_name')} className="w-full p-3 border rounded-lg" />
               <div className="grid grid-cols-2 gap-4">
-                <input placeholder="Duration (mins)" className="p-3 border rounded-lg" />
-                <input placeholder="Price (RM)" className="p-3 border rounded-lg" />
+                <input placeholder={t('mini_services.form.duration_mins')} className="p-3 border rounded-lg" />
+                <input placeholder={t('mini_services.form.price')} className="p-3 border rounded-lg" />
               </div>
               <select className="w-full p-3 border rounded-lg">
-                <option>Available 9 AM - 6 PM</option>
-                <option>Available 24/7</option>
-                <option>Custom hours</option>
+                <option>{t('mini_services.availability.9am_6pm')}</option>
+                <option>{t('mini_services.availability.24_7')}</option>
+                <option>{t('mini_services.availability.custom')}</option>
               </select>
             </div>
           )
@@ -475,29 +440,26 @@ export default function MiniServices() {
     },
     {
       id: 'appointment-scheduler',
-      title: 'Appointment Scheduler',
-      titleMs: 'Penjadual Temujanji',
-      description: 'Manage appointments and staff schedules',
-      descriptionMs: 'Urus temujanji dan jadual kakitangan',
+      title: 'mini_services.appointment_scheduler.title',
+      description: 'mini_services.appointment_scheduler.description',
       icon: Clock,
       category: 'digital',
       color: 'from-rose-500 to-rose-600',
       bgColor: 'bg-rose-50',
-      outputs: ['Schedule Reports', 'Staff Calendars'],
-      previews: [{ type: 'text', label: 'Sample', content: 'Appointment scheduler preview', icon: Clock }],
+      outputs: ['mini_services.output.schedule_reports', 'mini_services.output.staff_calendars'],
+      previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.appointment_scheduler', icon: Clock }],
       onboardingSteps: [
         {
-          title: 'Staff Availability',
-          titleMs: 'Ketersediaan Kakitangan',
+          title: 'mini_services.appointment_scheduler.step1.title',
           component: (
             <div className="space-y-4">
-              <input placeholder="Staff Name" className="w-full p-3 border rounded-lg" />
+              <input placeholder={t('mini_services.form.staff_name')} className="w-full p-3 border rounded-lg" />
               <div className="grid grid-cols-2 gap-4">
                 <input type="time" defaultValue="09:00" className="p-3 border rounded-lg" />
                 <input type="time" defaultValue="17:00" className="p-3 border rounded-lg" />
               </div>
               <div className="flex flex-wrap gap-2">
-                {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
+                {[t('mini_services.days.mon'), t('mini_services.days.tue'), t('mini_services.days.wed'), t('mini_services.days.thu'), t('mini_services.days.fri'), t('mini_services.days.sat'), t('mini_services.days.sun')].map(day => (
                   <button key={day} className="px-3 py-1 border rounded bg-rose-50 text-sm">
                     {day}
                   </button>
@@ -512,28 +474,25 @@ export default function MiniServices() {
     // Professional Services (2 services)
     {
       id: 'lhdn-filing',
-      title: 'LHDN e-Filing Assistant',
-      titleMs: 'Pembantu e-Filing LHDN',
-      description: 'Guided tax filing with LHDN',
-      descriptionMs: 'Panduan pemfailan cukai dengan LHDN',
+      title: 'mini_services.lhdn_filing.title',
+      description: 'mini_services.lhdn_filing.description',
       icon: FileCheck,
       category: 'professional',
       color: 'from-emerald-500 to-emerald-600',
       bgColor: 'bg-emerald-50',
-      outputs: ['Filed Returns', 'Confirmation Receipt'],
-      previews: [{ type: 'text', label: 'Sample', content: 'LHDN filing preview', icon: FileCheck }],
+      outputs: ['mini_services.output.filed_returns', 'mini_services.output.confirmation_receipt'],
+      previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.lhdn_filing', icon: FileCheck }],
       onboardingSteps: [
         {
-          title: 'Document Checklist',
-          titleMs: 'Senarai Semak Dokumen',
+          title: 'mini_services.lhdn_filing.step1.title',
           component: (
             <div className="space-y-4">
               <div className="space-y-2">
                 {[
-                  'Form BE (Individual)',
-                  'EA Form (Employment)',
-                  'Bank Statements',
-                  'Business Receipts'
+                  t('mini_services.documents.form_be'),
+                  t('mini_services.documents.ea_form'),
+                  t('mini_services.documents.bank_statements'),
+                  t('mini_services.documents.business_receipts')
                 ].map(doc => (
                   <div key={doc} className="flex items-center space-x-2">
                     <input type="checkbox" />
@@ -542,7 +501,7 @@ export default function MiniServices() {
                 ))}
               </div>
               <button className="w-full p-3 bg-emerald-500 text-white rounded-lg">
-                Start Filing Process
+                {t('mini_services.action.start_filing')}
               </button>
             </div>
           )
@@ -551,32 +510,29 @@ export default function MiniServices() {
     },
     {
       id: 'insurance-quotes',
-      title: 'Business Insurance Quotes',
-      titleMs: 'Sebut Harga Insurans Perniagaan',
-      description: 'Compare business insurance coverage',
-      descriptionMs: 'Bandingkan perlindungan insurans perniagaan',
+      title: 'mini_services.insurance_quotes.title',
+      description: 'mini_services.insurance_quotes.description',
       icon: Shield,
       category: 'professional',
       color: 'from-slate-500 to-slate-600',
       bgColor: 'bg-slate-50',
-      outputs: ['Quote Comparisons', 'Policy Documents'],
-      previews: [{ type: 'text', label: 'Sample', content: 'Insurance quotes preview', icon: Shield }],
+      outputs: ['mini_services.output.quote_comparisons', 'mini_services.output.policy_documents'],
+      previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.insurance_quotes', icon: Shield }],
       onboardingSteps: [
         {
-          title: 'Business Type',
-          titleMs: 'Jenis Perniagaan',
+          title: 'mini_services.insurance_quotes.step1.title',
           component: (
             <div className="space-y-4">
               <select className="w-full p-3 border rounded-lg">
-                <option>Restaurant/F&B</option>
-                <option>Retail Store</option>
-                <option>Service Provider</option>
-                <option>Manufacturing</option>
+                <option>{t('mini_services.business_type.restaurant')}</option>
+                <option>{t('mini_services.business_type.retail')}</option>
+                <option>{t('mini_services.business_type.service')}</option>
+                <option>{t('mini_services.business_type.manufacturing')}</option>
               </select>
-              <input placeholder="Number of Employees" className="w-full p-3 border rounded-lg" />
-              <input placeholder="Annual Revenue (RM)" className="w-full p-3 border rounded-lg" />
+              <input placeholder={t('mini_services.form.number_employees')} className="w-full p-3 border rounded-lg" />
+              <input placeholder={t('mini_services.form.annual_revenue')} className="w-full p-3 border rounded-lg" />
               <div className="p-4 bg-slate-50 rounded-lg">
-                <div className="text-sm font-medium">Estimated Premium: RM 200-500/month</div>
+                <div className="text-sm font-medium">{t('mini_services.status.estimated_premium')}</div>
               </div>
             </div>
           )
@@ -586,10 +542,10 @@ export default function MiniServices() {
   ]
 
   const categories = {
-    financial: { name: 'Financial & Compliance', nameMs: 'Kewangan & Pematuhan', color: 'text-blue-600' },
-    operations: { name: 'Point of Sale & Operations', nameMs: 'Titik Jualan & Operasi', color: 'text-indigo-600' },
-    digital: { name: 'Digital Presence & Customer Management', nameMs: 'Kehadiran Digital & Pengurusan Pelanggan', color: 'text-purple-600' },
-    professional: { name: 'Professional Services', nameMs: 'Perkhidmatan Profesional', color: 'text-emerald-600' }
+    financial: { name: 'mini_services.category.financial', color: 'text-blue-600' },
+    operations: { name: 'mini_services.category.operations', color: 'text-indigo-600' },
+    digital: { name: 'mini_services.category.digital', color: 'text-purple-600' },
+    professional: { name: 'mini_services.category.professional', color: 'text-emerald-600' }
   }
 
   const selectedServiceData = services.find(s => s.id === selectedService)
@@ -643,17 +599,12 @@ export default function MiniServices() {
       <GradientBackground/>
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 mt-2">
         {/* Header */}
-        <div className="text-center mb-12 bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
-          <h1 className="text-4xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
+        <div className="text-center mb-12 bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
             {t('language') === 'ms' ? 'Perkhidmatan Mini' : 'Mini Services'}
-            </span>
           </h1>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-6">
-            {t('language') === 'ms'
-              ? 'Akses alat dan perkhidmatan penting untuk menjalankan perniagaan anda dengan lebih cekap'
-              : 'Access essential tools and services to run your business more efficiently'
-            }
+            {t('mini_services.subtitle')}
           </p>
 
           <div className="flex justify-center items-center gap-4 mb-4">
@@ -665,7 +616,7 @@ export default function MiniServices() {
                   : 'bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200'
               }`}
             >
-              {showFavoritesOnly ? 'Show All' : 'Show Favorites'}
+              {showFavoritesOnly ? t('mini_services.show_all') : t('mini_services.show_favorites')}
               {favorites.size > 0 && (
                 <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
                   {favorites.size}
@@ -681,7 +632,7 @@ export default function MiniServices() {
         {Object.entries(categories).map(([categoryKey, category]) => (
           <div key={categoryKey} className="mb-12">
             <h2 className={`text-2xl font-bold ${category.color} mb-6`}>
-              {t('language') === 'ms' ? category.nameMs : category.name}
+              {t(category.name)}
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -693,8 +644,8 @@ export default function MiniServices() {
                   return (
                     <HoverCard
                       key={service.id}
-                      title={t('language') === 'ms' ? service.titleMs : service.title}
-                      description={t('language') === 'ms' ? service.descriptionMs : service.description}
+                      title={t(service.title)}
+                      description={t(service.description)}
                       outputs={service.outputs}
                       previews={service.previews}
                     >
@@ -734,11 +685,11 @@ export default function MiniServices() {
                         </div>
 
                         <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">
-                          {t('language') === 'ms' ? service.titleMs : service.title}
+                          {t(service.title)}
                         </h3>
 
                         <p className="text-sm text-gray-600 text-center leading-relaxed">
-                          {t('language') === 'ms' ? service.descriptionMs : service.description}
+                          {t(service.description)}
                         </p>
                       </div>
                     </HoverCard>
@@ -761,10 +712,10 @@ export default function MiniServices() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900">
-                      {t('language') === 'ms' ? selectedServiceData.titleMs : selectedServiceData.title}
+                      {t(selectedServiceData.title)}
                     </h3>
                     <p className="text-sm text-gray-600">
-                      {t('language') === 'ms' ? 'Langkah' : 'Step'} {currentStep + 1} {t('language') === 'ms' ? 'daripada' : 'of'} {selectedServiceData.onboardingSteps.length}
+                      {t('mini_services.step_of').replace('{current}', (currentStep + 1).toString()).replace('{total}', selectedServiceData.onboardingSteps.length.toString())}
                     </p>
                   </div>
                 </div>
@@ -779,12 +730,9 @@ export default function MiniServices() {
 
             <div className="p-6">
               <h4 className="text-lg font-semibold mb-4">
-                {t('language') === 'ms' 
-                  ? selectedServiceData.onboardingSteps[currentStep].titleMs 
-                  : selectedServiceData.onboardingSteps[currentStep].title
-                }
+                {t(selectedServiceData.onboardingSteps[currentStep].title)}
               </h4>
-              
+
               {selectedServiceData.onboardingSteps[currentStep].component}
             </div>
 
@@ -795,22 +743,22 @@ export default function MiniServices() {
                 disabled={currentStep === 0}
                 className="px-6 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {t('language') === 'ms' ? 'Sebelum' : 'Previous'}
+                {t('mini_services.previous')}
               </button>
-              
+
               {currentStep < selectedServiceData.onboardingSteps.length - 1 ? (
                 <button
                   onClick={handleNextStep}
                   className={`px-6 py-2 bg-gradient-to-r ${selectedServiceData.color} text-white rounded-lg hover:shadow-lg transition-all flex items-center space-x-2`}
                 >
-                  <span>{t('language') === 'ms' ? 'Seterusnya' : 'Next'}</span>
+                  <span>{t('mini_services.next')}</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               ) : (
                 <button
                   className={`px-6 py-2 bg-gradient-to-r ${selectedServiceData.color} text-white rounded-lg hover:shadow-lg transition-all`}
                 >
-                  {t('language') === 'ms' ? 'Selesai' : 'Complete'}
+                  {t('mini_services.complete')}
                 </button>
               )}
             </div>

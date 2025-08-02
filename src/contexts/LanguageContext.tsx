@@ -1736,6 +1736,793 @@ const translations = {
     ms: 'Pembiayaan Mikro Biz (MBF)',
     en: 'Micro Biz Financing (MBF)'
   },
+
+  // Mini Services Page
+  'mini_services.title': {
+    ms: 'Perkhidmatan Mini',
+    en: 'Mini Services'
+  },
+  'mini_services.subtitle': {
+    ms: 'Akses alat dan perkhidmatan penting untuk menjalankan perniagaan anda dengan lebih cekap',
+    en: 'Access essential tools and services to run your business more efficiently'
+  },
+  'mini_services.show_favorites': {
+    ms: 'Tunjuk Kegemaran',
+    en: 'Show Favorites'
+  },
+  'mini_services.show_all': {
+    ms: 'Tunjuk Semua',
+    en: 'Show All'
+  },
+  'mini_services.recommended': {
+    ms: 'Disyorkan',
+    en: 'Recommended'
+  },
+  'mini_services.popular': {
+    ms: 'Popular',
+    en: 'Popular'
+  },
+  'mini_services.step_of': {
+    ms: 'Langkah {current} daripada {total}',
+    en: 'Step {current} of {total}'
+  },
+  'mini_services.previous': {
+    ms: 'Sebelum',
+    en: 'Previous'
+  },
+  'mini_services.next': {
+    ms: 'Seterusnya',
+    en: 'Next'
+  },
+  'mini_services.complete': {
+    ms: 'Selesai',
+    en: 'Complete'
+  },
+
+  // Mini Services Categories
+  'mini_services.category.financial': {
+    ms: 'Kewangan & Pematuhan',
+    en: 'Financial & Compliance'
+  },
+  'mini_services.category.operations': {
+    ms: 'Titik Jualan & Operasi',
+    en: 'Point of Sale & Operations'
+  },
+  'mini_services.category.digital': {
+    ms: 'Kehadiran Digital & Pengurusan Pelanggan',
+    en: 'Digital Presence & Customer Management'
+  },
+  'mini_services.category.professional': {
+    ms: 'Perkhidmatan Profesional',
+    en: 'Professional Services'
+  },
+
+  // Financial & Compliance Services
+  'mini_services.einvoicing.title': {
+    ms: 'Sistem E-Invois',
+    en: 'E-Invoicing System'
+  },
+  'mini_services.einvoicing.description': {
+    ms: 'Jana invois digital yang mematuhi MyInvois • Output PDF',
+    en: 'Generate MyInvois compliant digital invoices • PDF output'
+  },
+  'mini_services.einvoicing.step1.title': {
+    ms: 'Butiran Perniagaan',
+    en: 'Business Details'
+  },
+  'mini_services.einvoicing.step2.title': {
+    ms: 'Template Invois',
+    en: 'Invoice Template'
+  },
+
+  'mini_services.digital_receipt.title': {
+    ms: 'Penjana Resit Digital',
+    en: 'Digital Receipt Generator'
+  },
+  'mini_services.digital_receipt.description': {
+    ms: 'Cipta resit profesional dengan GST/SST • PDF & siap cetak',
+    en: 'Create professional receipts with GST/SST • PDF & print ready'
+  },
+  'mini_services.digital_receipt.step1.title': {
+    ms: 'Template Resit',
+    en: 'Receipt Template'
+  },
+
+  'mini_services.tax_calculator.title': {
+    ms: 'Kalkulator Cukai',
+    en: 'Tax Calculator'
+  },
+  'mini_services.tax_calculator.description': {
+    ms: 'Kira cukai peribadi dan perniagaan • Laporan ringkasan PDF',
+    en: 'Calculate personal and business tax • PDF summary report'
+  },
+  'mini_services.tax_calculator.step1.title': {
+    ms: 'Butiran Pendapatan',
+    en: 'Income Details'
+  },
+
+  'mini_services.gst_helper.title': {
+    ms: 'Pembantu GST/SST',
+    en: 'GST/SST Helper'
+  },
+  'mini_services.gst_helper.description': {
+    ms: 'Bantuan pengiraan dan pemfailan GST/SST • Peringatan auto',
+    en: 'GST/SST calculation and filing assistance • Auto reminders'
+  },
+  'mini_services.gst_helper.step1.title': {
+    ms: 'Tetapan Cukai',
+    en: 'Tax Settings'
+  },
+
+  // Point of Sale & Operations Services
+  'mini_services.mobile_pos.title': {
+    ms: 'Aplikasi POS Mudah Alih',
+    en: 'Mobile POS App'
+  },
+  'mini_services.mobile_pos.description': {
+    ms: 'Tukar telefon anda jadi mesin kira-kira • Jejak jualan masa nyata',
+    en: 'Turn your phone into a cash register • Real-time sales tracking'
+  },
+  'mini_services.mobile_pos.step1.title': {
+    ms: 'Katalog Produk',
+    en: 'Product Catalog'
+  },
+  'mini_services.mobile_pos.step2.title': {
+    ms: 'Kaedah Pembayaran',
+    en: 'Payment Methods'
+  },
+
+  'mini_services.inventory.title': {
+    ms: 'Pengurusan Inventori',
+    en: 'Inventory Management'
+  },
+  'mini_services.inventory.description': {
+    ms: 'Jejak stok dan dapat amaran',
+    en: 'Track stock levels and get alerts'
+  },
+  'mini_services.inventory.step1.title': {
+    ms: 'Entri Stok',
+    en: 'Stock Entry'
+  },
+
+  'mini_services.loyalty_program.title': {
+    ms: 'Setup Program Kesetiaan',
+    en: 'Loyalty Program Setup'
+  },
+  'mini_services.loyalty_program.description': {
+    ms: 'Cipta kad setem digital dan ganjaran',
+    en: 'Create digital stamp cards and rewards'
+  },
+  'mini_services.loyalty_program.step1.title': {
+    ms: 'Struktur Ganjaran',
+    en: 'Reward Structure'
+  },
+
+  'mini_services.delivery_service.title': {
+    ms: 'Integrasi Perkhidmatan Penghantaran',
+    en: 'Delivery Service Integration'
+  },
+  'mini_services.delivery_service.description': {
+    ms: 'Sambung dengan rakan kongsi penghantaran',
+    en: 'Connect with delivery partners'
+  },
+  'mini_services.delivery_service.step1.title': {
+    ms: 'Rakan Kongsi Penghantaran',
+    en: 'Delivery Partners'
+  },
+
+  // Digital Presence & Customer Management Services
+  'mini_services.website_builder.title': {
+    ms: 'Pembina Laman Web Mini',
+    en: 'Mini Website Builder'
+  },
+  'mini_services.website_builder.description': {
+    ms: 'Cipta laman web perniagaan mudah',
+    en: 'Create a simple business website'
+  },
+  'mini_services.website_builder.step1.title': {
+    ms: 'Pemilihan Template',
+    en: 'Template Selection'
+  },
+
+  'mini_services.booking_system.title': {
+    ms: 'Sistem Tempahan Dalam Talian',
+    en: 'Online Booking System'
+  },
+  'mini_services.booking_system.description': {
+    ms: 'Terima tempahan dan reservasi dalam talian',
+    en: 'Accept online bookings and reservations'
+  },
+  'mini_services.booking_system.step1.title': {
+    ms: 'Setup Perkhidmatan',
+    en: 'Service Setup'
+  },
+
+  'mini_services.appointment_scheduler.title': {
+    ms: 'Penjadual Temujanji',
+    en: 'Appointment Scheduler'
+  },
+  'mini_services.appointment_scheduler.description': {
+    ms: 'Urus temujanji dan jadual kakitangan',
+    en: 'Manage appointments and staff schedules'
+  },
+  'mini_services.appointment_scheduler.step1.title': {
+    ms: 'Ketersediaan Kakitangan',
+    en: 'Staff Availability'
+  },
+
+  // Professional Services
+  'mini_services.lhdn_filing.title': {
+    ms: 'Pembantu e-Filing LHDN',
+    en: 'LHDN e-Filing Assistant'
+  },
+  'mini_services.lhdn_filing.description': {
+    ms: 'Panduan pemfailan cukai dengan LHDN',
+    en: 'Guided tax filing with LHDN'
+  },
+  'mini_services.lhdn_filing.step1.title': {
+    ms: 'Senarai Semak Dokumen',
+    en: 'Document Checklist'
+  },
+
+  'mini_services.insurance_quotes.title': {
+    ms: 'Sebut Harga Insurans Perniagaan',
+    en: 'Business Insurance Quotes'
+  },
+  'mini_services.insurance_quotes.description': {
+    ms: 'Bandingkan perlindungan insurans perniagaan',
+    en: 'Compare business insurance coverage'
+  },
+  'mini_services.insurance_quotes.step1.title': {
+    ms: 'Jenis Perniagaan',
+    en: 'Business Type'
+  },
+
+  // Mini Services - Common Form Elements
+  'mini_services.form.business_name': {
+    ms: 'Nama Perniagaan',
+    en: 'Business Name'
+  },
+  'mini_services.form.business_address': {
+    ms: 'Alamat Perniagaan',
+    en: 'Business Address'
+  },
+  'mini_services.form.ssm_registration': {
+    ms: 'No. Pendaftaran SSM',
+    en: 'SSM Registration No.'
+  },
+  'mini_services.form.tax_id': {
+    ms: 'No. Pengenalan Cukai',
+    en: 'Tax Identification No.'
+  },
+  'mini_services.form.annual_income': {
+    ms: 'Pendapatan Tahunan (RM)',
+    en: 'Annual Income (RM)'
+  },
+  'mini_services.form.product_name': {
+    ms: 'Nama Produk',
+    en: 'Product Name'
+  },
+  'mini_services.form.price': {
+    ms: 'Harga',
+    en: 'Price'
+  },
+  'mini_services.form.current_stock': {
+    ms: 'Stok Semasa',
+    en: 'Current Stock'
+  },
+  'mini_services.form.minimum_alert': {
+    ms: 'Amaran Minimum',
+    en: 'Minimum Alert'
+  },
+  'mini_services.form.item_name': {
+    ms: 'Nama Item',
+    en: 'Item Name'
+  },
+  'mini_services.form.service_name': {
+    ms: 'Nama Perkhidmatan',
+    en: 'Service Name'
+  },
+  'mini_services.form.duration_mins': {
+    ms: 'Tempoh (minit)',
+    en: 'Duration (mins)'
+  },
+  'mini_services.form.staff_name': {
+    ms: 'Nama Kakitangan',
+    en: 'Staff Name'
+  },
+  'mini_services.form.number_employees': {
+    ms: 'Bilangan Pekerja',
+    en: 'Number of Employees'
+  },
+  'mini_services.form.annual_revenue': {
+    ms: 'Hasil Tahunan (RM)',
+    en: 'Annual Revenue (RM)'
+  },
+
+  // Mini Services - Business Types
+  'mini_services.business_type.restaurant': {
+    ms: 'Restoran/F&B',
+    en: 'Restaurant/F&B'
+  },
+  'mini_services.business_type.retail': {
+    ms: 'Kedai Runcit',
+    en: 'Retail Store'
+  },
+  'mini_services.business_type.service': {
+    ms: 'Penyedia Perkhidmatan',
+    en: 'Service Provider'
+  },
+  'mini_services.business_type.manufacturing': {
+    ms: 'Pembuatan',
+    en: 'Manufacturing'
+  },
+  'mini_services.business_type.individual': {
+    ms: 'Individu',
+    en: 'Individual'
+  },
+  'mini_services.business_type.married': {
+    ms: 'Berkahwin',
+    en: 'Married'
+  },
+  'mini_services.business_type.business': {
+    ms: 'Perniagaan',
+    en: 'Business'
+  },
+
+  // Mini Services - Tax Settings
+  'mini_services.tax.gst_registered': {
+    ms: 'Berdaftar GST',
+    en: 'GST Registered'
+  },
+  'mini_services.tax.sst_registered': {
+    ms: 'Berdaftar SST',
+    en: 'SST Registered'
+  },
+  'mini_services.tax.not_registered': {
+    ms: 'Tidak Berdaftar',
+    en: 'Not Registered'
+  },
+  'mini_services.tax.include_gst': {
+    ms: 'Termasuk GST (6%)',
+    en: 'Include GST (6%)'
+  },
+  'mini_services.tax.include_sst': {
+    ms: 'Termasuk SST',
+    en: 'Include SST'
+  },
+
+  // Mini Services - Receipt Templates
+  'mini_services.receipt.standard': {
+    ms: 'Resit Standard',
+    en: 'Standard Receipt'
+  },
+  'mini_services.receipt.detailed': {
+    ms: 'Resit Terperinci',
+    en: 'Detailed Receipt'
+  },
+  'mini_services.receipt.minimal': {
+    ms: 'Resit Minimal',
+    en: 'Minimal Receipt'
+  },
+
+  // Mini Services - Invoice Templates
+  'mini_services.invoice.professional': {
+    ms: 'Profesional',
+    en: 'Professional'
+  },
+  'mini_services.invoice.simple': {
+    ms: 'Mudah',
+    en: 'Simple'
+  },
+
+  // Mini Services - Payment Methods
+  'mini_services.payment.cash': {
+    ms: 'Tunai',
+    en: 'Cash'
+  },
+  'mini_services.payment.qr_pay': {
+    ms: 'Bayar QR',
+    en: 'QR Pay'
+  },
+
+  // Mini Services - Website Templates
+  'mini_services.website.restaurant': {
+    ms: 'Restoran',
+    en: 'Restaurant'
+  },
+  'mini_services.website.retail': {
+    ms: 'Runcit',
+    en: 'Retail'
+  },
+
+  // Mini Services - Availability
+  'mini_services.availability.9am_6pm': {
+    ms: 'Tersedia 9 Pagi - 6 Petang',
+    en: 'Available 9 AM - 6 PM'
+  },
+  'mini_services.availability.24_7': {
+    ms: 'Tersedia 24/7',
+    en: 'Available 24/7'
+  },
+  'mini_services.availability.custom': {
+    ms: 'Waktu Khas',
+    en: 'Custom hours'
+  },
+
+  // Mini Services - Days of Week
+  'mini_services.days.mon': {
+    ms: 'Isn',
+    en: 'Mon'
+  },
+  'mini_services.days.tue': {
+    ms: 'Sel',
+    en: 'Tue'
+  },
+  'mini_services.days.wed': {
+    ms: 'Rab',
+    en: 'Wed'
+  },
+  'mini_services.days.thu': {
+    ms: 'Kha',
+    en: 'Thu'
+  },
+  'mini_services.days.fri': {
+    ms: 'Jum',
+    en: 'Fri'
+  },
+  'mini_services.days.sat': {
+    ms: 'Sab',
+    en: 'Sat'
+  },
+  'mini_services.days.sun': {
+    ms: 'Ahd',
+    en: 'Sun'
+  },
+
+  // Mini Services - Document Types
+  'mini_services.documents.form_be': {
+    ms: 'Borang BE (Individu)',
+    en: 'Form BE (Individual)'
+  },
+  'mini_services.documents.ea_form': {
+    ms: 'Borang EA (Pekerjaan)',
+    en: 'EA Form (Employment)'
+  },
+  'mini_services.documents.bank_statements': {
+    ms: 'Penyata Bank',
+    en: 'Bank Statements'
+  },
+  'mini_services.documents.business_receipts': {
+    ms: 'Resit Perniagaan',
+    en: 'Business Receipts'
+  },
+
+  // Mini Services - Action Buttons
+  'mini_services.action.start_filing': {
+    ms: 'Mula Proses Pemfailan',
+    en: 'Start Filing Process'
+  },
+  'mini_services.action.add_product': {
+    ms: 'Tambah Produk',
+    en: 'Add Product'
+  },
+  'mini_services.action.choose_file': {
+    ms: 'Pilih Fail',
+    en: 'Choose File'
+  },
+
+  // Mini Services - Status Messages
+  'mini_services.status.estimated_tax': {
+    ms: 'Anggaran Cukai: RM 0',
+    en: 'Estimated Tax: RM 0'
+  },
+  'mini_services.status.next_filing': {
+    ms: 'Pemfailan Seterusnya: 30 Apr 2024',
+    en: 'Next Filing: 30 Apr 2024'
+  },
+  'mini_services.status.set_reminder': {
+    ms: 'Tetapkan peringatan 7 hari sebelum',
+    en: 'Set reminder 7 days before'
+  },
+  'mini_services.status.estimated_premium': {
+    ms: 'Anggaran Premium: RM 200-500/bulan',
+    en: 'Estimated Premium: RM 200-500/month'
+  },
+  'mini_services.status.preview_reward': {
+    ms: 'Pratonton: Kumpul 10 setem = Kopi percuma',
+    en: 'Preview: Collect 10 stamps = Free coffee'
+  },
+
+  // Mini Services - Delivery Partners
+  'mini_services.delivery.grab': {
+    ms: 'Grab',
+    en: 'Grab'
+  },
+  'mini_services.delivery.foodpanda': {
+    ms: 'Foodpanda',
+    en: 'Foodpanda'
+  },
+  'mini_services.delivery.lalamove': {
+    ms: 'Lalamove',
+    en: 'Lalamove'
+  },
+  'mini_services.delivery.commission': {
+    ms: 'komisi 5-15%',
+    en: '5-15% commission'
+  },
+
+  // Mini Services - Sample Data
+  'mini_services.sample.invoice_header': {
+    ms: 'INVOIS #INV-2024-001\nTarikh: 15 Jan 2024\nKepada: ABC Sdn Bhd\nSSM: 123456-A\nID GST: 000123456789',
+    en: 'INVOICE #INV-2024-001\nDate: 15 Jan 2024\nTo: ABC Sdn Bhd\nSSM: 123456-A\nGST ID: 000123456789'
+  },
+  'mini_services.sample.receipt': {
+    ms: 'RESIT #R-2024-001\nKafe Sedap\nNasi Lemak x2    RM 10.00\nTeh Tarik x1     RM  3.50\nSubjumlah:       RM 13.50\nGST (6%):        RM  0.81\nJumlah:          RM 14.31',
+    en: 'RECEIPT #R-2024-001\nCafe Delicious\nNasi Lemak x2    RM 10.00\nTeh Tarik x1     RM  3.50\nSubtotal:        RM 13.50\nGST (6%):        RM  0.81\nTotal:           RM 14.31'
+  },
+  'mini_services.sample.tax_calculation': {
+    ms: 'Pendapatan Tahunan: RM 60,000\nPelepasan Peribadi: RM 9,000\nPendapatan Bercukai: RM 51,000\nCukai Perlu Bayar: RM 1,350\nKadar Berkesan: 2.25%',
+    en: 'Annual Income: RM 60,000\nPersonal Relief: RM 9,000\nTaxable Income: RM 51,000\nTax Payable: RM 1,350\nEffective Rate: 2.25%'
+  },
+  'mini_services.sample.gst_return': {
+    ms: 'Penyata GST-03\nTempoh: Jan-Mac 2024\nCukai Output: RM 1,200\nCukai Input: RM 800\nGST Bersih: RM 400\nTarikh Akhir: 30 Apr 2024',
+    en: 'GST-03 Return\nPeriod: Jan-Mar 2024\nOutput Tax: RM 1,200\nInput Tax: RM 800\nNet GST: RM 400\nDue Date: 30 Apr 2024'
+  },
+  'mini_services.sample.pos_interface': {
+    ms: 'Produk: Nasi Lemak\nHarga: RM 5.00\nKuantiti: 2\nSubjumlah: RM 10.00\nBayaran: Tunai/QR',
+    en: 'Product: Nasi Lemak\nPrice: RM 5.00\nQty: 2\nSubtotal: RM 10.00\nPayment: Cash/QR'
+  },
+
+  // Mini Services - Features Lists
+  'mini_services.features.myinvois_compliance': {
+    ms: '✓ Format diluluskan LHDN\n✓ Tandatangan digital\n✓ Pengesahan kod QR\n✓ Pengiraan GST auto',
+    en: '✓ LHDN approved format\n✓ Digital signature\n✓ QR code verification\n✓ Auto GST calculation'
+  },
+  'mini_services.features.receipt_features': {
+    ms: '✓ Pengiraan GST/SST auto\n✓ Template profesional\n✓ Penjanaan PDF segera\n✓ Penghantaran emel',
+    en: '✓ Auto GST/SST calculation\n✓ Professional templates\n✓ Instant PDF generation\n✓ Email delivery'
+  },
+  'mini_services.features.tax_calculation': {
+    ms: '✓ Cukai peribadi & perniagaan\n✓ Pengoptimuman pelepasan\n✓ Anggaran bulanan\n✓ Peringatan pemfailan',
+    en: '✓ Personal & business tax\n✓ Relief optimization\n✓ Monthly estimates\n✓ Filing reminders'
+  },
+  'mini_services.features.gst_helper': {
+    ms: '✓ Pengiraan auto\n✓ Peringatan pemfailan\n✓ Pra-isi borang\n✓ Jejak tarikh akhir',
+    en: '✓ Auto calculations\n✓ Filing reminders\n✓ Form pre-filling\n✓ Deadline tracking'
+  },
+
+  // Mini Services - Output Types
+  'mini_services.output.pdf_invoice': {
+    ms: 'Invois PDF',
+    en: 'PDF Invoice'
+  },
+  'mini_services.output.email_delivery': {
+    ms: 'Penghantaran Emel',
+    en: 'Email Delivery'
+  },
+  'mini_services.output.pdf_receipt': {
+    ms: 'Resit PDF',
+    en: 'PDF Receipt'
+  },
+  'mini_services.output.print_format': {
+    ms: 'Format Cetak',
+    en: 'Print Format'
+  },
+  'mini_services.output.email_copy': {
+    ms: 'Salinan Emel',
+    en: 'Email Copy'
+  },
+  'mini_services.output.tax_summary_pdf': {
+    ms: 'Ringkasan Cukai PDF',
+    en: 'Tax Summary PDF'
+  },
+  'mini_services.output.calculation_breakdown': {
+    ms: 'Pecahan Pengiraan',
+    en: 'Calculation Breakdown'
+  },
+  'mini_services.output.filing_checklist': {
+    ms: 'Senarai Semak Pemfailan',
+    en: 'Filing Checklist'
+  },
+  'mini_services.output.filing_forms': {
+    ms: 'Borang Pemfailan',
+    en: 'Filing Forms'
+  },
+  'mini_services.output.calculation_sheet': {
+    ms: 'Lembaran Pengiraan',
+    en: 'Calculation Sheet'
+  },
+  'mini_services.output.email_reminders': {
+    ms: 'Peringatan Emel',
+    en: 'Email Reminders'
+  },
+  'mini_services.output.sales_reports': {
+    ms: 'Laporan Jualan',
+    en: 'Sales Reports'
+  },
+  'mini_services.output.receipt_prints': {
+    ms: 'Cetakan Resit',
+    en: 'Receipt Prints'
+  },
+  'mini_services.output.daily_summary': {
+    ms: 'Ringkasan Harian',
+    en: 'Daily Summary'
+  },
+  'mini_services.output.stock_reports': {
+    ms: 'Laporan Stok',
+    en: 'Stock Reports'
+  },
+  'mini_services.output.alert_notifications': {
+    ms: 'Notifikasi Amaran',
+    en: 'Alert Notifications'
+  },
+  'mini_services.output.digital_cards': {
+    ms: 'Kad Digital',
+    en: 'Digital Cards'
+  },
+  'mini_services.output.customer_database': {
+    ms: 'Pangkalan Data Pelanggan',
+    en: 'Customer Database'
+  },
+  'mini_services.output.integration_setup': {
+    ms: 'Setup Integrasi',
+    en: 'Integration Setup'
+  },
+  'mini_services.output.tracking_links': {
+    ms: 'Pautan Jejak',
+    en: 'Tracking Links'
+  },
+  'mini_services.output.website_url': {
+    ms: 'URL Laman Web',
+    en: 'Website URL'
+  },
+  'mini_services.output.mobile_responsive': {
+    ms: 'Responsif Mudah Alih',
+    en: 'Mobile Responsive'
+  },
+  'mini_services.output.booking_confirmations': {
+    ms: 'Pengesahan Tempahan',
+    en: 'Booking Confirmations'
+  },
+  'mini_services.output.calendar_sync': {
+    ms: 'Segerak Kalendar',
+    en: 'Calendar Sync'
+  },
+  'mini_services.output.schedule_reports': {
+    ms: 'Laporan Jadual',
+    en: 'Schedule Reports'
+  },
+  'mini_services.output.staff_calendars': {
+    ms: 'Kalendar Kakitangan',
+    en: 'Staff Calendars'
+  },
+  'mini_services.output.filed_returns': {
+    ms: 'Penyata Difailkan',
+    en: 'Filed Returns'
+  },
+  'mini_services.output.confirmation_receipt': {
+    ms: 'Resit Pengesahan',
+    en: 'Confirmation Receipt'
+  },
+  'mini_services.output.quote_comparisons': {
+    ms: 'Perbandingan Sebut Harga',
+    en: 'Quote Comparisons'
+  },
+  'mini_services.output.policy_documents': {
+    ms: 'Dokumen Polisi',
+    en: 'Policy Documents'
+  },
+
+  // Mini Services - Preview Labels
+  'mini_services.preview.sample_invoice_header': {
+    ms: 'Contoh Pengepala Invois',
+    en: 'Sample Invoice Header'
+  },
+  'mini_services.preview.myinvois_compliance': {
+    ms: 'Pematuhan MyInvois',
+    en: 'MyInvois Compliance'
+  },
+  'mini_services.preview.export_formats': {
+    ms: 'Format Eksport',
+    en: 'Export Formats'
+  },
+  'mini_services.preview.sample_receipt': {
+    ms: 'Contoh Resit',
+    en: 'Sample Receipt'
+  },
+  'mini_services.preview.features': {
+    ms: 'Ciri-ciri',
+    en: 'Features'
+  },
+  'mini_services.preview.tax_calculation_sample': {
+    ms: 'Contoh Pengiraan Cukai',
+    en: 'Tax Calculation Sample'
+  },
+  'mini_services.preview.calculation_features': {
+    ms: 'Ciri Pengiraan',
+    en: 'Calculation Features'
+  },
+  'mini_services.preview.gst_return_sample': {
+    ms: 'Contoh Penyata GST',
+    en: 'GST Return Sample'
+  },
+  'mini_services.preview.helper_features': {
+    ms: 'Ciri Pembantu',
+    en: 'Helper Features'
+  },
+  'mini_services.preview.pos_interface': {
+    ms: 'Antara Muka POS',
+    en: 'POS Interface'
+  },
+
+  // Mini Services - Placeholders
+  'mini_services.placeholder.business_name': {
+    ms: 'Contoh: Warung Mak Kiah',
+    en: 'Example: Mak Kiah\'s Stall'
+  },
+  'mini_services.placeholder.about_us': {
+    ms: 'Tentang Kami',
+    en: 'About Us'
+  },
+  'mini_services.placeholder.stamps_needed': {
+    ms: 'Setem diperlukan',
+    en: 'Stamps needed'
+  },
+  'mini_services.placeholder.reward': {
+    ms: 'Ganjaran',
+    en: 'Reward'
+  },
+
+  // Mini Services - File Names
+  'mini_services.file.invoice_001': {
+    ms: 'invois_001.pdf',
+    en: 'invoice_001.pdf'
+  },
+
+  // Mini Services - Preview Text
+  'mini_services.preview_text.invoice_template': {
+    ms: 'Pratonton: Template invois akan muncul di sini',
+    en: 'Preview: Invoice template will appear here'
+  },
+  'mini_services.preview_text.website': {
+    ms: 'Pratonton laman web',
+    en: 'Website preview'
+  },
+  'mini_services.preview_text.booking_system': {
+    ms: 'Pratonton sistem tempahan',
+    en: 'Booking system preview'
+  },
+  'mini_services.preview_text.appointment_scheduler': {
+    ms: 'Pratonton penjadual temujanji',
+    en: 'Appointment scheduler preview'
+  },
+  'mini_services.preview_text.lhdn_filing': {
+    ms: 'Pratonton pemfailan LHDN',
+    en: 'LHDN filing preview'
+  },
+  'mini_services.preview_text.insurance_quotes': {
+    ms: 'Pratonton sebut harga insurans',
+    en: 'Insurance quotes preview'
+  },
+  'mini_services.preview_text.inventory': {
+    ms: 'Pratonton jejak stok',
+    en: 'Stock tracking preview'
+  },
+  'mini_services.preview_text.loyalty_program': {
+    ms: 'Pratonton program kesetiaan',
+    en: 'Loyalty program preview'
+  },
+  'mini_services.preview_text.delivery_integration': {
+    ms: 'Pratonton integrasi penghantaran',
+    en: 'Delivery integration preview'
+  },
+
+  // Language identifier
+  'language': {
+    ms: 'ms',
+    en: 'en'
+  },
   'recommendation.data.mbf.description': {
     ms: 'Pembiayaan mikro untuk petani kecil dan agroprenuer pada kadar faedah rendah (2% setahun).',
     en: 'Micro-financing for small-scale farmers and agropreneurs at a low interest rate (2% per annum).'

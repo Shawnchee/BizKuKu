@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { X, ExternalLink, FileText, Download } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface PreviewItem {
   type: 'image' | 'text' | 'file' | 'feature'
@@ -34,6 +35,7 @@ export default function HoverCard({
   className = '',
   disabled = false
 }: HoverCardProps) {
+  const { t } = useLanguage()
   const [isVisible, setIsVisible] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const triggerRef = useRef<HTMLDivElement>(null)
@@ -157,7 +159,7 @@ export default function HoverCard({
                           key={index}
                           className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-medium"
                         >
-                          {output}
+                          {t(output)}
                         </span>
                       ))}
                     </div>
@@ -170,38 +172,38 @@ export default function HoverCard({
                     <FileText className="w-4 h-4" />
                     Preview:
                   </h4>
-                  
+
                   {previews.map((preview, index) => (
                     <div key={index} className="border rounded-lg p-3 bg-gray-50">
                       <div className="flex items-center gap-2 mb-2">
                         {preview.icon && <preview.icon className="w-4 h-4 text-gray-600" />}
-                        <span className="text-sm font-medium text-gray-700">{preview.label}</span>
+                        <span className="text-sm font-medium text-gray-700">{t(preview.label)}</span>
                       </div>
-                      
+
                       {preview.type === 'text' && (
                         <div className="text-sm text-gray-600 font-mono bg-white p-2 rounded border">
-                          {preview.content}
+                          {t(preview.content as string)}
                         </div>
                       )}
-                      
+
                       {preview.type === 'image' && (
                         <div className="bg-white p-2 rounded border">
                           <div className="text-xs text-gray-500 text-center py-8 border-2 border-dashed border-gray-200 rounded">
-                            {preview.content}
+                            {t(preview.content as string)}
                           </div>
                         </div>
                       )}
-                      
+
                       {preview.type === 'feature' && (
                         <div className="text-sm text-gray-600">
-                          {preview.content}
+                          {t(preview.content as string)}
                         </div>
                       )}
-                      
+
                       {preview.type === 'file' && (
                         <div className="flex items-center gap-2 text-sm text-gray-600 bg-white p-2 rounded border">
                           <FileText className="w-4 h-4" />
-                          {preview.content}
+                          {t(preview.content as string)}
                         </div>
                       )}
                     </div>
