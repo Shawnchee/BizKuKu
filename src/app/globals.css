@@ -298,3 +298,7 @@ body.chatbot-expanded {
   background-size: 400% 400%;
   animation: gradientShift 30s ease infinite;
 }
+
+nextjs-portal {
+display:none
+}

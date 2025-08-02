@@ -639,7 +639,7 @@ export default function AuthenticatedHome() {
         }
       `}</style>
 
-      {/* Enhanced Avatar Test Panel (Development) */}
+      {/* Enhanced Avatar Test Panel (Development)
       {process.env.NODE_ENV === 'development' && (
         <AvatarTestPanel
           onSpeakText={speakText}
@@ -659,7 +659,7 @@ export default function AuthenticatedHome() {
           currentAvatarConfig={typeof window !== 'undefined' ? (window as any).azureAvatar?.currentConfig : null}
           spokenTextQueue={[]}
         />
-      )}
+      )} */}
     </div>
   )
 }
