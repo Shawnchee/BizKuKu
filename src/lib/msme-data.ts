@@ -717,6 +717,94 @@ export const msmeConsolidatedFinancialData: ConsolidatedFinancialData = {
     savingsRate: 0.47,
     liquidityRatio: 5.7,
   },
+  creditScore: {
+    currentScore: 720,
+    scoreRange: { min: 300, max: 850 },
+    grade: 'B+',
+    trend: 'improving',
+    monthlyChange: 15,
+    lastUpdated: '2024-01-20T10:30:00Z',
+    factors: [
+      {
+        id: 'payment_history',
+        name: 'Payment History',
+        weight: 45,
+        score: 85,
+        status: 'healthy',
+        trend: 'stable',
+        impact: 'high',
+        recommendation: 'Continue paying bills on time. Late payments (30+ days) significantly hurt your score. Avoid collections, settlements, or legal judgments.'
+      },
+      {
+        id: 'amounts_owed',
+        name: 'Amounts Owed',
+        weight: 20,
+        score: 72,
+        status: 'warning',
+        trend: 'declining',
+        impact: 'high',
+        recommendation: 'Reduce total credit utilization below 30%. Maintain a good mix of credit types and pay down existing balances to improve this factor.'
+      },
+      {
+        id: 'length_of_credit_history',
+        name: 'Length of Credit History',
+        weight: 7,
+        score: 92,
+        status: 'healthy',
+        trend: 'stable',
+        impact: 'low',
+        recommendation: 'Your established credit history is excellent. Keep older accounts open to maintain your average account age and credit history length.'
+      },
+      {
+        id: 'credit_mix',
+        name: 'Credit Mix',
+        weight: 14,
+        score: 78,
+        status: 'healthy',
+        trend: 'improving',
+        impact: 'medium',
+        recommendation: 'Good variety of credit types (credit cards, loans, trade credit). Maintain responsible management across all account types.'
+      },
+      {
+        id: 'new_credit',
+        name: 'New Credit',
+        weight: 14,
+        score: 68,
+        status: 'warning',
+        trend: 'declining',
+        impact: 'medium',
+        recommendation: 'Limit new credit applications. Recent credit inquiries and new accounts suggest higher risk. Space out credit applications over time.'
+      }
+    ]
+  },
+  businessHealth: {
+    overallHealth: 'good',
+    healthScore: 76,
+    keyStrengths: [
+      'Excellent payment history with no late payments',
+      'Long-established credit history (8+ years)',
+      'Diverse credit mix across multiple account types',
+      'Strong relationship with financial institutions'
+    ],
+    improvementAreas: [
+      'Total amounts owed across credit facilities',
+      'Recent new credit applications', 
+      'Credit utilization ratio optimization',
+      'Debt-to-income ratio management'
+    ],
+    recommendedActions: [
+      'Reduce total debt balances to improve amounts owed ratio',
+      'Limit new credit applications to avoid negative impact',
+      'Maintain timely payments across all credit accounts',
+      'Keep older credit accounts open to preserve credit history length',
+      'Diversify credit mix responsibly without overextending'
+    ],
+    riskFactors: [
+      'High total debt levels affecting amounts owed score',
+      'Recent credit inquiries showing increased credit-seeking behavior',
+      'Concentration of debt in single credit facility type'
+    ]
+  }
 }
 
 // Transaction Categories - PAYMENT-CENTRIC VERSION

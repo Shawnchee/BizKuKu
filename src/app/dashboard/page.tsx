@@ -12,12 +12,13 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useUser } from '@/contexts/UserContext'
-import { msmePaymentMethodPerformance } from '@/lib/msme-data'
+import { msmePaymentMethodPerformance, msmeConsolidatedFinancialData } from '@/lib/msme-data'
 import { useStoryData } from '@/hooks/useStoryData'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import RefinedMoneyJar from '@/components/story/RefinedMoneyJar'
 import RefinedStoryTimeline from '@/components/story/RefinedStoryTimeline'
+import CreditScoreSection from '@/components/dashboard/CreditScoreSection'
 import EducationalModal from '@/components/story/EducationalModal'
 import CountUp from 'react-countup'
 import Link from 'next/link'
@@ -106,6 +107,19 @@ export default function StoryPage() {
             </motion.div>
           ))}
         </section>
+
+        {/* Credit Score & Business Health Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="mt-16 mb-16"
+        >
+          <CreditScoreSection
+            creditScoreData={msmeConsolidatedFinancialData.creditScore!}
+            businessHealth={msmeConsolidatedFinancialData.businessHealth!}
+          />
+        </motion.section>
 
         
         <section>

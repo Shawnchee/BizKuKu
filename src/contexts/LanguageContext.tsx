@@ -3381,6 +3381,144 @@ const translations = {
   'recommendation.for_whom.farmers_agri': {
     ms: 'Petani, perniagaan agri',
     en: 'Farmers, agri-businesses'
+  },
+
+  // Credit Score & Business Health Translations
+  'credit_score.title': {
+    ms: 'Skor Kredit Perniagaan',
+    en: 'Business Credit Score'
+  },
+  'credit_score.grade': {
+    ms: 'Gred',
+    en: 'Grade'
+  },
+  'credit_score.monthly_change': {
+    ms: 'Perubahan Bulanan',
+    en: 'Monthly Change'
+  },
+  'credit_score.last_updated': {
+    ms: 'Kemaskini Terakhir',
+    en: 'Last Updated'
+  },
+  'credit_score.trend.improving': {
+    ms: 'Membaik',
+    en: 'Improving'
+  },
+  'credit_score.trend.stable': {
+    ms: 'Stabil',
+    en: 'Stable'
+  },
+  'credit_score.trend.declining': {
+    ms: 'Menurun',
+    en: 'Declining'
+  },
+  'credit_score.factors.payment_history': {
+    ms: 'Sejarah Pembayaran',
+    en: 'Payment History'
+  },
+  'credit_score.factors.amounts_owed': {
+    ms: 'Jumlah Hutang',
+    en: 'Amounts Owed'
+  },
+  'credit_score.factors.length_of_credit_history': {
+    ms: 'Tempoh Sejarah Kredit',
+    en: 'Length of Credit History'
+  },
+  'credit_score.factors.credit_mix': {
+    ms: 'Campuran Kredit',
+    en: 'Credit Mix'
+  },
+  'credit_score.factors.new_credit': {
+    ms: 'Kredit Baharu',
+    en: 'New Credit'
+  },
+  'credit_score.status.healthy': {
+    ms: 'Sihat',
+    en: 'Healthy'
+  },
+  'credit_score.status.warning': {
+    ms: 'Amaran',
+    en: 'Warning'
+  },
+  'credit_score.status.critical': {
+    ms: 'Kritikal',
+    en: 'Critical'
+  },
+  'credit_score.impact.high': {
+    ms: 'Tinggi',
+    en: 'High'
+  },
+  'credit_score.impact.medium': {
+    ms: 'Sederhana',
+    en: 'Medium'
+  },
+  'credit_score.impact.low': {
+    ms: 'Rendah',
+    en: 'Low'
+  },
+  'business_health.title': {
+    ms: 'Laporan Kesihatan Perniagaan',
+    en: 'Business Health Report'
+  },
+  'business_health.overall_health': {
+    ms: 'Kesihatan Keseluruhan',
+    en: 'Overall Health'
+  },
+  'business_health.health_score': {
+    ms: 'Skor Kesihatan',
+    en: 'Health Score'
+  },
+  'business_health.key_strengths': {
+    ms: 'Kekuatan Utama',
+    en: 'Key Strengths'
+  },
+  'business_health.improvement_areas': {
+    ms: 'Bidang Penambahbaikan',
+    en: 'Improvement Areas'
+  },
+  'business_health.recommended_actions': {
+    ms: 'Tindakan Disyorkan',
+    en: 'Recommended Actions'
+  },
+  'business_health.risk_factors': {
+    ms: 'Faktor Risiko',
+    en: 'Risk Factors'
+  },
+  'business_health.level.excellent': {
+    ms: 'Cemerlang',
+    en: 'Excellent'
+  },
+  'business_health.level.good': {
+    ms: 'Baik',
+    en: 'Good'
+  },
+  'business_health.level.fair': {
+    ms: 'Sederhana',
+    en: 'Fair'
+  },
+  'business_health.level.poor': {
+    ms: 'Lemah',
+    en: 'Poor'
+  },
+  'credit_score.view_details': {
+    ms: 'Lihat Butiran',
+    en: 'View Details'
+  },
+  'credit_score.factors_affecting': {
+    ms: 'Faktor yang Mempengaruhi Skor',
+    en: 'Factors Affecting Score'
+  },
+  'credit_score.recommendations': {
+    ms: 'Cadangan Penambahbaikan',
+    en: 'Improvement Recommendations'
+  },
+  'credit_score.download_report': {
+    ms: 'Muat Turun Laporan',
+    en: 'Download Report'
+  },
+  'credit_score.footer_description': {
+    ms: 'Ingin memperbaiki skor kredit anda? Dapatkan cadangan yang diperibadikan atau muat turun laporan terperinci anda.',
+    en: 'Want to improve your credit score? Get personalized recommendations or download your detailed report.'
   }
 }
 

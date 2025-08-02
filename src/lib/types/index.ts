@@ -214,6 +214,8 @@ export interface ConsolidatedFinancialData {
     savingsRate: number;
     liquidityRatio: number;
   };
+  creditScore?: CreditScoreData;
+  businessHealth?: BusinessHealthReport;
 }
 
 export interface TransactionCategory {
@@ -381,4 +383,35 @@ export interface SocialLinks {
   linkedin?: string;
   instagram?: string;
   github?: string;
+}
+
+// Credit Scoring & Business Health Interfaces
+export interface CreditScoreData {
+  currentScore: number;
+  scoreRange: { min: number; max: number };
+  grade: 'A+' | 'A' | 'B+' | 'B' | 'C+' | 'C' | 'D' | 'F';
+  trend: 'improving' | 'stable' | 'declining';
+  monthlyChange: number;
+  factors: CreditScoreFactor[];
+  lastUpdated: string;
+}
+
+export interface CreditScoreFactor {
+  id: string;
+  name: string;
+  weight: number;
+  score: number;
+  status: 'healthy' | 'warning' | 'critical';
+  trend: 'improving' | 'stable' | 'declining';
+  recommendation: string;
+  impact: 'high' | 'medium' | 'low';
+}
+
+export interface BusinessHealthReport {
+  overallHealth: 'excellent' | 'good' | 'fair' | 'poor';
+  healthScore: number;
+  keyStrengths: string[];
+  improvementAreas: string[];
+  recommendedActions: string[];
+  riskFactors: string[];
 }
