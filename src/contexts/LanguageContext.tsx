@@ -3083,6 +3083,42 @@ const translations = {
     en: 'Est. Completion'
   },
 
+  // Online Business Store Names
+  'online_business.store.official_store': {
+    ms: 'Kedai Rasmi BizzKu',
+    en: 'BizzKu Official Store'
+  },
+  'online_business.store.marketplace': {
+    ms: 'Pasar Raya BizzKu',
+    en: 'BizzKu Marketplace'
+  },
+
+  // Platform Status
+  'online_business.status.connected': {
+    ms: 'Disambung',
+    en: 'Connected'
+  },
+  'online_business.status.in_progress': {
+    ms: 'Sedang Diproses',
+    en: 'In Progress'
+  },
+  'online_business.status.error': {
+    ms: 'Ralat',
+    en: 'Error'
+  },
+  'online_business.status.available': {
+    ms: 'Tersedia',
+    en: 'Available'
+  },
+  'online_business.status.active': {
+    ms: 'Aktif',
+    en: 'Active'
+  },
+  'online_business.status.pending_verification': {
+    ms: 'Menunggu Pengesahan',
+    en: 'Pending Verification'
+  },
+
   // Language identifier
   'language': {
     ms: 'ms',

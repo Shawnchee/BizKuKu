@@ -272,7 +272,7 @@ export default function BusinessDashboard({
                         </motion.div>
                         <div>
                           <h3 className="text-lg font-bold text-gray-900">{account.platformName}</h3>
-                          <p className="text-sm text-gray-600">{account.accountName}</p>
+                          <p className="text-sm text-gray-600">{t(account.accountName)}</p>
                         </div>
                       </div>
                       {getStatusBadge(account.status)}
@@ -537,7 +537,7 @@ export default function BusinessDashboard({
                       transition={{ delay: index * 0.1 }}
                     >
                       <Badge variant="secondary" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-                        {t(`online_business.features.${feature.toLowerCase().replace(/[^a-z]/g, '_')}`) || feature}
+                        {t(`online_business.feature.${feature.toLowerCase().replace(/[^a-z]/g, '_')}`) || feature}
                       </Badge>
                     </motion.div>
                   ))}

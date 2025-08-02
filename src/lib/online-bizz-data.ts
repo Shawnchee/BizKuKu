@@ -156,7 +156,7 @@ export const connectedAccounts: ConnectedAccount[] = [
     id: "shopee_001",
     platformId: "shopee",
     platformName: "Shopee",
-    accountName: "BizzKu Official Store",
+    accountName: "online_business.store.official_store",
     accountId: "bizzkustore",
     status: "active",
     stats: {
@@ -172,7 +172,7 @@ export const connectedAccounts: ConnectedAccount[] = [
     id: "lazada_001",
     platformId: "lazada",
     platformName: "Lazada",
-    accountName: "BizzKu Marketplace",
+    accountName: "online_business.store.marketplace",
     accountId: "bizzku-my",
     status: "in_progress",
     stats: {
