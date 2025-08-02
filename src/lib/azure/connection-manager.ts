@@ -90,10 +90,31 @@ export class AzureConnectionManager {
 
   // Fetch ICE servers from Azure
   async fetchICEServers(): Promise<ICEServerConfig[]> {
-    const region = this.getEffectiveRegion()
-    const iceServerUrl = `https://${region}.tts.speech.microsoft.com/cognitiveservices/avatar/relay/token/v1`
+    // Check if custom endpoint is configured
+    const customEndpoint = process.env.NEXT_PUBLIC_AZURE_CUSTOM_ENDPOINT
+    let iceServerUrl: string
+    let useCustomEndpoint = false
     
-    console.log(`🧊 Fetching ICE servers from: ${iceServerUrl}`)
+    // For now, prioritize regional TTS endpoints for Avatar services
+    // Custom endpoints often don't support Avatar services
+    const region = this.getEffectiveRegion()
+    
+    if (customEndpoint && region) {
+      // Try regional TTS endpoint first (more likely to work for Avatar)
+      iceServerUrl = `https://${region}.tts.speech.microsoft.com/cognitiveservices/avatar/relay/token/v1`
+      console.log(`🧊 Trying regional TTS endpoint first: ${iceServerUrl}`)
+      console.log(`⚠️ Note: Custom endpoints often don't support Avatar services`)
+    } else if (customEndpoint) {
+      // Use custom endpoint as fallback
+      const baseEndpoint = customEndpoint.replace(/\/$/, '')
+      iceServerUrl = `${baseEndpoint}/cognitiveservices/avatar/relay/token/v1`
+      useCustomEndpoint = true
+      console.log(`🧊 Using custom endpoint: ${iceServerUrl}`)
+    } else {
+      // Use standard region-based endpoint
+      iceServerUrl = `https://${region}.tts.speech.microsoft.com/cognitiveservices/avatar/relay/token/v1`
+      console.log(`🧊 Using standard regional endpoint: ${iceServerUrl}`)
+    }
     
     try {
       const response = await fetch(iceServerUrl, {
@@ -126,6 +147,36 @@ export class AzureConnectionManager {
       }]
       
     } catch (error) {
+      console.log(`❌ Primary endpoint failed: ${error.message}`)
+      
+      // Try custom endpoint if we were using regional and custom is available
+      if (!useCustomEndpoint && customEndpoint) {
+        console.log(`🔄 Trying custom endpoint as fallback...`)
+        const customUrl = `${customEndpoint.replace(/\/$/, '')}/cognitiveservices/avatar/relay/token/v1`
+        
+        try {
+          const customResponse = await fetch(customUrl, {
+            method: 'GET',
+            headers: {
+              'Ocp-Apim-Subscription-Key': this.credentials.speechKey,
+              'Content-Type': 'application/json'
+            }
+          })
+          
+          if (customResponse.ok) {
+            const customData = await customResponse.json()
+            const urls = customData.Urls || customData.urls || []
+            return [{
+              urls: urls.filter((url: string) => url.startsWith('turn:')),
+              username: customData.Username || customData.username,
+              credential: customData.Password || customData.credential
+            }]
+          }
+        } catch (customError) {
+          console.log(`❌ Custom endpoint also failed: ${customError.message}`)
+        }
+      }
+      
       // Fallback to different region if available
       if (region !== AVATAR_FALLBACK_REGION) {
         console.log(`🔄 Retrying with fallback region: ${AVATAR_FALLBACK_REGION}`)
@@ -227,6 +278,14 @@ export class AzureConnectionManager {
         clearTimeout(timeout)
         console.log('🎭 Avatar start result:', result.reason, result)
         
+        // Check for rate limiting (throttling) errors
+        if (result.errorDetails && result.errorDetails.includes('throttled')) {
+          console.error('🚫 Rate limiting detected:', result.errorDetails)
+          const waitTime = this.extractThrottleWaitTime(result.errorDetails) || 30000
+          reject(new Error(`RATE_LIMIT:${waitTime}:${result.errorDetails}`))
+          return
+        }
+        
         if (result.reason === this.speechSDK?.ResultReason.SynthesizingAudioCompleted) {
           console.log('✅ Avatar session started successfully')
           resolve()
@@ -236,6 +295,13 @@ export class AzureConnectionManager {
           // Add specific error messages for common issues
           switch (result.reason) {
             case 1:
+              // Check if this is due to throttling
+              if (result.errorDetails && (result.errorDetails.includes('4429') || result.errorDetails.includes('throttled'))) {
+                const waitTime = this.extractThrottleWaitTime(result.errorDetails) || 60000
+                errorMsg = `Rate limit exceeded (429). Azure is throttling your requests. Wait ${waitTime/1000}s before retrying.`
+                reject(new Error(`RATE_LIMIT:${waitTime}:${errorMsg}`))
+                return
+              }
               errorMsg = 'Avatar initialization failed - check character/style configuration or region support'
               break
             case 2:

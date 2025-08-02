@@ -5,6 +5,7 @@ export interface AzureAvatarConfig {
   // Authentication
   speechKey: string
   speechRegion: string
+  customEndpoint?: string // Support for custom Azure endpoints
   
   // Avatar settings
   defaultAvatarIndex: number
@@ -87,6 +88,7 @@ export class AzureAvatarConfigManager {
     // Load from environment variables
     this.config.speechKey = process.env.NEXT_PUBLIC_AZURE_SPEECH_KEY || ''
     this.config.speechRegion = process.env.NEXT_PUBLIC_AZURE_SPEECH_REGION || ''
+    this.config.customEndpoint = process.env.NEXT_PUBLIC_AZURE_CUSTOM_ENDPOINT || ''
     
     // Development overrides
     if (process.env.NODE_ENV === 'development') {

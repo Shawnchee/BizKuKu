@@ -130,9 +130,9 @@ const AzureAvatar: React.FC<AzureAvatarProps> = ({
             {language === 'ms' ? 'Azure Tidak Dikonfigurasi' : 'Azure Not Configured'}
           </h3>
           <p className="text-sm text-gray-500 max-w-md">
-            {language === 'ms' 
-              ? 'Sila tetapkan NEXT_PUBLIC_AZURE_SPEECH_KEY dan NEXT_PUBLIC_AZURE_SPEECH_REGION dalam fail .env.local'
-              : 'Please set NEXT_PUBLIC_AZURE_SPEECH_KEY and NEXT_PUBLIC_AZURE_SPEECH_REGION in your .env.local file'
+            {            language === 'ms'
+              ? 'Sila tetapkan NEXT_PUBLIC_AZURE_SPEECH_KEY dan NEXT_PUBLIC_AZURE_CUSTOM_ENDPOINT dalam fail .env.local'
+              : 'Please set NEXT_PUBLIC_AZURE_SPEECH_KEY and NEXT_PUBLIC_AZURE_CUSTOM_ENDPOINT in your .env.local file'
             }
           </p>
           <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-left">

@@ -71,6 +71,7 @@ const AzureAvatarClient: React.FC<AzureAvatarProps> = ({
   // Azure configuration
   const SPEECH_KEY = process.env.NEXT_PUBLIC_AZURE_SPEECH_KEY
 const SPEECH_REGION = process.env.NEXT_PUBLIC_AZURE_SPEECH_REGION
+const CUSTOM_ENDPOINT = process.env.NEXT_PUBLIC_AZURE_CUSTOM_ENDPOINT
 // Disable private endpoint for Avatar services
 const USE_PRIVATE_ENDPOINT = false
 
@@ -123,8 +124,8 @@ const AVATAR_FALLBACK_REGION = 'eastus'
         setIsLoading(true)
         
         // Validate environment variables
-        if (!SPEECH_KEY || !SPEECH_REGION) {
-          throw new Error('Azure Speech credentials not configured. Please set NEXT_PUBLIC_AZURE_SPEECH_KEY and NEXT_PUBLIC_AZURE_SPEECH_REGION')
+        if (!SPEECH_KEY || (!SPEECH_REGION && !CUSTOM_ENDPOINT)) {
+          throw new Error('Azure Speech credentials not configured. Please set NEXT_PUBLIC_AZURE_SPEECH_KEY and either NEXT_PUBLIC_AZURE_SPEECH_REGION or NEXT_PUBLIC_AZURE_CUSTOM_ENDPOINT')
         }
 
         // Important: Avatar domain endpoint information
@@ -211,15 +212,24 @@ const AVATAR_FALLBACK_REGION = 'eastus'
       
       console.log('🌍 Using avatar region:', avatarRegion, 'for ICE servers')
       
-          // Use the correct TTS domain for Avatar ICE servers as per Microsoft docs
-    // Avatar services use .tts.speech.microsoft.com not .api.cognitive.microsoft.com
-    // From Azure docs: "Host: westus2.tts.speech.microsoft.com"
-    const iceServerAttempts = [
-      {
+          // Determine which endpoint to use
+    const iceServerAttempts = []
+    
+    if (CUSTOM_ENDPOINT) {
+      // Use custom endpoint
+      const baseEndpoint = CUSTOM_ENDPOINT.replace(/\/$/, '')
+      iceServerAttempts.push({
+        url: `${baseEndpoint}/cognitiveservices/avatar/relay/token/v1`,
+        description: `Custom endpoint: ${baseEndpoint}`
+      })
+    } else if (SPEECH_REGION) {
+      // Use standard TTS domain for Avatar ICE servers as per Microsoft docs
+      // Avatar services use .tts.speech.microsoft.com not .api.cognitive.microsoft.com
+      iceServerAttempts.push({
         url: `https://${avatarRegion}.tts.speech.microsoft.com/cognitiveservices/avatar/relay/token/v1`,
-        description: `Region: ${avatarRegion} (correct TTS domain)`
-      }
-    ]
+        description: `Region: ${avatarRegion} (standard TTS domain)`
+      })
+    }
     
     // Additional fallback for different regions if not already using eastus
     if (avatarRegion !== 'eastus') {
