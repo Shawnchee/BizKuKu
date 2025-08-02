@@ -55,8 +55,8 @@ export default function MiniServices() {
       description: 'mini_services.einvoicing.description',
       icon: FileText,
       category: 'financial',
-      color: 'from-blue-500 to-blue-600',
-      bgColor: 'bg-blue-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       priority: 'high',
       isPopular: true,
       outputs: ['mini_services.output.pdf_invoice', 'mini_services.output.email_delivery'],
@@ -95,10 +95,10 @@ export default function MiniServices() {
           component: (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 border-2 border-blue-500 rounded-lg bg-blue-50">
+                <div className="p-4 border-2 border-gray-500 rounded-lg bg-gray-50">
                   <div className="text-sm font-medium">{t('mini_services.invoice.professional')}</div>
                 </div>
-                <div className="p-4 border rounded-lg hover:border-blue-300">
+                <div className="p-4 border rounded-lg hover:border-gray-300">
                   <div className="text-sm font-medium">{t('mini_services.invoice.simple')}</div>
                 </div>
               </div>
@@ -116,8 +116,8 @@ export default function MiniServices() {
       description: 'mini_services.digital_receipt.description',
       icon: Receipt,
       category: 'financial',
-      color: 'from-green-500 to-green-600',
-      bgColor: 'bg-green-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       priority: 'high',
       isPopular: true,
       outputs: ['mini_services.output.pdf_receipt', 'mini_services.output.print_format', 'mini_services.output.email_copy'],
@@ -163,8 +163,8 @@ export default function MiniServices() {
       description: 'mini_services.tax_calculator.description',
       icon: Calculator,
       category: 'financial',
-      color: 'from-purple-500 to-purple-600',
-      bgColor: 'bg-purple-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.tax_summary_pdf', 'mini_services.output.calculation_breakdown', 'mini_services.output.filing_checklist'],
       previews: [
         {
@@ -190,7 +190,7 @@ export default function MiniServices() {
                 <option>{t('mini_services.business_type.married')}</option>
                 <option>{t('mini_services.business_type.business')}</option>
               </select>
-              <div className="p-4 bg-purple-50 rounded-lg">
+              <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="text-sm font-medium">{t('mini_services.status.estimated_tax')}</div>
               </div>
             </div>
@@ -204,8 +204,8 @@ export default function MiniServices() {
       description: 'mini_services.gst_helper.description',
       icon: HelpCircle,
       category: 'financial',
-      color: 'from-orange-500 to-orange-600',
-      bgColor: 'bg-orange-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.filing_forms', 'mini_services.output.calculation_sheet', 'mini_services.output.email_reminders'],
       previews: [
         {
@@ -230,7 +230,7 @@ export default function MiniServices() {
                 <option>{t('mini_services.tax.sst_registered')}</option>
                 <option>{t('mini_services.tax.not_registered')}</option>
               </select>
-              <div className="p-4 bg-orange-50 rounded-lg">
+              <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="text-sm font-medium">{t('mini_services.status.next_filing')}</div>
                 <div className="text-xs text-gray-600">{t('mini_services.status.set_reminder')}</div>
               </div>
@@ -246,8 +246,8 @@ export default function MiniServices() {
       description: 'mini_services.mobile_pos.description',
       icon: ShoppingCart,
       category: 'operations',
-      color: 'from-indigo-500 to-indigo-600',
-      bgColor: 'bg-indigo-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.sales_reports', 'mini_services.output.receipt_prints', 'mini_services.output.daily_summary'],
       previews: [
         {
@@ -265,7 +265,7 @@ export default function MiniServices() {
               <div className="flex items-center space-x-2">
                 <input placeholder={t('mini_services.form.product_name')} className="flex-1 p-3 border rounded-lg" />
                 <input placeholder={t('mini_services.form.price')} className="w-24 p-3 border rounded-lg" />
-                <button className="p-3 bg-indigo-500 text-white rounded-lg">
+                <button className="p-3 bg-gray-500 text-white rounded-lg">
                   <Plus className="w-4 h-4" />
                 </button>
               </div>
@@ -283,7 +283,7 @@ export default function MiniServices() {
           component: (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 border-2 border-indigo-500 rounded-lg bg-indigo-50 text-center">
+                <div className="p-4 border-2 border-gray-500 rounded-lg bg-gray-50 text-center">
                   <div className="text-sm font-medium">{t('mini_services.payment.cash')}</div>
                 </div>
                 <div className="p-4 border rounded-lg text-center">
@@ -301,8 +301,8 @@ export default function MiniServices() {
       description: 'mini_services.inventory.description',
       icon: Package,
       category: 'operations',
-      color: 'from-teal-500 to-teal-600',
-      bgColor: 'bg-teal-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.stock_reports', 'mini_services.output.alert_notifications'],
       previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.inventory', icon: Package }],
       onboardingSteps: [
@@ -326,8 +326,8 @@ export default function MiniServices() {
       description: 'mini_services.loyalty_program.description',
       icon: Gift,
       category: 'operations',
-      color: 'from-pink-500 to-pink-600',
-      bgColor: 'bg-pink-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.digital_cards', 'mini_services.output.customer_database'],
       previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.loyalty_program', icon: Gift }],
       onboardingSteps: [
@@ -339,7 +339,7 @@ export default function MiniServices() {
                 <input placeholder={t('mini_services.placeholder.stamps_needed')} className="p-3 border rounded-lg" />
                 <input placeholder={t('mini_services.placeholder.reward')} className="p-3 border rounded-lg" />
               </div>
-              <div className="p-4 bg-pink-50 rounded-lg">
+              <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="text-sm">{t('mini_services.status.preview_reward')}</div>
               </div>
             </div>
@@ -353,8 +353,8 @@ export default function MiniServices() {
       description: 'mini_services.delivery_service.description',
       icon: Truck,
       category: 'operations',
-      color: 'from-yellow-500 to-yellow-600',
-      bgColor: 'bg-yellow-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.integration_setup', 'mini_services.output.tracking_links'],
       previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.delivery_integration', icon: Truck }],
       onboardingSteps: [
@@ -384,8 +384,8 @@ export default function MiniServices() {
       description: 'mini_services.website_builder.description',
       icon: Globe,
       category: 'digital',
-      color: 'from-cyan-500 to-cyan-600',
-      bgColor: 'bg-cyan-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.website_url', 'mini_services.output.mobile_responsive'],
       previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.website', icon: Globe }],
       onboardingSteps: [
@@ -394,7 +394,7 @@ export default function MiniServices() {
           component: (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 border-2 border-cyan-500 rounded-lg bg-cyan-50">
+                <div className="p-4 border-2 border-gray-500 rounded-lg bg-gray-50">
                   <div className="text-sm font-medium">{t('mini_services.website.restaurant')}</div>
                 </div>
                 <div className="p-4 border rounded-lg">
@@ -414,8 +414,8 @@ export default function MiniServices() {
       description: 'mini_services.booking_system.description',
       icon: Calendar,
       category: 'digital',
-      color: 'from-violet-500 to-violet-600',
-      bgColor: 'bg-violet-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.booking_confirmations', 'mini_services.output.calendar_sync'],
       previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.booking_system', icon: Calendar }],
       onboardingSteps: [
@@ -444,8 +444,8 @@ export default function MiniServices() {
       description: 'mini_services.appointment_scheduler.description',
       icon: Clock,
       category: 'digital',
-      color: 'from-rose-500 to-rose-600',
-      bgColor: 'bg-rose-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.schedule_reports', 'mini_services.output.staff_calendars'],
       previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.appointment_scheduler', icon: Clock }],
       onboardingSteps: [
@@ -460,7 +460,7 @@ export default function MiniServices() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {[t('mini_services.days.mon'), t('mini_services.days.tue'), t('mini_services.days.wed'), t('mini_services.days.thu'), t('mini_services.days.fri'), t('mini_services.days.sat'), t('mini_services.days.sun')].map(day => (
-                  <button key={day} className="px-3 py-1 border rounded bg-rose-50 text-sm">
+                  <button key={day} className="px-3 py-1 border rounded bg-gray-50 text-sm">
                     {day}
                   </button>
                 ))}
@@ -478,8 +478,8 @@ export default function MiniServices() {
       description: 'mini_services.lhdn_filing.description',
       icon: FileCheck,
       category: 'professional',
-      color: 'from-emerald-500 to-emerald-600',
-      bgColor: 'bg-emerald-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.filed_returns', 'mini_services.output.confirmation_receipt'],
       previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.lhdn_filing', icon: FileCheck }],
       onboardingSteps: [
@@ -500,7 +500,7 @@ export default function MiniServices() {
                   </div>
                 ))}
               </div>
-              <button className="w-full p-3 bg-emerald-500 text-white rounded-lg">
+              <button className="w-full p-3 bg-gray-500 text-white rounded-lg">
                 {t('mini_services.action.start_filing')}
               </button>
             </div>
@@ -514,8 +514,8 @@ export default function MiniServices() {
       description: 'mini_services.insurance_quotes.description',
       icon: Shield,
       category: 'professional',
-      color: 'from-slate-500 to-slate-600',
-      bgColor: 'bg-slate-50',
+      color: 'from-gray-500 to-gray-600',
+      bgColor: 'bg-gray-50',
       outputs: ['mini_services.output.quote_comparisons', 'mini_services.output.policy_documents'],
       previews: [{ type: 'text', label: 'Sample', content: 'mini_services.preview_text.insurance_quotes', icon: Shield }],
       onboardingSteps: [
@@ -531,7 +531,7 @@ export default function MiniServices() {
               </select>
               <input placeholder={t('mini_services.form.number_employees')} className="w-full p-3 border rounded-lg" />
               <input placeholder={t('mini_services.form.annual_revenue')} className="w-full p-3 border rounded-lg" />
-              <div className="p-4 bg-slate-50 rounded-lg">
+              <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="text-sm font-medium">{t('mini_services.status.estimated_premium')}</div>
               </div>
             </div>
@@ -542,10 +542,10 @@ export default function MiniServices() {
   ]
 
   const categories = {
-    financial: { name: 'mini_services.category.financial', color: 'text-blue-600' },
-    operations: { name: 'mini_services.category.operations', color: 'text-indigo-600' },
-    digital: { name: 'mini_services.category.digital', color: 'text-purple-600' },
-    professional: { name: 'mini_services.category.professional', color: 'text-emerald-600' }
+    financial: { name: 'mini_services.category.financial', color: 'text-gray-600' },
+    operations: { name: 'mini_services.category.operations', color: 'text-gray-600' },
+    digital: { name: 'mini_services.category.digital', color: 'text-gray-600' },
+    professional: { name: 'mini_services.category.professional', color: 'text-gray-600' }
   }
 
   const selectedServiceData = services.find(s => s.id === selectedService)
@@ -570,7 +570,7 @@ export default function MiniServices() {
 
   const getPriorityBadge = (priority?: string, isPopular?: boolean) => {
     if (priority === 'high' || isPopular) {
-      return { label: 'Recommended', color: 'bg-blue-100 text-blue-700', icon: TrendingUp }
+      return { label: 'Recommended', color: 'bg-gray-100 text-gray-700', icon: TrendingUp }
     }
     return null
   }
@@ -600,7 +600,7 @@ export default function MiniServices() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 mt-2">
         {/* Header */}
         <div className="text-center mb-12 bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-700 via-gray-600 to-gray-800 bg-clip-text text-transparent mb-4">
             {t('language') === 'ms' ? 'Perkhidmatan Mini' : 'Mini Services'}
           </h1>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-6">
@@ -612,13 +612,13 @@ export default function MiniServices() {
               onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 showFavoritesOnly
-                  ? 'bg-red-100 text-red-700 border border-red-200'
+                  ? 'bg-gray-200 text-gray-700 border border-gray-300'
                   : 'bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200'
               }`}
             >
               {showFavoritesOnly ? t('mini_services.show_all') : t('mini_services.show_favorites')}
               {favorites.size > 0 && (
-                <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
+                <span className="bg-gray-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
                   {favorites.size}
                 </span>
               )}
@@ -651,22 +651,22 @@ export default function MiniServices() {
                     >
                       <div
                         onClick={() => handleServiceClick(service.id)}
-                        className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 hover:shadow-xl ${service.bgColor} bg-white/90 backdrop-blur-sm border-white/30 hover:bg-white/95 hover:border-white/50 ${service.priority === 'high' ? 'ring-2 ring-blue-300/50' : ''}`}
+                        className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 hover:shadow-xl ${service.bgColor} bg-white/90 backdrop-blur-sm border-white/30 hover:bg-white/95 hover:border-white/50 ${service.priority === 'high' ? 'ring-2 ring-gray-300/50' : ''}`}
                       >
                         {/* Recommended Badge */}
                         {(service.priority === 'high' || service.isPopular) && (
                           <div className="absolute top-3 left-3">
-                            {(() => {
-                              const badge = getPriorityBadge(service.priority, service.isPopular)
-                              if (!badge) return null
-                              const BadgeIcon = badge.icon
-                              return (
-                                <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${badge.color}`}>
-                                  <BadgeIcon className="w-3 h-3" />
-                                  {badge.label}
-                                </div>
-                              )
-                            })()}
+                                    {(() => {
+          const badge = getPriorityBadge(service.priority, service.isPopular)
+          if (!badge) return null
+          const BadgeIcon = badge.icon
+          return (
+            <div className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+              <BadgeIcon className="w-3 h-3" />
+              {badge.label}
+            </div>
+          )
+        })()}
                           </div>
                         )}
 
@@ -675,9 +675,9 @@ export default function MiniServices() {
                           onClick={(e) => toggleFavorite(service.id, e)}
                           className="absolute bottom-3 right-3 p-2 rounded-full hover:bg-white hover:bg-opacity-50 transition-colors"
                         >
-                          <Heart
-                            className={`w-4 h-4 ${favorites.has(service.id) ? 'fill-red-500 text-red-500' : 'text-gray-400'}`}
-                          />
+                                            <Heart
+                    className={`w-4 h-4 ${favorites.has(service.id) ? 'fill-gray-500 text-gray-500' : 'text-gray-400'}`}
+                  />
                         </button>
 
                         <div className={`w-16 h-16 mx-auto ${(service.priority === 'high' || service.isPopular) ? 'mt-8' : 'mt-4'} mb-4 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center shadow-lg`}>
