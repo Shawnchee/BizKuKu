@@ -7,7 +7,6 @@ import GradientBackground from "@/components/backgrounds/GradientBackground"
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
-import TypewriterText from '@/components/animation/TypewriterText'
 import AzureAvatar from '@/components/avatar/AzureAvatar'
 import { useAzureAvatarEnhanced } from '@/hooks/useAzureAvatarEnhanced'
 
@@ -215,8 +214,7 @@ export default function AvatarOnboarding() {
             return;
           }
           const welcomeMessage = "Hi there! I'm your **personal MSME onboarding assistant**.\n\nWhere are you in your business journey?";
-          
-          // Add message directly with options to avoid dependency issues
+          // Add message directly to avoid dependency issues
           const newMessage: Message = {
             id: Date.now().toString(),
             text: welcomeMessage,
@@ -717,13 +715,7 @@ export default function AvatarOnboarding() {
           <div>
             {message.text && (
               <div className="text-sm leading-relaxed mb-3 [&>ul]:space-y-1 [&>ul>li]:block">
-                <TypewriterText 
-                  text={message.text}
-                  speed={40}
-                  delay={300}
-                  renderAsMarkdown={true}
-                  cursor={true}
-                />
+                <ReactMarkdown>{message.text}</ReactMarkdown>
               </div>
             )}
             <div className="space-y-2">
@@ -746,13 +738,7 @@ export default function AvatarOnboarding() {
           <div className="mt-3">
             {message.text && (
                 <div className="text-sm leading-relaxed mb-4 ml-2">
-                    <TypewriterText 
-                      text={message.text}
-                      speed={40}
-                      delay={300}
-                      renderAsMarkdown={true}
-                      cursor={true}
-                    />
+                    <ReactMarkdown>{message.text}</ReactMarkdown>
                 </div>
             )}
             <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 p-4">
@@ -887,13 +873,7 @@ export default function AvatarOnboarding() {
               <div>
                 {message.text && (
                   <div className="text-sm leading-relaxed mb-4">
-                    <TypewriterText 
-                      text={message.text}
-                      speed={40}
-                      delay={300}
-                      renderAsMarkdown={true}
-                      cursor={true}
-                    />
+                    <ReactMarkdown>{message.text}</ReactMarkdown>
                   </div>
                 )}
                 <div className="space-y-4 mt-3 w-full">
@@ -902,7 +882,7 @@ export default function AvatarOnboarding() {
                       id: 'ssm-registration',
                       title: 'Step 1',
                       description: 'Apply for SSM registration',
-                      buttonText: completedSteps.has('ssm-registration') ? 'Done' : 'Start Now',
+                      buttonText: completedSteps.has('ssm-registration') ? 'Processing' : 'Start Now',
                       completed: completedSteps.has('ssm-registration'),
                       action: completedSteps.has('ssm-registration') ? undefined : () => handleSSMApplication()
                     },
@@ -910,7 +890,7 @@ export default function AvatarOnboarding() {
                       id: 'bank-account',
                       title: 'Step 2',
                       description: 'Open a business bank account',
-                      buttonText: completedSteps.has('bank-account') ? 'Done' : 'Start Now',
+                      buttonText: completedSteps.has('bank-account') ? 'Processing' : 'Start Now',
                       completed: completedSteps.has('bank-account'),
                       action: completedSteps.has('bank-account') ? undefined : () => handleBankAccountSetup()
                     },
@@ -918,7 +898,7 @@ export default function AvatarOnboarding() {
                       id: 'payments',
                       title: 'Step 3',
                       description: 'Set up digital payment',
-                      buttonText: completedSteps.has('payments') ? 'Done' : 'Start Now',
+                      buttonText: completedSteps.has('payments') ? 'Processing' : 'Start Now',
                       completed: completedSteps.has('payments'),
                       action: completedSteps.has('payments') ? undefined : () => showPaymentSetup()
                     }
@@ -939,7 +919,7 @@ export default function AvatarOnboarding() {
                           {item.buttonText}
                         </button>
                       ) : (
-                        <div className="ml-6 px-6 py-2 bg-green-100 text-green-700 text-sm rounded-md w-fit font-medium">
+                        <div className="ml-6 px-5 py-2 bg-gray-400 text-white text-sm rounded-md w-fit font-medium">
                           {item.buttonText}
                         </div>
                       )}
@@ -955,13 +935,7 @@ export default function AvatarOnboarding() {
           <div>
             {message.text && (
               <div className="text-sm leading-relaxed mb-4">
-                <TypewriterText 
-                  text={message.text}
-                  speed={40}
-                  delay={300}
-                  renderAsMarkdown={true}
-                  cursor={true}
-                />
+                <ReactMarkdown>{message.text}</ReactMarkdown>
               </div>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
@@ -1021,13 +995,7 @@ export default function AvatarOnboarding() {
         return (
           <div>
             <div className="text-sm leading-relaxed">
-              <TypewriterText 
-                text={message.text}
-                speed={40}
-                delay={300}
-                renderAsMarkdown={true}
-                cursor={true}
-              />
+              <ReactMarkdown>{message.text}</ReactMarkdown>
             </div>
             
             {/* File attachments */}
