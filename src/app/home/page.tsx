@@ -7,6 +7,7 @@ import { useUser } from '@/contexts/UserContext'
 import GradientBackground from "@/components/backgrounds/GradientBackground"
 import { motion, AnimatePresence } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
+import TypewriterText from '@/components/animation/TypewriterText'
 import AzureAvatar from '@/components/avatar/AzureAvatar'
 import AvatarTestPanel from '@/components/avatar/AvatarTestPanel'
 import { useAzureAvatarEnhanced } from '@/hooks/useAzureAvatarEnhanced'
@@ -411,7 +412,13 @@ export default function AuthenticatedHome() {
                       <div className="text-sm leading-relaxed">
                         {message.sender === 'bot' ? (
                           <>
-                            <ReactMarkdown>{message.text}</ReactMarkdown>
+                            <TypewriterText 
+                              text={message.text}
+                              speed={40}
+                              delay={300}
+                              renderAsMarkdown={true}
+                              cursor={true}
+                            />
                             {message.customComponent && (
                               <div className="mt-4">
                                 {message.customComponent}
