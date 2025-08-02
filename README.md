@@ -158,18 +158,19 @@ The backend will be available at http://localhost:8000
 
 ## 📈 Future Roadmap
 
-**Year 1:**
+**Year 1: MVP & Proof of Value**
 - Launch one-stop onboarding with Face-KYC
 - Open Finance pilot sync
 - Launch MSME digital report card
 
-**Year 2-3:**
+**Year 2-3: Full Rollout & Embedded Services**
 - OpenFinance service rollout
 - Launch in-app micro services
+- Expand user base
 
-**Year 4-5:**
+**Year 4-5: Ecosystem Integration & Institutional Trust**
 - Launch BizKuku APIs for banks, insurers, and public programs
-- Formalize digital report card as recognized document for loan approvals
+- Formalize the digital report card as recognized document for loan approvals
 
 ---
 
