@@ -2,14 +2,10 @@
 
 import { motion } from "framer-motion"
 import BusinessDashboard from "@/components/online-bizz/BusinessDashboard"
-import BusinessResources from "@/components/online-bizz/BusinessResources"
 import { useLanguage } from "@/contexts/LanguageContext"
 import {
-  platforms,
   connectedAccounts,
-  consolidatedStats,
-  helpResources,
-  quickStartGuides
+  consolidatedStats
 } from "@/lib/online-bizz-data"
 import GradientBackground from "@/components/backgrounds/GradientBackground"
 
@@ -64,17 +60,10 @@ export default function OnlineBizzkuPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {/* Business Dashboard Component (Overview, Connected Accounts, Available Platforms) */}
+          {/* Business Dashboard Component (Overview, Connected Accounts) */}
           <BusinessDashboard 
-            platforms={platforms}
             connectedAccounts={connectedAccounts}
             consolidatedStats={consolidatedStats}
-          />
-          
-          {/* Business Resources Component (Help Resources, Quick Start Guides) */}
-          <BusinessResources 
-            helpResources={helpResources}
-            quickStartGuides={quickStartGuides}
           />
         </motion.div>
       </div>

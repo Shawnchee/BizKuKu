@@ -57,7 +57,7 @@ export default function ApplicationStatus() {
           speed={0.8}
           className="absolute inset-0"
         /> */}
-        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <OnboardingProgressBar />
         </div>
       </section>

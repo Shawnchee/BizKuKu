@@ -3119,6 +3119,362 @@ const translations = {
     en: 'Pending Verification'
   },
 
+  // Avatar Onboarding
+  'avatar_onboarding.title': {
+    ms: 'Pembantu Orientasi MSME',
+    en: 'MSME Onboarding Assistant'
+  },
+  'avatar_onboarding.skip_onboarding': {
+    ms: 'Langkau Orientasi',
+    en: 'Skip Onboarding'
+  },
+  'avatar_onboarding.welcome_message': {
+    ms: 'Hai! Saya **pembantu orientasi MSME peribadi** anda.\n\nDimana anda dalam perjalanan perniagaan anda?',
+    en: 'Hi there! I\'m your **personal MSME onboarding assistant**.\n\nWhere are you in your business journey?'
+  },
+  'avatar_onboarding.journey_question': {
+    ms: '**Dimana anda dalam perjalanan perniagaan anda?**',
+    en: '**Where are you in your business journey?**'
+  },
+  'avatar_onboarding.journey.just_starting': {
+    ms: 'Saya baru bermula (belum daftar lagi)',
+    en: 'I\'m just starting (no registration yet)'
+  },
+  'avatar_onboarding.journey.have_ssm': {
+    ms: 'Saya sudah ada nombor SSM',
+    en: 'I already have an SSM number'
+  },
+  'avatar_onboarding.journey.operating_offline': {
+    ms: 'Saya sudah beroperasi tetapi tidak dalam talian',
+    en: 'I\'m already operating but not online'
+  },
+  'avatar_onboarding.journey.fully_digital': {
+    ms: 'Saya sudah digital sepenuhnya dan mahu berkembang lagi',
+    en: 'I\'m fully digital and want to grow more'
+  },
+  'avatar_onboarding.first_step_message': {
+    ms: '**Bagus! Anda mengambil langkah pertama.**\n\nSila muat naik **MyKad** anda untuk pendaftaran.',
+    en: '**Great! You\'re taking your first step.**\n\nPlease upload your **MyKad** for registration.'
+  },
+  'avatar_onboarding.form_message': {
+    ms: '**MyKad berjaya dimuat naik!**\n\n**Sila lengkapkan maklumat peribadi dan perniagaan anda:**',
+    en: '**MyKad uploaded successfully!**\n\n**Please complete your personal and business information:**'
+  },
+  'avatar_onboarding.checklist.initial': {
+    ms: 'Hebat! Sekarang, biar saya bimbing anda melalui setiap langkah untuk menyediakan perniagaan anda sepenuhnya.\n\n**Berikut ialah senarai semak orientasi anda:**',
+    en: 'Awesome! Now, let me guide you through each step to get your business fully set up.\n\n**Here\'s your onboarding checklist:**'
+  },
+  'avatar_onboarding.checklist.proceed': {
+    ms: 'Mari kita teruskan dengan senarai semak orientasi:',
+    en: 'Let us proceed with the onboarding checklist:'
+  },
+
+  // SSM Application
+  'avatar_onboarding.ssm.start_application': {
+    ms: 'Mula Permohonan SSM',
+    en: 'Start SSM Application'
+  },
+  'avatar_onboarding.ssm.confirm_message': {
+    ms: 'Sebelum kita teruskan, mari sahkan:\n\n**Adakah anda bersedia untuk memohon pendaftaran SSM?**\n\n\n\nIni akan membolehkan anda:\n\n• Mengendalikan perniagaan anda secara sah\n\n• Membuka akaun bank perniagaan\n\n• Memohon pinjaman dan geran',
+    en: 'Before we proceed, let\'s confirm:\n\n**Are you ready to apply for SSM registration?**\n\n\n\nThis will allow you to:\n\n• Legally operate your business\n\n• Open a business bank account\n\n• Apply for loans and grants'
+  },
+  'avatar_onboarding.ssm.confirm': {
+    ms: '✔️ Sahkan',
+    en: '✔️ Confirm'
+  },
+  'avatar_onboarding.ssm.cancel': {
+    ms: '❌ Batal',
+    en: '❌ Cancel'
+  },
+  'avatar_onboarding.ssm.confirmed': {
+    ms: '✔️ Disahkan',
+    en: '✔️ Confirmed'
+  },
+  'avatar_onboarding.ssm.progress_message': {
+    ms: '**Pendaftaran SSM Sedang Diproses**\n\nKami sedang menghantar permohonan anda sekarang. Anda akan menerima kemas kini tentang status.',
+    en: '**SSM Registration in Progress**\n\nWe\'re submitting your application now. You\'ll receive updates on the status.'
+  },
+  'avatar_onboarding.ssm.submitted_message': {
+    ms: '**Permohonan Dihantar!**\n\nAnda akan mendapat **Nombor Pendaftaran Perniagaan** anda selepas kelulusan (dalam 2–3 hari).\n\nKami akan memberitahu anda sebaik sahaja selesai.',
+    en: '**Application Submitted!**\n\nYou will get your **Business Registration Number** after approval (within 2–3 days).\n\nWe\'ll notify you once it\'s done.'
+  },
+  'avatar_onboarding.ssm.canceled': {
+    ms: 'Permohonan Dibatalkan',
+    en: 'Application Canceled'
+  },
+  'avatar_onboarding.ssm.cancel_message': {
+    ms: 'Tidak mengapa! Beritahu saya jika anda ingin memohon kemudian.',
+    en: 'No worries! Let me know if you\'d like to apply later.'
+  },
+
+  // Bank Account Setup
+  'avatar_onboarding.bank.open_account': {
+    ms: 'Buka akaun bank perniagaan',
+    en: 'Open business bank account'
+  },
+  'avatar_onboarding.bank.setup_message': {
+    ms: '**Mari sediakan akaun bank perniagaan anda!** 🏦\n\nPilih bank pilihan anda untuk akaun perniagaan anda:',
+    en: '**Let\'s set up your business bank account!** 🏦\n\nChoose your preferred bank for your business account:'
+  },
+  'avatar_onboarding.bank.choice_message': {
+    ms: '**Pilihan yang bagus!** {bank} adalah bank yang boleh dipercayai untuk akaun perniagaan.\n\nKami akan membantu anda menyediakan akaun perniagaan anda dengan {bank}.\n\nAnda akan menerima butiran akaun dalam 1-2 hari bekerja.',
+    en: '**Great choice!** {bank} is a reliable bank for business accounts.\n\nWe\'ll help you set up your business account with {bank}.\n\nYou\'ll receive account details within 1-2 business days.'
+  },
+  'avatar_onboarding.bank.setup_complete': {
+    ms: '**Persediaan Akaun Bank Selesai!**\n\nPermohonan akaun bank perniagaan anda telah berjaya dihantar.',
+    en: '**Bank Account Setup Complete!**\n\nYour business bank account application has been submitted successfully.'
+  },
+
+  // Payment Setup
+  'avatar_onboarding.payment.setup_digital': {
+    ms: 'Sediakan pembayaran digital',
+    en: 'Set up digital payment'
+  },
+  'avatar_onboarding.payment.activate_message': {
+    ms: '**Mari aktifkan saluran pembayaran anda!**\n\nPilih satu atau lebih kaedah pembayaran untuk menerima pembayaran pelanggan:',
+    en: '**Let\'s activate your payment channels!**\n\nChoose one or more payment methods to accept customer payments:'
+  },
+  'avatar_onboarding.payment.consent_message': {
+    ms: '**Persetujuan Diperlukan**\n\nKami memerlukan persetujuan anda untuk berkongsi butiran SSM anda dengan **{bank}** untuk persediaan QR pedagang.\n\nIni akan membolehkan anda menerima pembayaran QR daripada pelanggan.',
+    en: '**Consent Required**\n\nWe need your consent to share your SSM details with **{bank}** for merchant QR setup.\n\nThis will enable you to accept QR payments from customers.'
+  },
+  'avatar_onboarding.payment.setup_complete': {
+    ms: '**Persediaan Selesai!**\n\n**DuitNow QR anda sedang diproses** dan akan siap dalam **3–5 hari**.\n\nAnda akan menerima pemberitahuan apabila ia diaktifkan.',
+    en: '**Setup Complete!**\n\nYour **DuitNow QR is processing** and will be ready in **3–5 days**.\n\nYou\'ll receive a notification when it\'s activated.'
+  },
+
+  // Payment Options
+  'avatar_onboarding.payment_options.duitnow_qr': {
+    ms: 'DuitNow QR',
+    en: 'DuitNow QR'
+  },
+  'avatar_onboarding.payment_options.duitnow_description': {
+    ms: 'Terima pembayaran QR serta-merta',
+    en: 'Accept QR payments instantly'
+  },
+  'avatar_onboarding.payment_options.boost_grabpay': {
+    ms: 'Boost / GrabPay',
+    en: 'Boost / GrabPay'
+  },
+  'avatar_onboarding.payment_options.mobile_description': {
+    ms: 'Penyelesaian pembayaran mudah alih',
+    en: 'Mobile payment solutions'
+  },
+  'avatar_onboarding.payment_options.fpx': {
+    ms: 'FPX',
+    en: 'FPX'
+  },
+  'avatar_onboarding.payment_options.fpx_description': {
+    ms: 'Pemindahan perbankan dalam talian',
+    en: 'Online banking transfers'
+  },
+  'avatar_onboarding.payment_options.gateway': {
+    ms: 'Gateway Pembayaran',
+    en: 'Payment Gateway'
+  },
+  'avatar_onboarding.payment_options.gateway_description': {
+    ms: 'Pemprosesan pembayaran termaju',
+    en: 'Advanced payment processing'
+  },
+  'avatar_onboarding.payment_options.activate': {
+    ms: 'Aktifkan',
+    en: 'Activate'
+  },
+  'avatar_onboarding.payment_options.apply': {
+    ms: 'Mohon',
+    en: 'Apply'
+  },
+  'avatar_onboarding.payment_options.setup': {
+    ms: 'Sediakan',
+    en: 'Setup'
+  },
+  'avatar_onboarding.payment_options.explore': {
+    ms: 'Terokai',
+    en: 'Explore'
+  },
+
+  // Form Fields
+  'avatar_onboarding.form.full_name': {
+    ms: 'Nama Penuh',
+    en: 'Full Name'
+  },
+  'avatar_onboarding.form.ic_number': {
+    ms: 'No. KP',
+    en: 'IC Number'
+  },
+  'avatar_onboarding.form.auto_filled': {
+    ms: 'Auto-diisi daripada MyKad',
+    en: 'Auto-filled from MyKad'
+  },
+  'avatar_onboarding.form.mobile_number': {
+    ms: 'Nombor Telefon',
+    en: 'Mobile Number'
+  },
+  'avatar_onboarding.form.mobile_placeholder': {
+    ms: 'Masukkan nombor telefon anda',
+    en: 'Enter your mobile number'
+  },
+  'avatar_onboarding.form.business_name': {
+    ms: 'Nama Perniagaan',
+    en: 'Business Name'
+  },
+  'avatar_onboarding.form.business_name_placeholder': {
+    ms: 'Masukkan nama perniagaan anda',
+    en: 'Enter your business name'
+  },
+  'avatar_onboarding.form.business_type': {
+    ms: 'Jenis Perniagaan',
+    en: 'Business Type'
+  },
+  'avatar_onboarding.form.business_type_placeholder': {
+    ms: 'Pilih jenis perniagaan',
+    en: 'Select business type'
+  },
+  'avatar_onboarding.form.sole_proprietor': {
+    ms: 'Milikan Tunggal',
+    en: 'Sole Proprietor'
+  },
+  'avatar_onboarding.form.partnership': {
+    ms: 'Perkongsian',
+    en: 'Partnership'
+  },
+  'avatar_onboarding.form.sdn_bhd': {
+    ms: 'Sdn. Bhd. (Syarikat Sendirian Berhad)',
+    en: 'Sdn. Bhd. (Private Limited)'
+  },
+  'avatar_onboarding.form.business_description': {
+    ms: 'Penerangan Perniagaan',
+    en: 'Business Description'
+  },
+  'avatar_onboarding.form.business_description_placeholder': {
+    ms: 'Terangkan aktiviti perniagaan anda',
+    en: 'Describe your business activities'
+  },
+  'avatar_onboarding.form.business_address': {
+    ms: 'Alamat Perniagaan',
+    en: 'Business Address'
+  },
+  'avatar_onboarding.form.business_address_placeholder': {
+    ms: 'Masukkan alamat perniagaan anda',
+    en: 'Enter your business address'
+  },
+  'avatar_onboarding.form.continue_button': {
+    ms: 'Teruskan ke Langkah Seterusnya',
+    en: 'Continue to Next Step'
+  },
+
+  // Steps
+  'avatar_onboarding.steps.step_1': {
+    ms: 'Langkah 1',
+    en: 'Step 1'
+  },
+  'avatar_onboarding.steps.step_2': {
+    ms: 'Langkah 2',
+    en: 'Step 2'
+  },
+  'avatar_onboarding.steps.step_3': {
+    ms: 'Langkah 3',
+    en: 'Step 3'
+  },
+  'avatar_onboarding.steps.ssm_description': {
+    ms: 'Mohon pendaftaran SSM',
+    en: 'Apply for SSM registration'
+  },
+  'avatar_onboarding.steps.bank_description': {
+    ms: 'Buka akaun bank perniagaan',
+    en: 'Open a business bank account'
+  },
+  'avatar_onboarding.steps.payment_description': {
+    ms: 'Sediakan pembayaran digital',
+    en: 'Set up digital payment'
+  },
+  'avatar_onboarding.steps.done': {
+    ms: 'Selesai',
+    en: 'Done'
+  },
+  'avatar_onboarding.steps.start_now': {
+    ms: 'Mula Sekarang',
+    en: 'Start Now'
+  },
+
+  // Completion
+  'avatar_onboarding.completion.success_message': {
+    ms: '**Orientasi Berjaya!**\n\n**Tahniah!** Persediaan perniagaan anda kini lengkap.\n\nAnda kini boleh:\n\n• Mengakses papan pemuka perniagaan anda\n\n• Menjejaki jualan dan pelanggan\n\n• Memohon pembiayaan\n\n• Menggunakan alat pembayaran digital\n\n\n\n**Bersedia untuk memulakan perjalanan perniagaan anda?**',
+    en: '**Onboarding Successful!**\n\n**Congratulations!** Your business setup is now complete.\n\nYou can now:\n\n• Access your business dashboard\n\n• Track sales and customers\n\n• Apply for funding\n\n• Use digital payment tools\n\n\n\n**Ready to start your business journey?**'
+  },
+  'avatar_onboarding.completion.continue_message': {
+    ms: '**Teruskan ke Papan Pemuka Anda**',
+    en: '**Continue to your Dashboard**'
+  },
+  'avatar_onboarding.completion.continue_button': {
+    ms: 'Teruskan ke Papan Pemuka',
+    en: 'Continue to Dashboard'
+  },
+  'avatar_onboarding.completion.onboarding_complete': {
+    ms: 'Orientasi Selesai!',
+    en: 'Onboarding Complete!'
+  },
+  'avatar_onboarding.completion.setup_complete_description': {
+    ms: 'Persediaan perniagaan anda kini lengkap. Anda kini boleh mengakses semua ciri dalam papan pemuka anda.',
+    en: 'Your business setup is now complete. You can now access all features in your dashboard.'
+  },
+
+  // Consent Modal
+  'avatar_onboarding.consent.title': {
+    ms: 'Persetujuan Diperlukan',
+    en: 'Consent Required'
+  },
+  'avatar_onboarding.consent.description': {
+    ms: 'Kami memerlukan persetujuan anda untuk berkongsi butiran SSM anda untuk persediaan QR pedagang. Ini akan membolehkan anda menerima pembayaran QR daripada pelanggan.',
+    en: 'We need your consent to share your SSM details for merchant QR setup. This will enable you to accept QR payments from customers.'
+  },
+  'avatar_onboarding.consent.decline': {
+    ms: 'Tolak',
+    en: 'Decline'
+  },
+  'avatar_onboarding.consent.agree': {
+    ms: 'Setuju & Teruskan',
+    en: 'Agree & Continue'
+  },
+
+  // Chat Interface
+  'avatar_onboarding.chat.placeholder': {
+    ms: 'Taip mesej anda di sini...',
+    en: 'Type your message here...'
+  },
+  'avatar_onboarding.chat.instructions': {
+    ms: 'Tekan Enter untuk hantar • Shift+Enter untuk baris baru',
+    en: 'Press Enter to send • Shift+Enter for new line'
+  },
+  'avatar_onboarding.chat.typing': {
+    ms: 'Menaip...',
+    en: 'Typing...'
+  },
+
+  // Avatar Status
+  'avatar_onboarding.avatar.ready': {
+    ms: 'Avatar Sedia',
+    en: 'Avatar Ready'
+  },
+  'avatar_onboarding.avatar.initializing': {
+    ms: 'Memulakan Avatar...',
+    en: 'Initializing Avatar...'
+  },
+
+  // Microphone Status
+  'avatar_onboarding.microphone.requesting': {
+    ms: 'Meminta akses mikrofon...',
+    en: 'Requesting microphone access...'
+  },
+  'avatar_onboarding.microphone.denied': {
+    ms: 'Akses mikrofon ditolak',
+    en: 'Microphone access denied'
+  },
+  'avatar_onboarding.microphone.ready': {
+    ms: 'Mikrofon sedia',
+    en: 'Microphone ready'
+  },
+
   // Language identifier
   'language': {
     ms: 'ms',

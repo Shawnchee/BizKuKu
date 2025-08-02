@@ -699,16 +699,32 @@ export const msmeOpenFinanceConnections: OpenFinanceConnection[] = [
       merchantId: 'DUITNOW-MSME-001',
     },
   },
+  {
+    id: 'conn_shopee_001',
+    providerId: 'shopee',
+    providerName: 'Shopee',
+    connectionType: 'e-commerce',
+    status: 'connected',
+    accounts: [],
+    permissions: ['read_sales', 'read_orders', 'read_payments', 'read_balance'],
+    consentExpiryDate: '2024-12-20T10:00:00Z',
+    lastSyncTime: '2024-01-20T10:00:00Z',
+    metadata: {
+      apiVersion: '2.1',
+      merchantId: 'SHOPEE-MSME-001',
+      storeBalance: 8450.75,
+    },
+  },
 ]
 
 // Consolidated Financial Data
 export const msmeConsolidatedFinancialData: ConsolidatedFinancialData = {
-  totalBalance: 56751.50,
+  totalBalance: 65202.25,
   totalIncome: 18750.00,
   totalExpenses: 10000.00,
   netCashFlow: 8750.00,
-  accountsCount: 3,
-  transactionsCount: 156,
+  accountsCount: 4,
+  transactionsCount: 350,
   lastUpdated: '2024-01-20T10:30:00Z',
   currency: 'MYR',
   performanceMetrics: {
@@ -991,7 +1007,7 @@ export const msmePaymentMethodPerformance: ChartData[] = [
   { name: 'DuitNow QR', value: 847 },
   { name: 'Touch n Go', value: 523 },
   { name: 'GrabPay', value: 324 },
-  { name: 'Cash', value: 186 },
+  { name: 'Shopee', value: 186 },
   { name: 'Bank Transfer', value: 92 },
   { name: 'Credit Card', value: 45 },
 ]

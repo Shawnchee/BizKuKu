@@ -168,22 +168,6 @@ export const connectedAccounts: ConnectedAccount[] = [
     lastActivity: "2024-06-20T10:30:00Z",
     profileImage: "/placeholder.svg?height=40&width=40&text=BS",
   },
-  {
-    id: "lazada_001",
-    platformId: "lazada",
-    platformName: "Lazada",
-    accountName: "online_business.store.marketplace",
-    accountId: "bizzku-my",
-    status: "in_progress",
-    stats: {
-      today: { revenue: 0, orders: 0, customers: 0 },
-      last7days: { revenue: 0, orders: 0, customers: 0 },
-      last1month: { revenue: 0, orders: 0, customers: 0 },
-      alltime: { revenue: 0, orders: 0, customers: 0 },
-    },
-    lastActivity: "2024-06-18T15:20:00Z",
-    profileImage: "/placeholder.svg?height=40&width=40&text=BM",
-  },
 ]
 
 export const consolidatedStats: ConsolidatedStats = {
@@ -192,7 +176,7 @@ export const consolidatedStats: ConsolidatedStats = {
   last1month: { totalRevenue: 12500, totalOrders: 324, totalCustomers: 287, totalProducts: 156 },
   alltime: { totalRevenue: 25800, totalOrders: 1247, totalCustomers: 892, totalProducts: 156 },
   activePlatforms: 1,
-  pendingPlatforms: 1,
+  pendingPlatforms: 0,
 }
 
 export const helpResources: Resource[] = [

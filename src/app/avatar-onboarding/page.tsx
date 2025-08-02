@@ -18,6 +18,8 @@ interface Message {
   options?: ChatOption[]
   type?: 'text' | 'options' | 'form' | 'checklist' | 'payment-setup' | 'completion'
   files?: File[]
+  translationKey?: string // Store translation key for language switching
+  translationParams?: Record<string, string> // Store parameters for dynamic translations
 }
 
 interface ChatOption {
@@ -142,6 +144,43 @@ export default function AvatarOnboarding() {
   const [welcomeTriggered, setWelcomeTriggered] = useState(false);
   const [spokenMessageIds, setSpokenMessageIds] = useState<Set<string>>(new Set());
 
+  // Effect to update message translations when language changes
+  useEffect(() => {
+    if (messages.length > 0) {
+      setMessages(prevMessages => 
+        prevMessages.map(message => {
+          if (message.translationKey && message.sender === 'bot') {
+            let translatedText = t(message.translationKey);
+            
+            // Apply parameters if they exist
+            if (message.translationParams) {
+              Object.entries(message.translationParams).forEach(([key, value]) => {
+                translatedText = translatedText.replace(`{${key}}`, value);
+              });
+            }
+            
+            return {
+              ...message,
+              text: translatedText,
+              options: message.options?.map(option => ({
+                ...option,
+                text: option.id === 'just-starting' ? t('avatar_onboarding.journey.just_starting') :
+                      option.id === 'have-ssm' ? t('avatar_onboarding.journey.have_ssm') :
+                      option.id === 'operating-offline' ? t('avatar_onboarding.journey.operating_offline') :
+                      option.id === 'fully-digital' ? t('avatar_onboarding.journey.fully_digital') :
+                      option.id === 'confirm-ssm' ? t('avatar_onboarding.ssm.confirm') :
+                      option.id === 'cancel-ssm' ? t('avatar_onboarding.ssm.cancel') :
+                      option.id === 'go-home' ? t('avatar_onboarding.completion.continue_button') :
+                      option.text
+              }))
+            };
+          }
+          return message;
+        })
+      );
+    }
+  }, [language]); // Re-run when language changes
+
   // Debug effect to track avatar ready state
   useEffect(() => {
     console.log('🎭 Avatar ready state changed:', { 
@@ -206,7 +245,7 @@ export default function AvatarOnboarding() {
         if (avatarReady && messages.length === 0 && !welcomeShown) {
           // Double-check to prevent duplicate welcome messages
           const existingWelcome = messages.some(msg => 
-            msg.text.includes("Hi there! I'm your **personal MSME onboarding assistant**")
+            msg.translationKey === 'avatar_onboarding.welcome_message'
           );
           
           if (existingWelcome) {
@@ -214,7 +253,7 @@ export default function AvatarOnboarding() {
             setWelcomeShown(true);
             return;
           }
-          const welcomeMessage = "Hi there! I'm your **personal MSME onboarding assistant**.\n\nWhere are you in your business journey?";
+          const welcomeMessage = t('avatar_onboarding.welcome_message');
           
           // Add message directly with options to avoid dependency issues
           const newMessage: Message = {
@@ -222,28 +261,29 @@ export default function AvatarOnboarding() {
             text: welcomeMessage,
             sender: 'bot',
             type: 'options',
+            translationKey: 'avatar_onboarding.welcome_message',
             options: [
               {
                 id: 'just-starting',
-                text: "I'm just starting (no registration yet)",
+                text: t('avatar_onboarding.journey.just_starting'),
                 icon: <Circle className="w-4 h-4" />,
                 action: () => handleJourneySelection('just-starting')
               },
               {
                 id: 'have-ssm',
-                text: "I already have an SSM number",
+                text: t('avatar_onboarding.journey.have_ssm'),
                 icon: <Circle className="w-4 h-4" />,
                 action: () => handleJourneySelection('have-ssm')
               },
               {
                 id: 'operating-offline',
-                text: "I'm already operating but not online",
+                text: t('avatar_onboarding.journey.operating_offline'),
                 icon: <Circle className="w-4 h-4" />,
                 action: () => handleJourneySelection('operating-offline')
               },
               {
                 id: 'fully-digital',
-                text: "I'm fully digital and want to grow more",
+                text: t('avatar_onboarding.journey.fully_digital'),
                 icon: <Circle className="w-4 h-4" />,
                 action: () => handleJourneySelection('fully-digital')
               }
@@ -268,7 +308,7 @@ export default function AvatarOnboarding() {
     }
   }, [avatarReady, messages.length, welcomeShown, speakText, isAvatarSpeaking]);
 
-  const addBotMessage = (text: string, options?: ChatOption[], type?: 'text' | 'options' | 'form' | 'checklist' | 'payment-setup' | 'completion') => {
+  const addBotMessage = (text: string, options?: ChatOption[], type?: 'text' | 'options' | 'form' | 'checklist' | 'payment-setup' | 'completion', translationKey?: string, translationParams?: Record<string, string>) => {
     // Check if this exact message already exists to prevent duplicates
     // But allow checklist messages to be added multiple times since they should appear after each step
     const messageExists = messages.some(msg => 
@@ -283,9 +323,9 @@ export default function AvatarOnboarding() {
     }
     
     // Special check for welcome message to prevent duplicates
-    if (text.includes("Hi there! I'm your **personal MSME onboarding assistant**")) {
+    if (translationKey === 'avatar_onboarding.welcome_message') {
       const welcomeExists = messages.some(msg => 
-        msg.text.includes("Hi there! I'm your **personal MSME onboarding assistant**")
+        msg.translationKey === 'avatar_onboarding.welcome_message'
       );
       if (welcomeExists) {
         console.log('Welcome message already exists, skipping duplicate');
@@ -298,7 +338,9 @@ export default function AvatarOnboarding() {
       text,
       sender: 'bot',
       options,
-      type: type || (options ? 'options' : 'text')
+      type: type || (options ? 'options' : 'text'),
+      translationKey,
+      translationParams
     }
     
     console.log('Adding new bot message:', {
@@ -326,55 +368,55 @@ export default function AvatarOnboarding() {
   const showBusinessJourneyOptions = () => {
     // Add the journey options message immediately without waiting
     console.log('🗣️ Adding journey options message');
-    const journeyMessage = "**Where are you in your business journey?**";
+    const journeyMessage = t('avatar_onboarding.journey_question');
     addBotMessage(journeyMessage, [
       {
         id: 'just-starting',
-        text: "I'm just starting (no registration yet)",
+        text: t('avatar_onboarding.journey.just_starting'),
         icon: <Circle className="w-4 h-4" />,
         action: () => handleJourneySelection('just-starting')
       },
       {
         id: 'have-ssm',
-        text: "I already have an SSM number",
+        text: t('avatar_onboarding.journey.have_ssm'),
         icon: <Circle className="w-4 h-4" />,
         action: () => handleJourneySelection('have-ssm')
       },
       {
         id: 'operating-offline',
-        text: "I'm already operating but not online",
+        text: t('avatar_onboarding.journey.operating_offline'),
         icon: <Circle className="w-4 h-4" />,
         action: () => handleJourneySelection('operating-offline')
       },
       {
         id: 'fully-digital',
-        text: "I'm fully digital and want to grow more",
+        text: t('avatar_onboarding.journey.fully_digital'),
         icon: <Circle className="w-4 h-4" />,
         action: () => handleJourneySelection('fully-digital')
       }
-    ], 'options')
+    ], 'options', 'avatar_onboarding.journey_question')
   }
 
   const handleJourneySelection = (journey: string) => {
-    addUserMessage(journey === 'just-starting' ? "I'm just starting" : 
-                  journey === 'have-ssm' ? "I already have an SSM number" :
-                  journey === 'operating-offline' ? "I'm already operating but not online" :
-                  "I'm fully digital and want to grow more")
+    addUserMessage(journey === 'just-starting' ? t('avatar_onboarding.journey.just_starting') : 
+                  journey === 'have-ssm' ? t('avatar_onboarding.journey.have_ssm') :
+                  journey === 'operating-offline' ? t('avatar_onboarding.journey.operating_offline') :
+                  t('avatar_onboarding.journey.fully_digital'))
     
     setUserData((prev: any) => ({ ...prev, journey }))
     
     if (journey === 'just-starting') {
       setTimeout(() => {
-        const firstStepMessage = "**Great! You're taking your first step.**\n\nPlease upload your **MyKad** for registration.";
-        addBotMessage(firstStepMessage);
+        const firstStepMessage = t('avatar_onboarding.first_step_message');
+        addBotMessage(firstStepMessage, [], 'text', 'avatar_onboarding.first_step_message');
       }, 500)
     }
   }
 
   const showBasicInfoForm = () => {
     setTimeout(() => {
-      const formMessage = "**MyKad uploaded successfully!**\n\n**Please complete your personal and business information:**";
-      addBotMessage(formMessage, [], 'form');
+      const formMessage = t('avatar_onboarding.form_message');
+      addBotMessage(formMessage, [], 'form', 'avatar_onboarding.form_message');
     }, 500)
   }
 
@@ -383,48 +425,49 @@ export default function AvatarOnboarding() {
     setTimeout(() => {
       const hasCompletedSteps = completedSteps.size > 0
       const message = hasCompletedSteps 
-        ? "Let us proceed with the onboarding checklist:"
-        : "Awesome! Now, let me guide you through each step to get your business fully set up. \n\n**Here's your onboarding checklist:**"
+        ? t('avatar_onboarding.checklist.proceed')
+        : t('avatar_onboarding.checklist.initial')
       
       console.log('Adding checklist message:', message.substring(0, 50) + '...');
-      addBotMessage(message, [], 'checklist');
+      const translationKey = hasCompletedSteps ? 'avatar_onboarding.checklist.proceed' : 'avatar_onboarding.checklist.initial';
+      addBotMessage(message, [], 'checklist', translationKey);
     }, 200) // Reduced from 500ms to 200ms for faster response
   }
 
   const handleSSMApplication = () => {  
-    addUserMessage("Start SSM Application")
+    addUserMessage(t('avatar_onboarding.ssm.start_application'))
     
     // Step 1: Ask for confirmation before proceeding - reduced delay
     setTimeout(() => {
-      const confirmMessage = "Before we proceed, let's confirm: \n\n**Are you ready to apply for SSM registration?** \n\n\n\nThis will allow you to:\n\n• Legally operate your business\n\n• Open a business bank account\n\n• Apply for loans and grants";
+      const confirmMessage = t('avatar_onboarding.ssm.confirm_message');
       addBotMessage(confirmMessage, [
         {
           id: 'confirm-ssm',
-          text: "✔️ Confirm",
+          text: t('avatar_onboarding.ssm.confirm'),
           action: () => handleSSMConfirmation("confirm")
         },
         {
           id: 'cancel-ssm',
-          text: "❌ Cancel",
+          text: t('avatar_onboarding.ssm.cancel'),
           action: () => handleSSMConfirmation("cancel")
         }
-      ]);
+      ], 'options', 'avatar_onboarding.ssm.confirm_message');
     }, 500) // Reduced from 1000ms to 500ms
   }
   
   const handleSSMConfirmation = (response: string) => {
     if (response === "confirm") {
       // Step 2: Proceed with the application submission after confirmation
-      addUserMessage("✔️ Confirmed")
+      addUserMessage(t('avatar_onboarding.ssm.confirmed'))
   
       setTimeout(() => {
-        const progressMessage = "**SSM Registration in Progress** \n\nWe're submitting your application now. You'll receive updates on the status.";
-        addBotMessage(progressMessage);
+        const progressMessage = t('avatar_onboarding.ssm.progress_message');
+        addBotMessage(progressMessage, [], 'text', 'avatar_onboarding.ssm.progress_message');
       }, 1000)
   
       setTimeout(() => {
-        const submittedMessage = "**Application Submitted!**\n\nYou will get your **Business Registration Number** after approval (within 2–3 days).\n\nWe'll notify you once it's done.";
-        addBotMessage(submittedMessage);
+        const submittedMessage = t('avatar_onboarding.ssm.submitted_message');
+        addBotMessage(submittedMessage, [], 'text', 'avatar_onboarding.ssm.submitted_message');
         
         // Mark SSM step as completed immediately
         setCompletedSteps(prev => {
@@ -437,27 +480,27 @@ export default function AvatarOnboarding() {
         setTimeout(() => {
           console.log('Showing checklist after SSM submission');
           const hasCompletedSteps = true // We just completed SSM
-          const message = "Let us proceed with the onboarding checklist:"
+          const message = t('avatar_onboarding.checklist.proceed')
           console.log('Adding checklist message:', message)
-          addBotMessage(message, [], 'checklist')
+          addBotMessage(message, [], 'checklist', 'avatar_onboarding.checklist.proceed')
         }, 1000) // Short delay to ensure submission message is processed
         
       }, 2000)
     } else {
       // Step 3: If user cancels, return a message and do not proceed
-      addUserMessage("Application Canceled")
+      addUserMessage(t('avatar_onboarding.ssm.canceled'))
       setTimeout(() => {
-        const cancelMessage = "No worries! Let me know if you'd like to apply later.";
-        addBotMessage(cancelMessage);
+        const cancelMessage = t('avatar_onboarding.ssm.cancel_message');
+        addBotMessage(cancelMessage, [], 'text', 'avatar_onboarding.ssm.cancel_message');
       }, 500)
     }
   }
 
   const handleBankAccountSetup = () => {
-    addUserMessage("Open business bank account")
+    addUserMessage(t('avatar_onboarding.bank.open_account'))
     
     setTimeout(() => {
-      const bankMessage = "**Let's set up your business bank account!** 🏦\n\nChoose your preferred bank for your business account:";
+      const bankMessage = t('avatar_onboarding.bank.setup_message');
       addBotMessage(bankMessage, [
         {
           id: 'cimb',
@@ -489,11 +532,11 @@ export default function AvatarOnboarding() {
   }
 
   const showPaymentSetup = () => {
-    addUserMessage("Set up digital payment")
+    addUserMessage(t('avatar_onboarding.payment.setup_digital'))
     
     setTimeout(() => {
-      const paymentMessage = "**Let's activate your payment channels!** \n\nChoose one or more payment methods to accept customer payments:";
-      addBotMessage(paymentMessage, [], 'payment-setup');
+      const paymentMessage = t('avatar_onboarding.payment.activate_message');
+      addBotMessage(paymentMessage, [], 'payment-setup', 'avatar_onboarding.payment.activate_message');
     }, 1000)
   }
 
@@ -516,8 +559,8 @@ export default function AvatarOnboarding() {
 
   const handleConsentAgreed = () => {
     setTimeout(() => {
-      const completeMessage = "**Setup Complete!**\n\nYour **DuitNow QR is processing** and will be ready in **3–5 days**.\n\nYou'll receive a notification when it's activated.";
-      addBotMessage(completeMessage);
+      const completeMessage = t('avatar_onboarding.payment.setup_complete');
+      addBotMessage(completeMessage, [], 'text', 'avatar_onboarding.payment.setup_complete');
       
       // Mark payment step as completed immediately after complete message
       setCompletedSteps(prev => new Set([...prev, 'payments']))
@@ -535,13 +578,13 @@ export default function AvatarOnboarding() {
     if (context === 'account') {
       // Bank account setup flow
       setTimeout(() => {
-        const choiceMessage = `**Great choice!** ${bank} is a reliable bank for business accounts.\n\nWe'll help you set up your business account with ${bank}.\n\nYou'll receive account details within 1-2 business days.`;
-        addBotMessage(choiceMessage);
+        const choiceMessage = t('avatar_onboarding.bank.choice_message').replace('{bank}', bank).replace('{bank}', bank);
+        addBotMessage(choiceMessage, [], 'text', 'avatar_onboarding.bank.choice_message', { bank });
       }, 1000)
       
       setTimeout(() => {
-        const setupMessage = "**Bank Account Setup Complete!**\n\nYour business bank account application has been submitted successfully.";
-        addBotMessage(setupMessage);
+        const setupMessage = t('avatar_onboarding.bank.setup_complete');
+        addBotMessage(setupMessage, [], 'text', 'avatar_onboarding.bank.setup_complete');
         
         // Mark bank account step as completed immediately
         setCompletedSteps(prev => {
@@ -553,9 +596,9 @@ export default function AvatarOnboarding() {
         // Show checklist immediately after setup message with backup
         setTimeout(() => {
           console.log('Showing checklist after bank account setup');
-          const message = "Let us proceed with the onboarding checklist:"
+          const message = t('avatar_onboarding.checklist.proceed')
           console.log('Adding checklist message:', message)
-          addBotMessage(message, [], 'checklist')
+          addBotMessage(message, [], 'checklist', 'avatar_onboarding.checklist.proceed')
           
           // Backup timer to ensure checklist appears
           setTimeout(() => {
@@ -563,12 +606,12 @@ export default function AvatarOnboarding() {
             const hasChecklistMessage = messages.some(msg => 
               msg.sender === 'bot' && 
               msg.text && 
-              (msg.text.includes('onboarding checklist') || msg.text.includes('Here\'s your onboarding checklist'))
+              (msg.text.includes(t('avatar_onboarding.checklist.proceed')) || msg.text.includes(t('avatar_onboarding.checklist.initial')))
             );
             
             if (!hasChecklistMessage) {
               console.log('Backup: Checklist not found after bank setup, showing it now');
-              addBotMessage("Let us proceed with the onboarding checklist:", [], 'checklist')
+              addBotMessage(t('avatar_onboarding.checklist.proceed'), [], 'checklist', 'avatar_onboarding.checklist.proceed')
             }
           }, 2000) // Backup after 2 seconds
         }, 1000) // Short delay to ensure setup message is processed
@@ -576,13 +619,13 @@ export default function AvatarOnboarding() {
     } else {
       // Payment setup flow
       setTimeout(() => {
-        const consentMessage = "**Consent Required** \n\nWe need your consent to share your SSM details with **" + bank + "** for merchant QR setup.\n\nThis will enable you to accept QR payments from customers.";
-        addBotMessage(consentMessage);
+        const consentMessage = t('avatar_onboarding.payment.consent_message').replace('{bank}', bank);
+        addBotMessage(consentMessage, [], 'text', 'avatar_onboarding.payment.consent_message', { bank });
       }, 1000)
       
       setTimeout(() => {
-        const completeMessage = "**Setup Complete!**\n\nYour **DuitNow QR is processing** and will be ready in **3–5 days**.\n\nYou'll receive a notification when it's activated.";
-        addBotMessage(completeMessage);
+        const completeMessage = t('avatar_onboarding.payment.setup_complete');
+        addBotMessage(completeMessage, [], 'text', 'avatar_onboarding.payment.setup_complete');
         
         setTimeout(() => {
           console.log('Showing onboarding completion after bank payment setup');
@@ -594,16 +637,16 @@ export default function AvatarOnboarding() {
 
   const showOnboardingCompletion = () => {
     setTimeout(() => {
-      const successMessage = "**Onboarding Successful!**\n\n**Congratulations!** Your business setup is now complete.\n\nYou can now:\n\n• Access your business dashboard\n\n• Track sales and customers\n\n• Apply for funding\n\n• Use digital payment tools\n\n\n\n**Ready to start your business journey?**";
-      addBotMessage(successMessage);
+      const successMessage = t('avatar_onboarding.completion.success_message');
+      addBotMessage(successMessage, [], 'text', 'avatar_onboarding.completion.success_message');
     }, 1000)
     
     setTimeout(() => {
-      const continueMessage = "**Continue to your Dashboard**";
+      const continueMessage = t('avatar_onboarding.completion.continue_message');
       addBotMessage(continueMessage, [
         {
           id: 'go-home',
-          text: "Continue to Dashboard",
+          text: t('avatar_onboarding.completion.continue_button'),
           icon: <ArrowRight className="w-4 h-4" />,
           action: () => {
             setTimeout(() => {
@@ -611,7 +654,7 @@ export default function AvatarOnboarding() {
             }, 1000)
           }
         }
-      ], 'completion');
+      ], 'completion', 'avatar_onboarding.completion.continue_message');
     }, 2000)
   }
 
@@ -762,27 +805,27 @@ export default function AvatarOnboarding() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Full Name
+                      {t('avatar_onboarding.form.full_name')}
                     </label>
                     <input
                       type="text"
-                      defaultValue="Pak Mat"
+                      defaultValue="Johnny Tan"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
                       readOnly
                     />
-                    <p className="text-xs text-gray-500 mt-1">Auto-filled from MyKad</p>
+                    <p className="text-xs text-gray-500 mt-1">{t('avatar_onboarding.form.auto_filled')}</p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      IC Number
+                      {t('avatar_onboarding.form.ic_number')}
                     </label>
                     <input
                       type="text"
-                      defaultValue="850122074553"
+                      defaultValue="040211070735"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
                       readOnly
                     />
-                    <p className="text-xs text-gray-500 mt-1">Auto-filled from MyKad</p>
+                    <p className="text-xs text-gray-500 mt-1">{t('avatar_onboarding.form.auto_filled')}</p>
                   </div>
                 </div>
 
@@ -790,21 +833,21 @@ export default function AvatarOnboarding() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Mobile Number <span className="text-red-500">*</span>
+                      {t('avatar_onboarding.form.mobile_number')} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="tel"
-                      placeholder="Enter your mobile number"
+                      placeholder={t('avatar_onboarding.form.mobile_placeholder')}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Business Name <span className="text-red-500">*</span>
+                      {t('avatar_onboarding.form.business_name')} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Enter your business name"
+                      placeholder={t('avatar_onboarding.form.business_name_placeholder')}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -812,22 +855,22 @@ export default function AvatarOnboarding() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Business Type <span className="text-red-500">*</span>
+                    {t('avatar_onboarding.form.business_type')} <span className="text-red-500">*</span>
                   </label>
                   <select className="w-full h-11 border border-gray-300 rounded-lg px-3 pr-8 text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none transition">
-                    <option value="">Select business type</option>
-                    <option value="sole-proprietor">Sole Proprietor</option>
-                    <option value="partnership">Partnership</option>
-                    <option value="sdn-bhd">Sdn. Bhd. (Private Limited)</option>
+                    <option value="">{t('avatar_onboarding.form.business_type_placeholder')}</option>
+                    <option value="sole-proprietor">{t('avatar_onboarding.form.sole_proprietor')}</option>
+                    <option value="partnership">{t('avatar_onboarding.form.partnership')}</option>
+                    <option value="sdn-bhd">{t('avatar_onboarding.form.sdn_bhd')}</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Business Description
+                    {t('avatar_onboarding.form.business_description')}
                   </label>
                   <textarea
-                    placeholder="Describe your business activities"
+                    placeholder={t('avatar_onboarding.form.business_description_placeholder')}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                   />
@@ -835,10 +878,10 @@ export default function AvatarOnboarding() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Business Address <span className="text-red-500">*</span>
+                    {t('avatar_onboarding.form.business_address')} <span className="text-red-500">*</span>
                   </label>
                   <textarea
-                    placeholder="Enter your business address"
+                    placeholder={t('avatar_onboarding.form.business_address_placeholder')}
                     rows={2}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                   />
@@ -849,7 +892,7 @@ export default function AvatarOnboarding() {
                     onClick={() => showOnboardingChecklist()}
                     className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
                   >
-                    Continue to Next Step
+                    {t('avatar_onboarding.form.continue_button')}
                   </button>
                 </div>
               </div>
@@ -863,10 +906,10 @@ export default function AvatarOnboarding() {
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
               <div className="flex items-center space-x-2 mb-2">
                 <CheckCircle className="w-5 h-5 text-green-600" />
-                <span className="font-medium text-green-800">Onboarding Complete!</span>
+                <span className="font-medium text-green-800">{t('avatar_onboarding.completion.onboarding_complete')}</span>
               </div>
               <p className="text-sm text-green-700">
-                Your business setup is now complete. You can now access all features in your dashboard.
+                {t('avatar_onboarding.completion.setup_complete_description')}
               </p>
             </div>
             {message.options?.map((option) => (
@@ -900,25 +943,25 @@ export default function AvatarOnboarding() {
                   {[
                     {
                       id: 'ssm-registration',
-                      title: 'Step 1',
-                      description: 'Apply for SSM registration',
-                      buttonText: completedSteps.has('ssm-registration') ? 'Done' : 'Start Now',
+                      title: t('avatar_onboarding.steps.step_1'),
+                      description: t('avatar_onboarding.steps.ssm_description'),
+                      buttonText: completedSteps.has('ssm-registration') ? t('avatar_onboarding.steps.done') : t('avatar_onboarding.steps.start_now'),
                       completed: completedSteps.has('ssm-registration'),
                       action: completedSteps.has('ssm-registration') ? undefined : () => handleSSMApplication()
                     },
                     {
                       id: 'bank-account',
-                      title: 'Step 2',
-                      description: 'Open a business bank account',
-                      buttonText: completedSteps.has('bank-account') ? 'Done' : 'Start Now',
+                      title: t('avatar_onboarding.steps.step_2'),
+                      description: t('avatar_onboarding.steps.bank_description'),
+                      buttonText: completedSteps.has('bank-account') ? t('avatar_onboarding.steps.done') : t('avatar_onboarding.steps.start_now'),
                       completed: completedSteps.has('bank-account'),
                       action: completedSteps.has('bank-account') ? undefined : () => handleBankAccountSetup()
                     },
                     {
                       id: 'payments',
-                      title: 'Step 3',
-                      description: 'Set up digital payment',
-                      buttonText: completedSteps.has('payments') ? 'Done' : 'Start Now',
+                      title: t('avatar_onboarding.steps.step_3'),
+                      description: t('avatar_onboarding.steps.payment_description'),
+                      buttonText: completedSteps.has('payments') ? t('avatar_onboarding.steps.done') : t('avatar_onboarding.steps.start_now'),
                       completed: completedSteps.has('payments'),
                       action: completedSteps.has('payments') ? undefined : () => showPaymentSetup()
                     }
@@ -968,34 +1011,34 @@ export default function AvatarOnboarding() {
               {[
                 {
                   id: 'duitnow-qr',
-                  name: 'DuitNow QR', 
-                  description: 'Accept QR payments instantly',
+                  name: t('avatar_onboarding.payment_options.duitnow_qr'), 
+                  description: t('avatar_onboarding.payment_options.duitnow_description'),
                   icon: <QrCode className="w-6 h-6" />,
-                  buttonText: 'Activate',
+                  buttonText: t('avatar_onboarding.payment_options.activate'),
                   action: () => handlePaymentSelection('duitnow-qr')
                 },
                 {
                   id: 'boost-grabpay',
-                  name: 'Boost / GrabPay',
-                  description: 'Mobile payment solutions',
+                  name: t('avatar_onboarding.payment_options.boost_grabpay'),
+                  description: t('avatar_onboarding.payment_options.mobile_description'),
                   icon: <CreditCard className="w-6 h-6" />,
-                  buttonText: 'Apply',
+                  buttonText: t('avatar_onboarding.payment_options.apply'),
                   action: () => handlePaymentSelection('boost-grabpay')
                 },
                 {
                   id: 'fpx',
-                  name: 'FPX',
-                  description: 'Online banking transfers',
+                  name: t('avatar_onboarding.payment_options.fpx'),
+                  description: t('avatar_onboarding.payment_options.fpx_description'),
                   icon: <Banknote className="w-6 h-6" />,
-                  buttonText: 'Setup',
+                  buttonText: t('avatar_onboarding.payment_options.setup'),
                   action: () => handlePaymentSelection('fpx')
                 },
                 {
                   id: 'payment-gateway',
-                  name: 'Payment Gateway',
-                  description: 'Advanced payment processing',
+                  name: t('avatar_onboarding.payment_options.gateway'),
+                  description: t('avatar_onboarding.payment_options.gateway_description'),
                   icon: <Globe className="w-6 h-6" />,
-                  buttonText: 'Explore',
+                  buttonText: t('avatar_onboarding.payment_options.explore'),
                   action: () => handlePaymentSelection('payment-gateway')
                 }
               ].map((option) => (
@@ -1066,7 +1109,7 @@ export default function AvatarOnboarding() {
           onClick={() => router.push('/home')}
           className="bg-white/30 backdrop-blur-md text-gray-600 text-sm font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-white/50 transition-colors"
         >
-          Skip Onboarding
+          {t('avatar_onboarding.skip_onboarding')}
         </button>
       </div>
       
@@ -1075,7 +1118,7 @@ export default function AvatarOnboarding() {
         <div className="w-1/2 flex flex-col items-center justify-center p-8">
           <h2 className="text-xl md:text-3xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
-              MSME Onboarding Assistant
+              {t('avatar_onboarding.title')}
             </span>
           </h2>
           {/* Avatar Container */}
@@ -1097,7 +1140,7 @@ export default function AvatarOnboarding() {
               <div className="absolute top-4 right-4 bg-yellow-100 border border-yellow-300 rounded-lg px-3 py-2 text-xs">
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                  <span className="text-yellow-700">Requesting microphone access...</span>
+                                      <span className="text-yellow-700">{t('avatar_onboarding.microphone.requesting')}</span>
                 </div>
               </div>
             )}
@@ -1106,7 +1149,7 @@ export default function AvatarOnboarding() {
               <div className="absolute top-4 right-4 bg-red-100 border border-red-300 rounded-lg px-3 py-2 text-xs">
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span className="text-red-700">Microphone access denied</span>
+                                      <span className="text-red-700">{t('avatar_onboarding.microphone.denied')}</span>
                 </div>
               </div>
             )}
@@ -1115,7 +1158,7 @@ export default function AvatarOnboarding() {
               <div className="absolute top-4 right-4 bg-green-100 border border-green-300 rounded-lg px-3 py-2 text-xs">
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-green-700">Microphone ready</span>
+                                      <span className="text-green-700">{t('avatar_onboarding.microphone.ready')}</span>
                 </div>
               </div>
             )}
@@ -1143,7 +1186,7 @@ export default function AvatarOnboarding() {
                   avatarReady ? 'bg-green-500' : 'bg-yellow-500 animate-pulse'
                 }`}></div>
                 <span className="text-xs text-gray-600">
-                  {avatarReady ? 'Avatar Ready' : 'Initializing Avatar...'}
+                  {avatarReady ? t('avatar_onboarding.avatar.ready') : t('avatar_onboarding.avatar.initializing')}
                 </span>
               </div>
             </div>
@@ -1197,7 +1240,7 @@ export default function AvatarOnboarding() {
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   </div>
-                  <span className="text-sm text-gray-600">Typing...</span>
+                  <span className="text-sm text-gray-600">{t('avatar_onboarding.chat.typing')}</span>
                 </div>
               </div>
             </motion.div>
@@ -1242,7 +1285,7 @@ export default function AvatarOnboarding() {
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Type your message here..."
+                  placeholder={t('avatar_onboarding.chat.placeholder')}
                   className="w-full resize-none border border-gray-300 rounded-2xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   rows={1}
                   style={{ minHeight: '48px', maxHeight: '120px' }}
@@ -1333,7 +1376,7 @@ export default function AvatarOnboarding() {
             />
             
             <p className="text-xs text-gray-500 mt-2 text-center">
-              Press Enter to send • Shift+Enter for new line
+              {t('avatar_onboarding.chat.instructions')}
             </p>
           </div>
         </div>
@@ -1347,9 +1390,9 @@ export default function AvatarOnboarding() {
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FileText className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Consent Required</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('avatar_onboarding.consent.title')}</h3>
               <p className="text-sm text-gray-600 mb-6">
-                We need your consent to share your SSM details for merchant QR setup. This will enable you to accept QR payments from customers.
+                {t('avatar_onboarding.consent.description')}
               </p>
               <div className="flex space-x-3">
                 <button
@@ -1359,7 +1402,7 @@ export default function AvatarOnboarding() {
                   }}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
                 >
-                  Decline
+                  {t('avatar_onboarding.consent.decline')}
                 </button>
                 <button
                   onClick={() => {
@@ -1368,7 +1411,7 @@ export default function AvatarOnboarding() {
                   }}
                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
-                  Agree & Continue
+                  {t('avatar_onboarding.consent.agree')}
                 </button>
               </div>
             </div>

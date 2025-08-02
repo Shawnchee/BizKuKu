@@ -188,7 +188,7 @@ export interface OpenFinanceConnection {
   id: string;
   providerId: string;
   providerName: string;
-  connectionType: 'bank' | 'payment_service' | 'e_money' | 'fintech';
+  connectionType: 'bank' | 'payment_service' | 'e_money' | 'fintech' | 'e-commerce';
   status: 'connected' | 'disconnected' | 'error' | 'pending';
   accounts: BankAccount[];
   permissions: string[];

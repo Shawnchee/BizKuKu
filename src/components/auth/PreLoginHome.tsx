@@ -9,10 +9,11 @@ import { Button } from '@/components/ui/Button'
 
 const PreLoginHome = () => {
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoginLoading, setIsLoginLoading] = useState(false)
+  const [isRegisterLoading, setIsRegisterLoading] = useState(false)
 
   const handleLoginClick = async () => {
-    setIsLoading(true)
+    setIsLoginLoading(true)
     // Add a small delay for better UX
     setTimeout(() => {
       router.push('/login')
@@ -20,7 +21,7 @@ const PreLoginHome = () => {
   }
 
   const handleRegisterClick = async () => {
-    setIsLoading(true)
+    setIsRegisterLoading(true)
     // Add a small delay for better UX
     setTimeout(() => {
       router.push('/register')
@@ -65,11 +66,11 @@ const PreLoginHome = () => {
             <div className="flex flex-col gap-4 justify-center items-center">
               <Button
                 onClick={handleLoginClick}
-                disabled={isLoading}
+                disabled={isLoginLoading}
                 className="group relative px-12 py-6 text-xl font-semibold text-white bg-black/80 hover:bg-black/90 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  {isLoading ? (
+                  {isLoginLoading ? (
                     <>
                       <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       Connecting...
@@ -89,11 +90,11 @@ const PreLoginHome = () => {
 
               <Button
                 onClick={handleRegisterClick}
-                disabled={isLoading}
+                disabled={isRegisterLoading}
                 className="group relative px-12 py-6 text-xl font-semibold text-black bg-white/90 hover:bg-white rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border-2 border-black/10"
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  {isLoading ? (
+                  {isRegisterLoading ? (
                     <>
                       <div className="w-6 h-6 border-2 border-black/30 border-t-black rounded-full animate-spin" />
                       Connecting...

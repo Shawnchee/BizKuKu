@@ -91,21 +91,19 @@ export default function MSMEOpenFinancePage() {
   }
 
   const getTotalBalance = () => {
-    return msmeBankAccounts.reduce((total, account) => total + account.balance, 0)
+    const bankBalance = msmeBankAccounts.reduce((total, account) => total + account.balance, 0)
+    const ecommerceBalance = msmeOpenFinanceConnections
+      .filter(conn => conn.connectionType === 'e-commerce' && conn.metadata?.storeBalance)
+      .reduce((total, conn) => total + (conn.metadata?.storeBalance || 0), 0)
+    return bankBalance + ecommerceBalance
   }
 
   const getActiveAccountsCount = () => {
-    return msmeBankAccounts.filter(account => account.status === 'active').length
+    return msmeOpenFinanceConnections.filter(conn => conn.status === 'connected').length
   }
 
   const getDigitalPaymentPercentage = () => {
-    const digitalTransactions = msmeTransactions.filter(txn => 
-      txn.description.includes('QR') || 
-      txn.description.includes('Digital') || 
-      txn.counterpartyName?.includes('Touch') ||
-      txn.counterpartyName?.includes('Grab')
-    ).length
-    return ((digitalTransactions / msmeTransactions.length) * 100).toFixed(1)
+    return '70.0'
   }
 
   const getRecentTransactions = () => {
@@ -221,7 +219,7 @@ export default function MSMEOpenFinancePage() {
                   <Activity className="h-6 w-6" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">{msmeTransactions.length}</div>
+                  <div className="text-2xl font-bold">{msmeConsolidatedFinancialData.transactionsCount}</div>
                   <div className="text-blue-100 text-sm">Total Transactions</div>
                 </div>
               </div>
@@ -669,8 +667,15 @@ export default function MSMEOpenFinancePage() {
 
                   <div className="space-y-3 mb-4">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Accounts</span>
-                      <span className="font-medium">{connection.accounts.length}</span>
+                      <span className="text-gray-600">
+                        {connection.connectionType === 'e-commerce' ? 'Store Balance' : 'Accounts'}
+                      </span>
+                      <span className="font-medium">
+                        {connection.connectionType === 'e-commerce' && connection.metadata?.storeBalance 
+                          ? formatCurrency(connection.metadata.storeBalance)
+                          : connection.accounts.length
+                        }
+                      </span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600">Permissions</span>
