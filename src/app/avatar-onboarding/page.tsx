@@ -214,14 +214,40 @@ export default function AvatarOnboarding() {
             setWelcomeShown(true);
             return;
           }
-          const welcomeMessage = "Hi there! I'm your **personal MSME onboarding assistant**.\n\nLet's get your business up and running in just a few steps.";
+          const welcomeMessage = "Hi there! I'm your **personal MSME onboarding assistant**.\n\nWhere are you in your business journey?";
           
-          // Add message directly to avoid dependency issues
+          // Add message directly with options to avoid dependency issues
           const newMessage: Message = {
             id: Date.now().toString(),
             text: welcomeMessage,
             sender: 'bot',
-            type: 'text'
+            type: 'options',
+            options: [
+              {
+                id: 'just-starting',
+                text: "I'm just starting (no registration yet)",
+                icon: <Circle className="w-4 h-4" />,
+                action: () => handleJourneySelection('just-starting')
+              },
+              {
+                id: 'have-ssm',
+                text: "I already have an SSM number",
+                icon: <Circle className="w-4 h-4" />,
+                action: () => handleJourneySelection('have-ssm')
+              },
+              {
+                id: 'operating-offline',
+                text: "I'm already operating but not online",
+                icon: <Circle className="w-4 h-4" />,
+                action: () => handleJourneySelection('operating-offline')
+              },
+              {
+                id: 'fully-digital',
+                text: "I'm fully digital and want to grow more",
+                icon: <Circle className="w-4 h-4" />,
+                action: () => handleJourneySelection('fully-digital')
+              }
+            ]
           }
           setMessages(prev => [...prev, newMessage]);
           setWelcomeShown(true);
@@ -235,16 +261,6 @@ export default function AvatarOnboarding() {
               console.log('Speaking welcome message...');
               const cleanText = welcomeMessage.replace(/\*\*/g, '').replace(/\n/g, ' ');
               speakText(cleanText);
-              
-              // Show business journey options AFTER the welcome message finishes speaking
-              // Calculate speaking duration based on word count - use a shorter duration
-              const wordCount = cleanText.split(' ').length;
-              const estimatedDuration = Math.max(2000, Math.min(5000, (wordCount / 200) * 60 * 1000));
-              
-              setTimeout(() => {
-                console.log('🗣️ Welcome message finished, showing journey options...');
-                showBusinessJourneyOptions();
-              }, estimatedDuration + 1000); // Reduced buffer to 500ms
             }
           }, 500);
         }
@@ -310,7 +326,7 @@ export default function AvatarOnboarding() {
   const showBusinessJourneyOptions = () => {
     // Add the journey options message immediately without waiting
     console.log('🗣️ Adding journey options message');
-    const journeyMessage = "**Where are you in your business journey?**\n\nPlease select one of the options below:";
+    const journeyMessage = "**Where are you in your business journey?**";
     addBotMessage(journeyMessage, [
       {
         id: 'just-starting',

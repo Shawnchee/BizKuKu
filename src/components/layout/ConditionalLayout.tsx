@@ -11,7 +11,7 @@ interface ConditionalLayoutProps {
 const ConditionalLayout = ({ children }: ConditionalLayoutProps) => {
   const pathname = usePathname()
   
-  const isPreLoginPage = pathname === '/' || pathname === '/login' || pathname === '/avatar-onboarding'
+  const isPreLoginPage = pathname === '/' || pathname === '/login'
   
   if (isPreLoginPage) {
     return <>{children}</>

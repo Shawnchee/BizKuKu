@@ -9,7 +9,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import TypewriterText from '@/components/animation/TypewriterText'
 import AzureAvatar from '@/components/avatar/AzureAvatar'
-import AvatarTestPanel from '@/components/avatar/AvatarTestPanel'
 import { useAzureAvatarEnhanced } from '@/hooks/useAzureAvatarEnhanced'
 import FinancialSnapshot from '@/components/chatbot/FinancialSnapshot'
 
@@ -76,23 +75,6 @@ export default function AuthenticatedHome() {
     setIsAvatarSpeaking(isSpeaking)
   }, [isSpeaking])
 
-  // Auto-show financial snapshot for XinJie
-  useEffect(() => {
-    if (user?.full_name === 'XinJie' && !hasUserSentMessage) {
-      // Automatically show financial snapshot
-      const botMessage: Message = {
-        id: Date.now().toString(),
-        text: '',
-        sender: 'bot',
-        timestamp: new Date(),
-        customComponent: <FinancialSnapshot onExploreGrants={handleExploreGrants} />
-      }
-      
-      setMessages([botMessage])
-      setHasUserSentMessage(true)
-    }
-  }, [user?.full_name, hasUserSentMessage])
-
   // Add this function to handle stopping the avatar from speaking
   const handleStopSpeaking = async () => {
     await stopSpeaking()
@@ -113,11 +95,11 @@ export default function AuthenticatedHome() {
       title: 'Check Application Status',
       titleMs: 'Semak Status Permohonan',
       icon: FileText,
-      color: 'from-blue-400 to-blue-600',
-      bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-200',
-      summary: 'Your SSM registration is approved and QR merchant setup is in progress. Expected completion in 2-3 working days.',
-      summaryMs: 'Pendaftaran SSM anda telah diluluskan dan setup QR pedagang sedang dalam proses. Dijangka siap dalam 2-3 hari bekerja.',
+      color: 'from-green-400 to-green-600',
+      bgColor: 'bg-green-50',
+      borderColor: 'border-green-200',
+      summary: 'Your SSM registration has been successfully approved. We\'re now setting up your QR merchant profile. This typically takes 2–3 working days. We\'ll notify you once the setup is complete so you can start receiving payments seamlessly.',
+      summaryMs: 'Pendaftaran SSM anda telah berjaya diluluskan. Profil QR pedagang anda sedang disediakan dan proses ini biasanya mengambil masa 2–3 hari bekerja. Kami akan maklumkan anda sebaik sahaja ia siap untuk membolehkan anda mula menerima bayaran tanpa masalah.',
       linkTo: '/application-status',
       tab: 'Application Status'
     },
@@ -126,13 +108,39 @@ export default function AuthenticatedHome() {
       title: 'Start Online Business Platform',
       titleMs: 'Mulakan Perniagaan Dalam Talian',
       icon: TrendingUp,
-      color: 'from-green-400 to-green-600',
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-200',
-      summary: 'Your business is performing well with steady growth in online sales. Monthly revenue shows a 15% increase compared to last month.',
-      summaryMs: 'Perniagaan anda berprestasi baik dengan pertumbuhan stabil dalam jualan dalam talian. Hasil bulanan menunjukkan peningkatan 15% berbanding bulan lepas.',
+      color: 'from-blue-400 to-blue-600',
+      bgColor: 'bg-blue-50',
+      borderColor: 'border-blue-200',
+      summary: 'Your online business is gaining momentum. You\'ve experienced a 15% increase in monthly revenue, showing consistent growth. Keep promoting your products and engaging customers to build on this success.',
+      summaryMs: 'Perniagaan dalam talian anda semakin berkembang. Terdapat peningkatan sebanyak 15% dalam hasil bulanan anda, menunjukkan pertumbuhan yang konsisten. Teruskan mempromosikan produk dan berinteraksi dengan pelanggan untuk mengekalkan kejayaan ini.',
       linkTo: '/online-bizzku',
       tab: 'Online Bizzku'
+    },
+    {
+      id: 'business-insights',
+      title: 'View Financial Insights',
+      titleMs: 'Lihat Analisis Kewangan',
+      icon: Sparkles,
+      color: 'from-purple-400 to-purple-600',
+      bgColor: 'bg-purple-50',
+      borderColor: 'border-purple-200',
+      summary: 'Your business is performing strongly. With a customer retention rate of 85% and traditional snacks as your top-selling product, you\'re hitting the right market. Peak sales occur between 2–4 PM, a great time to boost promotions.',
+      summaryMs: 'Perniagaan anda menunjukkan prestasi kukuh. Dengan kadar pengekalan pelanggan sebanyak 85% dan kudapan tradisional sebagai produk terlaris, anda berada pada landasan yang tepat. Waktu jualan puncak adalah antara 2–4 petang — masa terbaik untuk meningkatkan promosi.',
+      linkTo: '/dashboard',
+      tab: 'Financial Dashboard'
+    },
+    {
+      id: 'grants-loans',
+      title: 'Apply for Loan, Grant or Subsidy',
+      titleMs: 'Memohon Pinjaman, Geran atau Subsidi',
+      icon: CreditCard,
+      color: 'from-pink-400 to-pink-600',
+      bgColor: 'bg-pink-50',
+      borderColor: 'border-pink-200',
+      summary: 'You currently have 2 active grant applications and 1 loan pre-approved. Your total potential funding is up to RM150,000. Take the next step by submitting any required documents or exploring additional support programs.',
+      summaryMs: 'Anda mempunyai 2 permohonan geran yang sedang diproses dan 1 pra-kelulusan pinjaman. Jumlah pembiayaan berpotensi anda ialah sehingga RM150,000. Ambil langkah seterusnya dengan menghantar dokumen yang diperlukan atau meneroka program sokongan tambahan.',
+      linkTo: '/recommendation',
+      tab: 'Funding Recommendation'
     },
     {
       id: 'mini-services',
@@ -142,37 +150,11 @@ export default function AuthenticatedHome() {
       color: 'from-orange-400 to-orange-600',
       bgColor: 'bg-orange-50',
       borderColor: 'border-orange-200',
-      summary: 'Access quick business tools: QR generator, invoice maker, tax calculator, and more utility services.',
-      summaryMs: 'Akses alat perniagaan pantas: penjana QR, pembuat invois, kalkulator cukai, dan lebih banyak perkhidmatan utiliti.',
+      summary: 'Maximize efficiency with your digital business toolkit. Instantly access tools like QR code generators, invoice creators, tax calculators, and more. Designed to help streamline daily operations and enhance your digital readiness.',
+      summaryMs: 'Maksimumkan kecekapan dengan alat perniagaan digital anda. Akses segera alat seperti penjana kod QR, pembuat invois, kalkulator cukai, dan banyak lagi. Direka untuk membantu mempercepat operasi harian dan meningkatkan kesediaan digital anda.',
       linkTo: '/mini-services',
       tab: 'Digital Business Toolkit'
-    },
-    {
-      id: 'business-insights',
-      title: 'View Financial Insights',
-      titleMs: 'Lihat Analisis Kewangan',
-      icon: Sparkles,
-      color: 'from-pink-400 to-pink-600',
-      bgColor: 'bg-pink-50',
-      borderColor: 'border-pink-200',
-      summary: 'Your customer retention rate is 85%. Best selling product: Traditional snacks. Peak hours: 2-4 PM.',
-      summaryMs: 'Kadar pengekalan pelanggan anda adalah 85%. Produk terlaris: Kudapan tradisional. Waktu puncak: 2-4 petang.',
-      linkTo: '/dashboard',
-      tab: 'Financial Dashboard'
-    },
-    {
-      id: 'grants-loans',
-      title: 'Apply for Loan, Grant or Subsidy',
-      titleMs: 'Memohon Pinjaman, Geran atau Subsidi',
-      icon: CreditCard,
-      color: 'from-purple-400 to-purple-600',
-      bgColor: 'bg-purple-50',
-      borderColor: 'border-purple-200',
-      summary: 'You have 2 pending grant applications and 1 loan pre-approval. Total potential funding: RM 150,000.',
-      summaryMs: 'Anda mempunyai 2 permohonan geran yang belum selesai dan 1 pra-kelulusan pinjaman. Jumlah pembiayaan berpotensi: RM 150,000.',
-      linkTo: '/recommendation',
-      tab: 'Funding Recommendation'
-    },
+    }
   ];
 
   const scrollToBottom = () => {
@@ -183,13 +165,108 @@ export default function AuthenticatedHome() {
     scrollToBottom()
   }, [messages])
 
-  const handleActionClick = (action: any) => {
+  const handleActionClick = async (action: any) => {
     setSelectedAction(action.id)
+    
+    // Add user message first for all actions
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      text: action.title,
+      sender: 'user',
+      timestamp: new Date()
+    }
+    
+    setMessages([userMessage])
+    setHasUserSentMessage(true)
+    setIsLoading(true)
+    
+    // Simulate typing delay
+    await new Promise(resolve => setTimeout(resolve, 1500))
+    
+    // Handle financial insights action specifically
+    if (action.id === 'business-insights') {
+      // Add bot message with streaming text and financial snapshot
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: '',
+        sender: 'bot',
+        timestamp: new Date(),
+        customComponent: <FinancialSnapshot onExploreGrants={handleExploreGrants} />
+      }
+      
+      setMessages(prev => [...prev, botMessage])
+      setIsLoading(false)
+      
+      // Stream the text
+      const fullText = 'Here are your financial insights:'
+      const words = fullText.split(' ')
+      let currentText = ''
+      
+      for (let i = 0; i < words.length; i++) {
+        currentText += (i > 0 ? ' ' : '') + words[i]
+        setMessages(prev => 
+          prev.map(msg => 
+            msg.id === botMessage.id 
+              ? { ...msg, text: currentText }
+              : msg
+          )
+        )
+        await new Promise(resolve => setTimeout(resolve, 100))
+      }
+      
+      return
+    }
+    
+    // Handle other actions with summary messages
+    const botMessage: Message = {
+      id: (Date.now() + 1).toString(),
+      text: '',
+      sender: 'bot',
+      timestamp: new Date()
+    }
+    
+    setMessages(prev => [...prev, botMessage])
+    setIsLoading(false)
+    
+    // Stream the summary text
+    const summaryText = language === 'ms' ? action.summaryMs : action.summary
+    const words = summaryText.split(' ')
+    let currentText = ''
+    
+    for (let i = 0; i < words.length; i++) {
+      currentText += (i > 0 ? ' ' : '') + words[i]
+      setMessages(prev => 
+        prev.map(msg => 
+          msg.id === botMessage.id 
+            ? { ...msg, text: currentText }
+            : msg
+        )
+      )
+      await new Promise(resolve => setTimeout(resolve, 80))
+    }
+    
+    // Add navigation button to the same message if linkTo exists
     if (action.linkTo) {
-      // Will handle navigation after showing summary
-      setTimeout(() => {
-        window.location.href = action.linkTo
-      }, 3000)
+      setMessages(prev => 
+        prev.map(msg => 
+          msg.id === botMessage.id 
+            ? { 
+                ...msg, 
+                customComponent: (
+                  <div className="mt-4">
+                    <button
+                      onClick={() => window.location.href = action.linkTo}
+                      className="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-700 hover:to-white-800 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2"
+                      >
+                      <TrendingUp className="w-5 h-5" />
+                      {language === 'ms' ? `Pergi ke ${action.tab}` : `Go to ${action.tab}`}
+                    </button>
+                  </div>
+                )
+              }
+            : msg
+        )
+      )
     }
   }
 
@@ -296,7 +373,7 @@ export default function AuthenticatedHome() {
   }
 
   const handleExploreGrants = () => {
-    // Navigate to grants page or show grants modal
+    // Navigate to recommendation page
     window.location.href = '/recommendation'
   }
 
@@ -369,7 +446,7 @@ export default function AuthenticatedHome() {
                         </h3>
                       </div>
 
-                      {selectedAction === action.id && (
+                      {/* {selectedAction === action.id && (
                         <div className="mt-4 p-4 bg-black/10 backdrop-blur-sm rounded-lg border border-black/20 animate-fadeIn">
                           <p className="text-sm text-gray-800">
                             {language === 'ms' ? action.summaryMs : action.summary}
@@ -378,9 +455,9 @@ export default function AuthenticatedHome() {
                             <div className="mt-2 text-xs text-blue-700 font-medium">
                               Redirecting to {action.tab}...
                             </div>
-                          )}
-                        </div>
-                      )}
+                          )} */}
+                        {/* </div>
+                      )} */}
                     </div>
                   );
                 })}
@@ -604,7 +681,7 @@ export default function AuthenticatedHome() {
             </p>
 
             {/* Clear Chat Button */}
-            {messages.length > 1 && (
+            {messages.length > 0 && (
               <button 
                 onClick={() => {
                   setMessages([])
