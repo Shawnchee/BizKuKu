@@ -3,7 +3,10 @@
 import { useState } from 'react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import HoverCard from '@/components/ui/HoverCard'
-import Iridescence from '@/components/backgrounds/Iridescence'
+// import Iridescence from '@/components/backgrounds/Iridescence'
+import GradientBackground from "@/components/backgrounds/GradientBackground"
+
+
 import {
   FileText, Receipt, Calculator, HelpCircle,
   ShoppingCart, Package, Gift, Truck,
@@ -630,18 +633,21 @@ export default function MiniServices() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <Iridescence
+      {/* <Iridescence
         color={[1, 1, 1]}
         mouseReact={true}
         amplitude={0.15}
         speed={0.8}
         className="absolute inset-0 z-0"
-      />
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8">
+      /> */}
+      <GradientBackground/>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 mt-2">
         {/* Header */}
-        <div className="text-center mb-12 bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+        <div className="text-center mb-12 bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
+          <h1 className="text-4xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
             {t('language') === 'ms' ? 'Perkhidmatan Mini' : 'Mini Services'}
+            </span>
           </h1>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-6">
             {t('language') === 'ms'
@@ -650,7 +656,7 @@ export default function MiniServices() {
             }
           </p>
 
-          <div className="flex justify-center items-center gap-4 mb-8">
+          <div className="flex justify-center items-center gap-4 mb-4">
             <button
               onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${

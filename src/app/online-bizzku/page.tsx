@@ -10,23 +10,18 @@ import {
   helpResources, 
   quickStartGuides 
 } from "@/lib/online-bizz-data"
-import Iridescence from "@/components/backgrounds/Iridescence"
+import GradientBackground from "@/components/backgrounds/GradientBackground"
+
 
 export default function OnlineBizzkuPage() {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden py-10">
-      <Iridescence
-        color={[1, 1, 1]}
-        mouseReact={false}
-        amplitude={0.1}
-        speed={1.0}
-        className="absolute inset-0 z-[-1]"
-      />
-    
+      <GradientBackground />
+
       <div className="relative z-10 min-h-screen">
         {/* Header with animations */}
         <motion.div 
-          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl mb-8"
+          className="bg-white/60 backdrop-blur-md border border-white/30 shadow-lg rounded-xl mb-8"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ 
@@ -39,22 +34,17 @@ export default function OnlineBizzkuPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="text-center">
               <motion.h1 
-                className="text-4xl font-bold mb-2"
+                className="text-4xl font-bold mb-4"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                <motion.span
-                  initial={{ rotate: -10 }}
-                  animate={{ rotate: 0 }}
-                  transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-                  className="inline-block"
-                >
-                  🚀
-                </motion.span> Online BizzKu
+                <span className="bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
+                  Online BizzKu
+                </span>
               </motion.h1>
               <motion.p 
-                className="text-xl text-blue-100 mb-4"
+                className="text-lg text-gray-700 mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
